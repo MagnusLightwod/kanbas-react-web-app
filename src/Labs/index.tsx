@@ -9,8 +9,10 @@ import Kanbas from "../Kanbas"
   export default function Labs() {
     return (
       <div id="wd-labs">
-        <h2>Christopher Alcantara</h2>
-        <h1>Labs</h1>
+         <h2>Christopher Alcantara CS5610 20593</h2>
+        
+        <a id="wd-website-url" href="=https://github.com/MagnusLightwod/kanbas-react-web-app/tree/master">Git Repositoy(Master Branch)</a>
+      
       
         <TOC />
       <Routes>
