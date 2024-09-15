@@ -7,7 +7,7 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.jpg" width={200} />
+          <img src="/images/reactjs.jpg" width={200} alt="default react" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/1234/Home">
@@ -22,7 +22,7 @@ export default function Dashboard() {
 
 
         <div className="wd-dashboard-course"> 
-          <img src="/images/computersystems.jpg" width={200} />
+          <img src="/images/computersystems.jpg" width={200} alt="computers"/>
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5600/Home">CS5600 Computer Systems</Link>
             <p className="wd-dashboard-course-title"> Inside the CPU </p>
@@ -31,7 +31,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/intro.jpg" width={200} />
+          <img src="/images/intro.jpg" width={200} alt="introimage"/>
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5004/Home">CS5004 Intro to Compuer Science
             </Link>
@@ -42,7 +42,7 @@ export default function Dashboard() {
 
 
         <div className="wd-dashboard-course">
-          <img src="/images/discrete.jpg" width={200} />
+          <img src="/images/discrete.jpg" width={200} alt="discrete image"/>
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5002/Home">CS5002 Discrete Math
             </Link>
@@ -52,7 +52,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/AI.jpg" width={200} />
+          <img src="/images/AI.jpg" width={200} alt="AI image"/>
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5620/Home">CS5620 AI Foundations
             </Link>
@@ -63,7 +63,7 @@ export default function Dashboard() {
 
 
         <div className="wd-dashboard-course"> 
-          <img src="images/app.jpg" width={200} />
+          <img src="images/app.jpg" width={200} alt="apps image"/>
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5660/Home">CS5660 App Development
             </Link>
@@ -74,7 +74,7 @@ export default function Dashboard() {
 
 
          <div className="wd-dashboard-course"> 
-          <img src="images/graphics.jpg" width={200} />
+          <img src="images/graphics.jpg" width={200} alt="graphics"/>
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/7660/Home">CS7660 GRaphical Work and Development
             </Link>
@@ -84,7 +84,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course"> 
-          <img src="images/hackers.jpg" width={200} />
+          <img src="images/hackers.jpg" width={200} alt="hackermans"/>
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/7669/Home">CS7690 Intro to hacking 
             </Link>
