@@ -11,7 +11,7 @@ import Kanbas from "../Kanbas"
       <div id="wd-labs">
          <h2>Christopher Alcantara CS5610 20593</h2>
         
-        <a id="wd-website-url" href="=https://github.com/MagnusLightwod/kanbas-react-web-app/tree/master">Git Repositoy(Master Branch)</a>
+        <a id="wd-website-url" href="https://github.com/MagnusLightwod/kanbas-react-web-app/tree/master">Git Repositoy(Master Branch)</a>
       
       
         <TOC />
