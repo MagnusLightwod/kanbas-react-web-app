@@ -4,6 +4,7 @@
  }
   */
 
+  /* How to color specific text sections in a simple way */
 p#wd-id-selector-1 {
 background-color: red;
 color: white;
@@ -27,6 +28,7 @@ color: black;
  color: blue;
 }
 
+/* // Colors  */
 .wd-fg-color-black { color: black; }
 .wd-fg-color-white { color: white; }
 .wd-fg-color-blue { color: #7070ff; }
@@ -49,6 +51,7 @@ color: black;
    background-color: lightgray;
 }
 
+ /* Borders  */
 .wd-border-fat {
     border-width: 20px 30px 20px 30px; }
  .wd-border-thin {
@@ -64,6 +67,8 @@ color: black;
  .wd-border-blue {
     border-color: #7070ff; }
 
+
+    /* Margins and padding  */
     .wd-padded-top-left {
         padding-top: 50px;
         padding-left: 50px;
@@ -92,6 +97,7 @@ color: black;
         margin: 30px;
       }
       
+      /* Rounded corners  */
       .wd-rounded-corners-top {
         border-top-left-radius: 40px;
         border-top-right-radius: 40px;
@@ -125,6 +131,7 @@ color: black;
         height: 75px;
      }
      
+     /* Positions and z axis */
      .wd-pos-relative-nudge-up-right {
         position: relative;
         bottom: 30px;
@@ -164,6 +171,7 @@ color: black;
         z-index: 10;
         }
 
+        /* floats  */
     .wd-float-left {
         float: left;
         }
@@ -178,6 +186,41 @@ color: black;
         }
         
         
+        /* Grid layout */
+        .wd-grid-row {
+         clear: both;
+      }
+      
+      .wd-grid-col-half-page {
+         width: 50%;
+         float: left;
+      }
+      
+      .wd-grid-col-third-page {
+         width: 33%;
+         float: left;
+      }
+      
+      .wd-grid-col-two-thirds-page {
+         width: 67%;
+         float: left;
+      }
+      
+      .wd-grid-col-left-sidebar {
+         width: 20%;
+         float: left;
+      }
+      
+      .wd-grid-col-main-content {
+         width: 60%;
+         float: left;
+      }
+      
+      .wd-grid-col-right-sidebar {
+         width: 20%;
+         float: left;
+      }
+      
         
      
             
