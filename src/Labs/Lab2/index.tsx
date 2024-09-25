@@ -13,6 +13,8 @@ import GridLayout from "./GridLayout";
 import Flex from "./Flex";
 import ReactIconsSampler from "./ReactIcons";
 import BootstrapGrids from "./BootstrapGrids";
+import ScreenSizeLabel from "./ScreenSizeLabel";
+import BoostrapTabls from "./BootstrapTabels";
 export default function Lab2() {
   return (
     <div id="wd-lab2">
@@ -78,6 +80,8 @@ export default function Lab2() {
   <div><Flex /></div>
   <div><ReactIconsSampler /></div>
   <div><BootstrapGrids /></div>
+  <div><ScreenSizeLabel /></div>
+  <div><BoostrapTabls /></div>
   </div>  
 </div>
 
