@@ -9,6 +9,10 @@ import Dimensions from "./Dimensions";
 import Positions from "./Positions";
 import Zindex from "./Zindex";
 import Float from "./Float";
+import GridLayout from "./GridLayout";
+import Flex from "./Flex";
+import ReactIconsSampler from "./ReactIcons";
+import BootstrapGrids from "./BootstrapGrids";
 export default function Lab2() {
   return (
     <div id="wd-lab2">
@@ -70,6 +74,10 @@ export default function Lab2() {
   <div><Positions /></div>
   <div> <Zindex /></div>
   <div><Float /></div>
+  <div><GridLayout /></div>
+  <div><Flex /></div>
+  <div><ReactIconsSampler /></div>
+  <div><BootstrapGrids /></div>
   </div>  
 </div>
 
