@@ -63,7 +63,7 @@ export default function Lab2() {
   <div><ForegroundColors /></div>
   <div><BackgroundColors /></div>
   <div><Borders /></div>
-  <div><Padding /></div>
+  <div><Padding /></div> 
   <div><Margins /></div>
   <div><Corners /></div>
   <div><Dimensions /></div>
