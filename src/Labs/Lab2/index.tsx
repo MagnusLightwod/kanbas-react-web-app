@@ -14,7 +14,10 @@ import Flex from "./Flex";
 import ReactIconsSampler from "./ReactIcons";
 import BootstrapGrids from "./BootstrapGrids";
 import ScreenSizeLabel from "./ScreenSizeLabel";
-import BoostrapTabls from "./BootstrapTabels";
+import BootstrapTables from "./BootstrapTabels";
+import BootstrapLists from "./BootstrapLists";
+import BootstrapForms from "./BootstrapForms";
+import BootstrapNavigation from "./BootstrapNavigation";
 export default function Lab2() {
   return (
     <div id="wd-lab2">
@@ -81,7 +84,10 @@ export default function Lab2() {
   <div><ReactIconsSampler /></div>
   <div><BootstrapGrids /></div>
   <div><ScreenSizeLabel /></div>
-  <div><BoostrapTabls /></div>
+  <div><BootstrapTables /></div>
+  <div><BootstrapLists /></div>
+  <div><BootstrapForms /></div>
+  <div><BootstrapNavigation /></div>
   </div>  
 </div>
 
