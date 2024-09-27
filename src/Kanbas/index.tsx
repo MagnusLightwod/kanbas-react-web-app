@@ -3,6 +3,7 @@ import Account from "./Account";
 import Dashboard from "./Dashboard";
 import Courses from "./Courses";
 import KanbasNavigation from "./Navigation";
+import "./styles.css";
 export default function Kanbas() {
     return (
       <div id="wd-kanbas">
@@ -10,6 +11,8 @@ export default function Kanbas() {
         <h1>Kanbas</h1>
         
         <KanbasNavigation />
+        <div className="wd-main-content-offset p-3">
+
         <Routes>
           {/* Adjusted so dashboard is the default */}
         <Route path="/" element={<Navigate to="Dashboard" />} />
@@ -20,7 +23,7 @@ export default function Kanbas() {
               <Route path="/Calendar" element={<h1>Calendar</h1>} />
               <Route path="/Inbox" element={<h1>Inbox</h1>} />
         </Routes>
-        
+        </div>
         </div>
       </div>
   );}
