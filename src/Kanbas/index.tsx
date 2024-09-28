@@ -8,9 +8,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./styles.css";
 export default function Kanbas() {
     return (
-      <div id="wd-kanbas">
+      <div id="wd-kanbas" className="">
         <div>
-        <h1>Kanbas</h1>
         
         <KanbasNavigation />
         <div className="wd-main-content-offset p-3">

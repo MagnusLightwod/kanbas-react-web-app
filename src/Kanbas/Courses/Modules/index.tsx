@@ -6,7 +6,8 @@ export default function Modules() {
     return (
       <div>
   <ModulesControls /><br /><br /><br /><br />
-  <ul id="wd-modules" className="list-group rounded-0">
+  {/* Margin Added */}
+  <ul id="wd-modules" className="list-group rounded-0 wd-margin-right-left">
     <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
     
       

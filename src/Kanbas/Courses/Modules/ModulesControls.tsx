@@ -2,7 +2,7 @@ import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
 export default function ModulesControls() {
   return (
-    <div id="wd-modules-controls" className="text-nowrap" >
+    <div id="wd-modules-controls" className="text-nowrap wd-margin-right-left" >
        
         <button id="wd-collapse-all" className="btn btn-lg btn-secondary"
           type="button" style={{ borderRight: "10px" }}>
