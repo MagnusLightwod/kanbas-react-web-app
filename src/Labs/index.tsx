@@ -4,6 +4,8 @@ import TOC from "./TOC";
 import Lab1 from "./Lab1";
 import Lab2 from "./Lab2";
 import Lab3 from "./Lab3";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Kanbas from "../Kanbas"
 // Importing Lab1 from lab1 file, defaults to index.tsx
   export default function Labs() {
