@@ -48,3 +48,7 @@ body * { font-family:
   margin-left: 30px
 }
 
+.btn-primary {
+  --bs-primary-rgb: 212, 11, 37;
+}
+

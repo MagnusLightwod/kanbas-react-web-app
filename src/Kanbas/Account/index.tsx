@@ -10,9 +10,7 @@ export default function Account() {
       <h2>Account</h2>
       <table>
         <tr>
-          <td valign="top">
-            <AccountNavigation />
-          </td>
+         
           <td valign="top">
 
       <Routes>
