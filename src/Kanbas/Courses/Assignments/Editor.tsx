@@ -2,35 +2,33 @@
 
 export default function AssignmentEditor() {
     return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">Assignment Name</label>
-        <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description">
-        The assignment is available online Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section Links to each of the lab assignments Link to the Kanbas application Links to all relevant source code repositories The Kanbas application should include a link to navigate back to the landing page.
+      
+      <div id="wd-assignments-editor" style={{marginLeft: "50px"}}>
+        <div className="mb-3">
+        <label htmlFor="wd-name">Assignment Name</label> <br />
+        <input type="assignment" className="form-control mb-2"
+      id="input1" placeholder="assignment"/>
 
-           {/* Points input */} 
-        </textarea>
-        <br />
+        <label htmlFor="wd-name">Assignment Description</label> <br />
+        <textarea id="wd-desription" className="form-control"
+         placeholder="input assignment description"/>
+        </div>
+    
+      
         <table>
           <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" value={100} />
-              </td>
-            
-            
+            <label htmlFor="wd-points">Points</label> <br />
+              <input id="wd-points" className="form-control mb-1" placeholder="100" />
           </tr>
           <p></p>
           {/* Assignment Drop Down Menu*/} 
           
           
           <tr>
-          <td align="left" valign="top"> 
-            <label htmlFor="wd-assign-to">Assignment Group</label>
-            </td>
-          <select id="wd-assign-to">
+        
+            <label htmlFor="wd-assign-to">Assignment Group</label> <br />
+            
+          <select id="wd-assign-to" >
                 <option selected value="ASSIGNMENTS"> Assignments</option>
                 <option value="QUIZZES">Quizzes</option>
                 <option value="EXAMS">Exams</option>
@@ -42,23 +40,24 @@ export default function AssignmentEditor() {
         {/* Display GRades Menu */} 
       
           <tr>
-          <td align="right" valign="middle">
-            <label htmlFor="wd-display-grade-as">Display Grade As</label>
-            </td>
+        
+            <label htmlFor="wd-display-grade-as">Display Grade As</label> <br />
+       
           <select id="wd-display-grade-as">
                 <option selected value="PERECNTAGE"> Percentage</option>
                 <option value="LETTER">Letter</option>
                 <option value="PASS/FAIL">Pass/Fail</option>
           </select>
+          
           </tr>
        
           <p></p>
         {/*Submission Type Dropdown menu */} 
         
             <tr>
-            <td align="right" valign="middle">
-            <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
+            
+            <label htmlFor="wd-submission-type">Submission Type</label> <br />
+         
           <select id="wd-submission-type">
                 <option selected value="ONLINE"> Online</option>
                 <option value="IN-PERSON">In Person</option>
@@ -66,41 +65,40 @@ export default function AssignmentEditor() {
                 <option value="EXTERNAL-WEBSITE">External Website</option>
           </select>
             </tr>
-            
+            <p></p>
 
             
           <tr>
             
             {/* Onine Entry multiple entry types*/} 
-            <td align="left" valign="top"></td>
-                <label htmlFor="wd-submission-type">Online Entry Options</label> 
-                <br />
+            
+             <label htmlFor="wd-submission-type">Online Entry options</label> <br />
+                
                 
                 <input type="checkbox"id="wd-submission-type" />
-                <label htmlFor="wd-submission-type">Text Entry</label>
+                <label htmlFor="wd-submission-type" style={{ margin: "2px" }}>Text Entry</label>
                 <br />
                 <input type="checkbox"id="wd-submission-type" />
-                <label htmlFor="wd-submission-type">Website URL</label>
+                <label htmlFor="wd-submission-type" style={{ margin: "2px" }}>Website URL</label>
                 <br />
                 <input type="checkbox"id="wd-submission-type" />
-                <label htmlFor="wd-submission-type">Media Recordings</label>
+                <label htmlFor="wd-submission-type" style={{ margin: "2px" }}>Media Recordings</label>
                 <br />
                 <input type="checkbox"id="wd-submission-type" />
-                <label htmlFor="wd-submission-type">Student Annotation</label>
+                <label htmlFor="wd-submission-type" style={{ margin: "2px" }}>Student Annotation</label>
                 <br />
                 <input type="checkbox"id="wd-submission-type" />
-                <label htmlFor="wd-submission-type">File Uploads</label>
+                <label htmlFor="wd-submission-type" style={{ margin: "2px" }}>File Uploads</label>
             
           </tr>
           
           <p></p>
           <tr>
             {/* Assignment group Text Input*/} 
-            <td align="left" valign="top"></td>
+            
             <label htmlFor="wd-assign-to"> Assign to</label>
             <br />
-            <input type="group" placeholder="Everyone" id="wd-assign-to">
-            </input>
+            <input id="wd-group" className="form-control mb-1" placeholder="Everyone" />
            <p></p>
            
           </tr>
