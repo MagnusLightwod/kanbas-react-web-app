@@ -145,8 +145,7 @@ export default function AssignmentEditor() {
            
         </tr>
         
-            
-       
+          
       </div>
   );}
   
