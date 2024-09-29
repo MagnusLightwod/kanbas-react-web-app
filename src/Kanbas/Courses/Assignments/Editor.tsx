@@ -1,6 +1,14 @@
 
 
 export default function AssignmentEditor() {
+
+  // const options = [
+  //   { value: "Online", label: "Online" },
+  //   { value: "In Person", label: "In Person" },
+  //   { value: "Link", label: "Link" },
+  //   { value: "External Website", label: "External Website" },
+  //   { value: "Text Entry", label: "Text Entry" },
+  // ]
     return (
       
       <div id="wd-assignments-editor" style={{marginLeft: "50px"}}>
@@ -106,26 +114,26 @@ export default function AssignmentEditor() {
             
             <tr>
                 {/* Due date of assignment */} 
-                <td align="left" valign="top"></td>
+                
                 <label htmlFor="wd-due-date"> Due Date:</label>
                 <br />
-                <input type="date" id="wd-due-date" value="2024-05-13">
+                <input type="date" id="wd-due-date" value="2024-05-13"  className="form-control mb-1">
                 </input>
             </tr>
            <p></p>
            
             <tr>
                 {/* Available From and Until */} 
-                <td align="right" valign="top"></td>
+               
                 <label htmlFor="wd-due-date"> Available From </label>
                 <br />
-                <input type="date" id="wd-due-date" value="2024-05-06">
+                <input type="date" id="wd-due-date" value="2024-05-06" className="form-control" >
                 </input>
 
                 <td align="left" valign="top"></td>
                 <label htmlFor="wd-due-date">Until</label>
                 <br />
-                <input type="date" id="wd-due-date" value="2024-05-20">
+                <input type="date" id="wd-due-date" value="2024-05-20" className="form-control mb-1">
                 </input>
 
             </tr>
@@ -135,10 +143,10 @@ export default function AssignmentEditor() {
            <tr>
            
             <td align="right" valign="middle">
-            <button id="wd-cancel-button"> cancel </button>
+            <button id="wd-cancel-button"  className="btn btn-secondary"> cancel </button>
             </td>
             <td align="right" valign="middle">
-            <button id="wd-save-button" onClick={() => alert("Assignment Saved")} type="button"> save </button>
+            <button id="wd-save-button" onClick={() => alert("Assignment Saved")} type="button" className="btn btn-secondary"> save </button>
             </td>
            
         </tr>
