@@ -5,7 +5,7 @@ import Courses from "./Courses";
 import KanbasNavigation from "./Navigation";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+{/*  issue of bootstrapmin resolved performing npm install --save bootstrap*/}
 import "./styles.css";
 export default function Kanbas() {
     return (
