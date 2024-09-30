@@ -2,13 +2,6 @@
 
 export default function AssignmentEditor() {
 
-  // const options = [
-  //   { value: "Online", label: "Online" },
-  //   { value: "In Person", label: "In Person" },
-  //   { value: "Link", label: "Link" },
-  //   { value: "External Website", label: "External Website" },
-  //   { value: "Text Entry", label: "Text Entry" },
-  // ]
     return (
       
       <div id="wd-assignments-editor" style={{marginLeft: "50px"}}>

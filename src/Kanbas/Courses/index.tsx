@@ -18,7 +18,6 @@ export default function Courses() {
   
 
             <CoursesNavigation />
-       
             </div>
     <div className="flex-fill">
 
