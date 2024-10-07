@@ -21,7 +21,7 @@ import Kanbas from "../Kanbas"
         <Route path="/" element={<Navigate to="Labs" />} />
         <Route path="Lab1" element={<Lab1 />} />
         <Route path="Lab2" element={<Lab2 />} />
-        <Route path="Lab3" element={<Lab3 />} />
+        <Route path="Lab3/*" element={<Lab3 />} />
         <Route path="Kanbas" element ={<Kanbas />} />
       </Routes>
       </div>

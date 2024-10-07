@@ -9,6 +9,7 @@ import { IoMdNotifications } from "react-icons/io";
 export default function CourseStatus() {
   return (
     <div id="wd-course-status" style={{ width: "300px" }} className="d-none d-xl-block" > 
+    {/* Should hide course status when zoomed in  */}
       <h2>Course Status</h2>
       <div className="d-flex">
         <div className="w-50 pe-1">
