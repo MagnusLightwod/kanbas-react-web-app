@@ -1,10 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
+import * as db from "../Database";
 import "../styles.css"; // Assuming your styles are in styles.css
 
 {/* Create an array to store the to links, ids and labels. 
   Then render those links on the side bar. Where the active is highlighted having black text*/}
 export default function CoursesNavigation() {
   const location = useLocation();
+  const courses = db.courses;
+  const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
 
   const menuLinks = [
     { to: "/Kanbas/Courses/1234/Home", id: "wd-course-home-link", label: "Home"},
@@ -18,6 +21,8 @@ export default function CoursesNavigation() {
     { to: "/Kanbas/Courses/1234/Assignments", id: "wd-course-assignments-link", label:"Assignments"},
 
     { to: "/Kanbas/Courses/1234/Quizzes", id: "wd-course-quizzes-link", label:"Quizzes"},
+
+    { to: "/Kanbas/Courses/1234/Grades", id: "wd-course-grades-link", label:"Grades"},
 
     { to: "/Kanbas/Courses/1234/People", id: "wd-course-people-link", label:"People"},
   ];

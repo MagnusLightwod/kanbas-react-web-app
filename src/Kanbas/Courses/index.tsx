@@ -1,38 +1,47 @@
-
-import CoursesNavigation from "./Navigation";
+import CoursesNavigation from "./nav2";
+import { courses } from "../Database";
 import Modules from "./Modules";
 import Home from "./Home";
-import Assignments from "./Assignments/index";
+import Assignments from "./Assignments/index2";
 import AssignmentEditor from "./Assignments/Editor";
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useParams, useLocation  } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
+
 export default function Courses() {
-    return (
-      <div id="wd-courses">
-        <h2 className="text-danger">
-      <FaAlignJustify className="me-4 fs-4 mb-1" />
-      Course 1234 </h2> <hr />
+  const { cid } = useParams<{ cid: string }>(); // Make sure cid is of type string
+  const { pathname } = useLocation();
+  // Check if cid exists and if the course exists in the database
+  const course = courses.find((course) => course._id === cid);
+
+  if (!cid || !course) {
+    return <div>Course not found</div>; // Handle missing or invalid course ID
+  }
+
+  return (
+    <div id="wd-courses">
+      <h2 className="text-danger">
+        <FaAlignJustify className="me-4 fs-4 mb-1" />
+        {course && course.name} &gt; {pathname.split("/")[4]}
+
+      </h2>
+      <hr />
       <div className="d-flex">
-      <div className="d-none d-md-block">
-  
-
-            <CoursesNavigation />
-            </div>
-    <div className="flex-fill">
-
-            <Routes>
-              <Route path="/" element={<Navigate to="Home" />} />
-              <Route path="Home" element={<h2><Home/></h2>} />
-              <Route path="Modules" element={<h2><Modules/></h2>} />
-    
-              <Route path="People" element={<PeopleTable />} />
-              <Route path="Assignments" element={<Assignments />} />
-              <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-            </Routes>
-       
-            </div></div>
-
+        <div className="d-none d-md-block">
+          {/* Pass the course ID to CoursesNavigation, ensuring it's a string */}
+          <CoursesNavigation cid={cid} />
+        </div>
+        <div className="flex-fill">
+          <Routes>
+            <Route path="/" element={<Navigate to="Home" />} />
+            <Route path="Home" element={<Home />} />
+            <Route path="Modules" element={<Modules />} />
+            <Route path="People" element={<PeopleTable />} />
+            <Route path="Assignments" element={<Assignments />} />
+            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+          </Routes>
+        </div>
       </div>
-  );}
-  
+    </div>
+  );
+}
