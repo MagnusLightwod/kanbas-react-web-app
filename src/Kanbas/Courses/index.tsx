@@ -7,6 +7,7 @@ import AssignmentEditor from "./Assignments/Editor";
 import { Navigate, Route, Routes, useParams, useLocation  } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
+import Quizes from "./Quizzes";
 
 export default function Courses() {
   const { cid } = useParams<{ cid: string }>(); // Make sure cid is of type string
@@ -39,6 +40,8 @@ export default function Courses() {
             <Route path="People" element={<PeopleTable />} />
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            {/* Add route for the quizzes page */}
+            <Route path="Quizzes" element={<Quizes />} />
           </Routes>
         </div>
       </div>

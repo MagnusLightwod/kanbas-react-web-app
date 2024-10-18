@@ -38,6 +38,8 @@ export default function Lab3() {
   return (
     <div id="wd-lab3" style={ {margin : "10px"}}>
       <h3>Lab 3</h3>
+
+     
       <VariablesAndConstants/>
       <VariableTypes />
       <BooleanVariables />
