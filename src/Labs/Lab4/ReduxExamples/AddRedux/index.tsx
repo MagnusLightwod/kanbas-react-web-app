@@ -23,3 +23,29 @@ export default function AddRedux() {
     </div>
   );
 }
+
+
+// to read/write to reducer
+// to maintain a and b parameters in UI
+
+
+
+// a and b state variables to edit
+// parameters to add in the reducer
+// read the sum state variable from the reducer
+// dispatch to call add redux function
+
+// render local state variables a and b, as well
+// as application state variable sum
+
+// update the local component state variable a
+
+// update the local component state variable b
+
+
+// on click, call add reducer function to 
+// compute the arithmetic addition of a and b, 
+// and store it in application state
+// variable sum
+
+
