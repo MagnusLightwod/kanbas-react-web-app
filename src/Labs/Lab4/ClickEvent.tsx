@@ -13,7 +13,7 @@ const hello = () => {
                 id="wd-life-is-good-click">
           Life is Good!</button>
         <button onClick={() => {
-                  hello();
+                  hello(); {/* hello and life is make it so there are 2 events on this one click */}
                   lifeIs("Great!");
                 }} id="wd-life-is-great-click">
           Life is Great!

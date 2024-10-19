@@ -15,3 +15,16 @@ export default function BooleanStateVariables() {
     </div>
   );
 }
+// import useState
+
+// declare and initialize
+// boolean state variable
+
+
+// render content based on
+// boolean state variable value
+// change state variable value
+// when handling events like
+// clicking a checkbox
+// render content based on
+// boolean state variable value
