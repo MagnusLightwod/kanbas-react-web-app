@@ -88,6 +88,8 @@ export default function Lab2() {
   <div><BootstrapLists /></div>
   <div><BootstrapForms /></div>
   <div><BootstrapNavigation /></div>
+
+  
   </div>  
 </div>
 

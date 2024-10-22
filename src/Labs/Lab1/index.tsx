@@ -1,4 +1,6 @@
 
+import React from 'react';
+
 export default function Lab1() {
   return (
     <div id="wd-lab1">
@@ -299,7 +301,7 @@ to get dummy text<br/>
 <p id="wd-p-3"></p>
 Please find the github repo <a id="wd-github" href="https://github.com/jannunzi">here</a> 
 
-
+<br />
 
     </div>
     </div>
