@@ -115,3 +115,5 @@ export default function Assignments() {
     </div>
   );
 }
+ // checked for if we are editing, and we make it so New works, before it would break since it is not a proper uid
+ 
