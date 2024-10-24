@@ -1,5 +1,5 @@
 import CoursesNavigation from "./nav2";
-import { courses } from "../Database";
+
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments/index2";
@@ -9,7 +9,7 @@ import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
 import Quizes from "./Quizzes";
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams<{ cid: string }>(); // Make sure cid is of type string
   const { pathname } = useLocation();
   // Check if cid exists and if the course exists in the database

@@ -3,17 +3,37 @@ import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlbuttons";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams } from "react-router";
+import React, { useState } from "react";
 import * as db from "../../Database";
+
 export default function Modules() {
   const { cid } = useParams();
-  const modules = db.modules;
+  const [modules, setModules] = useState<any[]>(db.modules);
+  const addModule = () => {
+    setModules([ ...modules, { _id: new Date().getTime().toString(),
+                                     name: moduleName, course: cid, lessons: [] } ]);
+    setModuleName("");
+  };
+  const deleteModule = (moduleId: string) => {
+    setModules(modules.filter((m) => m._id !== moduleId));
+  };
+
+  const [moduleName, setModuleName] = useState("");
+ 
+
+
     return (
       
       <ul id="wd-modules" className="list-group rounded-0">
+        <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={addModule} />
+
         {modules.filter((module: any) => module.course === cid).map((module: any) => (
           <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
             <div className="wd-title p-3 ps-2 bg-secondary">
-              <BsGripVertical className="me-2 fs-3" /> {module.name} <ModuleControlButtons />
+              <BsGripVertical className="me-2 fs-3" /> {module.name} <ModuleControlButtons   moduleId={module._id}
+        deleteModule={deleteModule}/>
+
+              
             </div>
             {module.lessons && (
               <ul className="wd-lessons list-group rounded-0">
