@@ -31,163 +31,192 @@ export default function AssignmentEditor() {
   const [fileUploads, setFileUploads] = useState(false);
 
   return (
-    <div id="wd-assignments-editor" style={{ marginLeft: "50px" }}>
+    <div id="wd-assignments-editor" style={{marginLeft: "50px"}}>
       <div className="mb-3">
-        <label htmlFor="wd-name">Assignment Name</label> <br />
-        <input
-          type="text"
-          className="form-control mb-2"
-          id="input1"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Assignment name"
-        />
+      <label htmlFor="wd-name">Assignment Name</label> <br />
+      <input type="assignment" className="form-control mb-2"
+        id="input1" 
+        value={title} 
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="assignment"/>
 
-        <label htmlFor="wd-description">Assignment Description</label> <br />
-        <textarea
-          id="wd-description"
-          className="form-control"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Input assignment description"
-        />
+      <label htmlFor="wd-name">Assignment Description</label> <br />
+      <textarea id="wd-desription" className="form-control"
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+       placeholder="input assignment description"/>
       </div>
-
+  
+    
       <table>
         <tr>
           <label htmlFor="wd-points">Points</label> <br />
-          <input
-            id="wd-points"
-            className="form-control mb-1"
+            <input id="wd-points" className="form-control mb-1" 
             value={points}
             onChange={(e) => setPoints(e.target.value)}
-            placeholder="100"
-          />
+            placeholder="100" />
         </tr>
         <p></p>
-
-        {/* Assignment Drop Down Menu */}
+        {/* Assignment Drop Down Menu*/} 
+        
+        
         <tr>
+      
           <label htmlFor="wd-assign-to">Assignment Group</label> <br />
-          <select
-            id="wd-assign-to"
-            value={assignmentGroup}
-            onChange={(e) => setAssignmentGroup(e.target.value)}
-          >
-            <option value="ASSIGNMENTS">Assignments</option>
-            <option value="QUIZZES">Quizzes</option>
-            <option value="EXAMS">Exams</option>
-            <option value="PROJECT">Project</option>
-          </select>
+          
+        <select id="wd-assign-to" value={assignmentGroup} 
+        onChange={(e) => setAssignmentGroup(e.target.value)}>
+              <option selected value="ASSIGNMENTS"> Assignments</option>
+              <option value="QUIZZES">Quizzes</option>
+              <option value="EXAMS">Exams</option>
+              <option value="PROJECT">Project</option>
+        </select>
         </tr>
+       
         <p></p>
-
-        {/* Display Grades Menu */}
+      {/* Display GRades Menu */} 
+    
         <tr>
+      
           <label htmlFor="wd-display-grade-as">Display Grade As</label> <br />
-          <select
-            id="wd-display-grade-as"
-            value={displayGradeAs}
-            onChange={(e) => setDisplayGradeAs(e.target.value)}
-          >
-            <option value="PERCENTAGE">Percentage</option>
-            <option value="LETTER">Letter</option>
-            <option value="PASS/FAIL">Pass/Fail</option>
-          </select>
+     
+        <select id="wd-display-grade-as"
+                value={displayGradeAs}
+                onChange={(e) => setDisplayGradeAs(e.target.value)}>
+              <option selected value="PERECNTAGE"> Percentage</option>
+              <option value="LETTER">Letter</option>
+              <option value="PASS/FAIL">Pass/Fail</option>
+        </select>
+        
         </tr>
+     
         <p></p>
-
-        {/* Submission Type Dropdown Menu */}
-        <tr>
+      {/*Submission Type Dropdown menu */} 
+      
+          <tr>
+          
           <label htmlFor="wd-submission-type">Submission Type</label> <br />
-          <select
-            id="wd-submission-type"
-            value={submissionType}
-            onChange={(e) => setSubmissionType(e.target.value)}
-          >
-            <option value="ONLINE">Online</option>
-            <option value="IN-PERSON">In Person</option>
-            <option value="EMAIL">Email</option>
-            <option value="EXTERNAL-WEBSITE">External Website</option>
-          </select>
-        </tr>
-        <p></p>
+       
+        <select id="wd-submission-type" value={submissionType}
+                onChange={(e) => setSubmissionType(e.target.value)}>
+              <option selected value="ONLINE"> Online</option>
+              <option value="IN-PERSON">In Person</option>
+              <option value="EMAIL">Email</option>
+              <option value="EXTERNAL-WEBSITE">External Website</option>
+        </select>
+          </tr>
+          <p></p>
 
-        {/* Online Entry Multiple Entry Types */}
-        <tr>
-          <label htmlFor="wd-submission-type-text-entry">Online Entry Options</label> <br />
-          <input
-            type="checkbox"
-            id="wd-submission-type-text-entry"
-            checked={textEntry}
-            onChange={(e) => setTextEntry(e.target.checked)}
-          />
-          <label htmlFor="wd-submission-type-text-entry" style={{ margin: "2px" }}>
-            Text Entry
-          </label>
-          <br />
-          {/* Add other checkboxes similarly */}
-        </tr>
-        <p></p>
+          
+          <tr>
+    {/* Online Entry multiple entry types */}
+    <label htmlFor="wd-submission-type-text-entry">Online Entry options</label> <br />
 
-        {/* Due Date of Assignment */}
-        <tr>
-          <label htmlFor="wd-due-date">Due Date:</label>
-          <br />
-          <input
-            type="date"
-            id="wd-due-date"
-            value={dueDate}
-            className="form-control mb-1"
-            onChange={(e) => setDueDate(e.target.value)}
-          />
-        </tr>
-        <p></p>
+    <input
+      type="checkbox"
+      id="wd-submission-type-text-entry"
+      checked={textEntry}
+      onChange={(e) => setTextEntry(e.target.checked)}
+    />
+    <label htmlFor="wd-submission-type-text-entry" style={{ margin: "2px" }}>Text Entry</label>
+    <br />
 
-        {/* Available From and Until */}
+    <input
+      type="checkbox"
+      id="wd-submission-type-website-url"
+      checked={websiteURL}
+      onChange={(e) => setWebsiteURL(e.target.checked)}
+    />
+    <label htmlFor="wd-submission-type-website-url" style={{ margin: "2px" }}>Website URL</label>
+    <br />
+
+    <input
+      type="checkbox"
+      id="wd-submission-type-media-recordings"
+      checked={mediaRecordings}
+      onChange={(e) => setMediaRecordings(e.target.checked)}
+    />
+    <label htmlFor="wd-submission-type-media-recordings" style={{ margin: "2px" }}>Media Recordings</label>
+    <br />
+
+    <input
+      type="checkbox"
+      id="wd-submission-type-student-annotation"
+      checked={studentAnnotation}
+      onChange={(e) => setStudentAnnotation(e.target.checked)}
+    />
+    <label htmlFor="wd-submission-type-student-annotation" style={{ margin: "2px" }}>Student Annotation</label>
+    <br />
+
+    <input
+      type="checkbox"
+      id="wd-submission-type-file-uploads"
+      checked={fileUploads}
+      onChange={(e) => setFileUploads(e.target.checked)}
+    />
+    <label htmlFor="wd-submission-type-file-uploads" style={{ margin: "2px" }}>File Uploads</label>
+  </tr>
+        
+        <p></p>
         <tr>
-          <label htmlFor="wd-available-date">Available From</label>
+          {/* Assignment group Text Input*/} 
+          
+          <label htmlFor="wd-assign-to"> Assign to</label>
           <br />
-          <input
-            type="date"
-            id="wd-available-date"
-            value={availableDate}
-            onChange={(e) => setAvailableDate(e.target.value)}
-            className="form-control"
-          />
-          <td align="left" valign="top"></td>
-          <label htmlFor="wd-until-date">Until</label>
-          <br />
-          <input
-            type="date"
-            id="wd-until-date"
-            value={untilDate}
-            onChange={(e) => setUntilDate(e.target.value)}
-            className="form-control mb-1"
-          />
+          <input id="wd-group" className="form-control mb-1" placeholder="Everyone" />
+         <p></p>
+         
         </tr>
-      </table>
-      <br />
-      <tr>
-        <td align="right" valign="middle">
-          <Link
-            to={`/Kanbas/Courses/${cid}/Assignments`}
-            id="wd-cancel-button"
-            className="btn btn-secondary"
-          >
-            Cancel
-          </Link>
-        </td>
-        <td align="right" valign="middle">
-          <Link
-            to={`/Kanbas/Courses/${cid}/Assignments`}
-            id="wd-save-button"
-            className="btn btn-secondary"
-          >
-            Save
-          </Link>
-        </td>
+
+          
+          <tr>
+              {/* Due date of assignment */} 
+              
+              <label htmlFor="wd-due-date"> Due Date:</label>
+              <br />
+              <input type="date" id="wd-due-date" value={dueDate}  
+              className="form-control mb-1"
+              onChange={(e) => setDueDate(e.target.value)}>
+              </input>
+          </tr>
+
+         <p></p>
+         
+          <tr>
+              {/* Available From and Until */} 
+             
+              <label htmlFor="wd-due-date"> Available From </label>
+              <br />
+              <input type="date" id="wd-due-date" value={availableDate} 
+              onChange={(e) => setAvailableDate(e.target.value)}
+              className="form-control" >
+              </input>
+
+              <td align="left" valign="top"></td>
+              <label htmlFor="wd-due-date">Until</label>
+              <br />
+              <input type="date" id="wd-due-date" value={untilDate} 
+              onChange={(e) => setUntilDate(e.target.value)}
+              className="form-control mb-1">
+              </input>
+
+          </tr>
+          </table>
+          <br />
+          <br />
+         <tr>
+         
+          <td align="right" valign="middle">
+          <Link to={` /Kanbas/Courses/${cid}/Assignments`} id="wd-cancel-button"  className="btn btn-secondary"> cancel </Link>
+          </td>
+          <td align="right" valign="middle">
+          <Link to={` /Kanbas/Courses/${cid}/Assignments`} id="wd-cancel-button"  className="btn btn-secondary"> save </Link>
+          </td>
+         
+         
       </tr>
+      
+        
     </div>
-  );
-}
+);}
+
