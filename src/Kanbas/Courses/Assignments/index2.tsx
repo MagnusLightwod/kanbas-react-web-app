@@ -19,6 +19,17 @@ export default function Assignments() {
   );
   console.log("Assignments Data:", assignments);
 
+  // Define functions for deleting and editing a module
+  const deleteModule = (moduleId: string) => {
+    console.log("Deleting module with ID:", moduleId);
+    // Add your delete logic here
+  };
+
+  const editModule = (moduleId: string) => {
+    console.log("Editing module with ID:", moduleId);
+    // Add your edit logic here
+  };
+
   const textStyle = {
     fontSize: "20px",
     bottom: "1px",
@@ -68,7 +79,12 @@ export default function Assignments() {
             <BsGripVertical className="me-2 fs-3" />
             ASSIGNMENTS 40% of Total
           </span>
-          <ModuleControlButtons />
+          
+          <ModuleControlButtons
+            moduleId={module._id} 
+            deleteModule={deleteModule}
+            editModule={editModule}
+          />
         </div>
 
         <ul className="wd-lessons list-group rounded-0">
@@ -100,7 +116,8 @@ export default function Assignments() {
                       Multiple Modules
                     </a>
                     <span className="text-muted ms-2">
-                      <b>Not available until </b> May 6 at 12:00 am| Due May 20 at 11:59pm | 100 pts
+                      <b>Not available until </b> May 6 at 12:00 am | Due May 20 at
+                      11:59pm | 100 pts
                     </span>
                   </div>
                 </div>
