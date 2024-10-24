@@ -1,17 +1,19 @@
 import { FaPlus } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
+import { useSelector, useDispatch } from "react-redux";
 import ModuleControlButtons from "../Modules/ModuleControlbuttons";
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { TfiWrite } from "react-icons/tfi";
 import { useParams } from "react-router";
 import * as db from "../../Database"; // Importing assignments from Database
+import { addAssignment, deleteAssignment, editAssignment, updateAssignment } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   console.log("Course ID:", cid);
-
-  const assignments = db.assiginments; // Fetch assignments from Database
+  const dispatch = useDispatch();
+  const assignments = useSelector((state: any) => state.assignmentReducer.assiginments); // Fetch assignments from Database
 
   // Filter assignments for the specific course based on cid
   const filteredAssignments = assignments.filter(
@@ -29,6 +31,20 @@ export default function Assignments() {
     console.log("Editing module with ID:", moduleId);
     // Add your edit logic here
   };
+
+    // Define functions for deleting and editing an assignment
+    const handleDeleteAssignment = (assignmentId: string) => {
+      dispatch(deleteAssignment(assignmentId));
+    };
+  
+    const handleEditAssignment = (assignmentId: string) => {
+      dispatch(editAssignment(assignmentId));
+    };
+  
+    const handleUpdateAssignment = (assignment: any) => {
+      dispatch(updateAssignment(assignment));
+    };
+  
 
   const textStyle = {
     fontSize: "20px",
@@ -81,7 +97,7 @@ export default function Assignments() {
           </span>
           
           <ModuleControlButtons
-            moduleId={module._id} 
+            moduleId="test"
             deleteModule={deleteModule}
             editModule={editModule}
           />
