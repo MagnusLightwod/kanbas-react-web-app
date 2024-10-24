@@ -2,7 +2,7 @@ import CoursesNavigation from "./nav2";
 
 import Modules from "./Modules";
 import Home from "./Home";
-import Assignments from "./Assignments/index2";
+import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import { Navigate, Route, Routes, useParams, useLocation  } from "react-router";
 import { FaAlignJustify } from "react-icons/fa";
@@ -39,9 +39,13 @@ export default function Courses({ courses }: { courses: any[]; }) {
             <Route path="Modules" element={<Modules />} />
             <Route path="People" element={<PeopleTable />} />
             <Route path="Assignments" element={<Assignments />} />
+            <Route path="Assignments/New" element={<AssignmentEditor />} />
             <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+          
             {/* Add route for the quizzes page */}
             <Route path="Quizzes" element={<Quizes />} />
+
+            
           </Routes>
         </div>
       </div>

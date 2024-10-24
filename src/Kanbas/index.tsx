@@ -12,6 +12,10 @@ import "./styles.css";
 
 import store from "./store";
 import { Provider } from "react-redux";
+
+import Assignments from "./Courses/Assignments"; // Fixed import path
+import AssignmentEditor from "./Courses/Assignments/Editor";
+
 export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
@@ -65,6 +69,11 @@ export default function Kanbas() {
 
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
             <Route path="/Inbox" element={<h1>Inbox</h1>} />
+     
+           {/* Assignments Routes */}
+          
+              <Route path="/Kanbas/Courses/:cid/Assignments/New" element={<AssignmentEditor />} />
+              <Route path="/Kanbas/Courses/:cid/Assignments/:aid" element={<AssignmentEditor />} />
           </Routes>
         </div>
       </div>

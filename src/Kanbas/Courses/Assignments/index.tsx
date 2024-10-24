@@ -1,60 +1,25 @@
+import { useNavigate, useParams } from "react-router";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
-import { useSelector, useDispatch } from "react-redux";
 import ModuleControlButtons from "../Modules/ModuleControlbuttons";
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { TfiWrite } from "react-icons/tfi";
-import { useParams } from "react-router";
-import * as db from "../../Database"; // Importing assignments from Database
-import { addAssignment, deleteAssignment, editAssignment, updateAssignment } from "./reducer";
+import * as db from "../../Database";
 
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
-  console.log("Course ID:", cid);
-  const dispatch = useDispatch();
-  const assignments = useSelector((state: any) => state.assignmentReducer.assiginments); // Fetch assignments from Database
+  const navigate = useNavigate(); // Initialize navigate function
+
+  const assignments = db.assiginments; // Fetch assignments from the Database
 
   // Filter assignments for the specific course based on cid
   const filteredAssignments = assignments.filter(
-    (assignment: any) => assignment.course === cid // Inline type for assignment
+    (assignment: any) => assignment.course === cid
   );
-  console.log("Assignments Data:", assignments);
 
-  // Define functions for deleting and editing a module
-  const deleteModule = (moduleId: string) => {
-    console.log("Deleting module with ID:", moduleId);
-    // Add your delete logic here
-  };
-
-  const editModule = (moduleId: string) => {
-    console.log("Editing module with ID:", moduleId);
-    // Add your edit logic here
-  };
-
-    // Define functions for deleting and editing an assignment
-    const handleDeleteAssignment = (assignmentId: string) => {
-      dispatch(deleteAssignment(assignmentId));
-    };
-  
-    const handleEditAssignment = (assignmentId: string) => {
-      dispatch(editAssignment(assignmentId));
-    };
-  
-    const handleUpdateAssignment = (assignment: any) => {
-      dispatch(updateAssignment(assignment));
-    };
-  
-
-  const textStyle = {
-    fontSize: "20px",
-    bottom: "1px",
-  };
-
-  const description = {
-    marginLeft: "40px",
-    flex: "1 1 auto",
-    whiteSpace: "normal",
+  const handleAddAssignment = () => {
+    navigate(`New`); // Use relative path within the course context
   };
 
   return (
@@ -79,7 +44,11 @@ export default function Assignments() {
             >
               Group
             </button>
-            <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-1">
+            <button
+              id="wd-add-module-btn"
+              className="btn btn-lg btn-danger me-1"
+              onClick={ handleAddAssignment} // Set the click handler
+            >
               <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
               Assignments
             </button>
@@ -89,17 +58,17 @@ export default function Assignments() {
         {/* Assignments Section */}
         <div
           className="wd-title p-3 ps-2 bg-secondary d-flex justify-content-between align-items-center"
-          style={textStyle}
         >
           <span>
             <BsGripVertical className="me-2 fs-3" />
             ASSIGNMENTS 40% of Total
           </span>
-          
+
+          {/* Example placeholder for ModuleControlButtons */}
           <ModuleControlButtons
-            moduleId="test"
-            deleteModule={deleteModule}
-            editModule={editModule}
+            moduleId="exampleModuleId"
+            deleteModule={() => {}}
+            editModule={() => {}}
           />
         </div>
 
@@ -124,7 +93,7 @@ export default function Assignments() {
                     </a>
                   </span>
 
-                  <div style={description}>
+                  <div>
                     <a
                       href={`#/Kanbas/Courses/${cid}/Modules`}
                       className="text-danger"
