@@ -5,8 +5,9 @@ import ModuleControlButtons from "../Modules/ModuleControlbuttons";
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { TfiWrite } from "react-icons/tfi";
+import { FaRegTrashAlt } from "react-icons/fa";
 
-export default function Assignments({ assignments }: { assignments: any[] }) {
+export default function Assignments({ assignments, deleteAssignment }: { assignments: any[], deleteAssignment: (assignmentId: string) => void }) {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   const navigate = useNavigate(); // Initialize navigate function
 
@@ -17,6 +18,14 @@ export default function Assignments({ assignments }: { assignments: any[] }) {
 
   const handleAddAssignment = () => {
     navigate(`/Kanbas/Courses/${cid}/Assignments/New`); 
+  };
+
+   // Function to confirm deletion
+   const handleConfirm = (assignmentId: string) => {
+    const answer = window.confirm("Delete assignment? Are you sure?");
+    if (answer) {
+      deleteAssignment(assignmentId);
+    }
   };
   
   return (
@@ -83,11 +92,13 @@ export default function Assignments({ assignments }: { assignments: any[] }) {
                     <BsGripVertical className="me-2 fs-3" />
                     <TfiWrite className="me-2 fs-3" />
                     <a
-                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} 
                       className="h5 text-dark mb-0"
+                      
                     >
                       {assignment.title}
-                    </a>
+                    </a><FaRegTrashAlt onClick={() => handleConfirm(assignment._id)}
+                      />
                   </span>
 
                   <div>
@@ -98,8 +109,8 @@ export default function Assignments({ assignments }: { assignments: any[] }) {
                       Multiple Modules
                     </a>
                     <span className="text-muted ms-2">
-                      <b>Not available until </b> May 6 at 12:00 am | Due May 20 at
-                      11:59pm | 100 pts
+                      <b>Not available until </b> {assignment.availableDate} | Due {assignment.dueDate}
+                      at 11:59pm | {assignment.points} pts
                     </span>
                   </div>
                 </div>

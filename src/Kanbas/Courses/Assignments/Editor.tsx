@@ -4,23 +4,24 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import * as db from "../../Database"; 
 
 export default function AssignmentEditor(props: any) {
-  const { cid, aid } = useParams(); // Get course ID and assignment ID from the URL
-  const assignments = db.assiginments;
+  const { cid, aid } = useParams<{ cid: string; aid?: string }>();
   const navigate = useNavigate();
-  // Find the selected assignment based on the ID from the URL
-  const assignment = assignments.find((assignment: any) => assignment._id === aid);
+
+  // Determine if we are editing an existing assignment or creating a new one
+  const isEditing = Boolean(aid);
+  const assignment = isEditing ? props.assignments?.find((assignment: any) => assignment._id === aid) : null;
 
   // Use state to manage the input fields
-  // gets the current title and allows me to use setTitle to update the current title so it matches the assignment its for. 
-  const [title, setTitle] = useState(assignment?.title || "");
-  const [description, setDescription] = useState(assignment?.description || "");
-  const [points, setPoints] = useState(assignment?.points.toString() || 100);
-  const [assignmentGroup, setAssignmentGroup] = useState("ASSIGNMENTS");
-  const [displayGradeAs, setDisplayGradeAs] = useState("PERCENTAGE");
-  const [submissionType, setSubmissionType] = useState("ONLINE");
-  const [dueDate, setDueDate] = useState(assignment?.dueDate || "2024-05-13");
-  const [availableDate, setAvailableDate] = useState(assignment?.availableDate || "2024-05-06");
-  const [untilDate, setUntilDate] = useState(assignment?.untilDate || "2024-05-20");
+  const [title, setTitle] = useState(isEditing ? assignment?.title || "" : "");
+  const [description, setDescription] = useState(isEditing ? assignment?.description || "" : "");
+  const [points, setPoints] = useState(isEditing ? assignment?.points?.toString() || "100" : "100");
+  const [assignmentGroup, setAssignmentGroup] = useState(isEditing ? assignment?.assignmentGroup || "ASSIGNMENTS" : "ASSIGNMENTS");
+  const [displayGradeAs, setDisplayGradeAs] = useState(isEditing ? assignment?.displayGradeAs || "PERCENTAGE" : "PERCENTAGE");
+  const [submissionType, setSubmissionType] = useState(isEditing ? assignment?.submissionType || "ONLINE" : "ONLINE");
+  const [dueDate, setDueDate] = useState(isEditing ? assignment?.dueDate || "2024-05-13" : "2024-05-13");
+  const [availableDate, setAvailableDate] = useState(isEditing ? assignment?.availableDate || "2024-05-06" : "2024-05-06");
+  const [untilDate, setUntilDate] = useState(isEditing ? assignment?.untilDate || "2024-05-20" : "2024-05-20");
+
 
     // State for each checkbox
     const [textEntry, setTextEntry] = useState(false);
@@ -32,25 +33,25 @@ export default function AssignmentEditor(props: any) {
   
   // hanlde saving the new assignment
  
-  const handleSave = () => {
-    
-    const newAssignment = {
-      _id: new Date().getTime().toString(),
+   // Handle Save Button Click
+   const handleSave = () => {
+    const updatedAssignment = {
+      _id: isEditing ? aid! : new Date().getTime().toString(),
       course: cid,
       title,
       description,
-      points,
+      points: parseInt(points),
+      assignmentGroup,
+      displayGradeAs,
+      submissionType,
       dueDate,
-      availableDate, 
+      availableDate,
       untilDate,
     };
 
-    if (props.saveAssignment) {
-      props.saveAssignment(newAssignment);
-      
-    }
+    props.saveAssignment(updatedAssignment);
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
-  }
+  };
 
     return (
       

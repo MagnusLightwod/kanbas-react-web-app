@@ -9,6 +9,7 @@ import PeopleTable from "./People/Table";
 import Quizes from "./Quizzes";
 import { useState } from "react";
 import * as db from "../Database"; // Assuming the initial data is from Database
+import { updateAssignment } from "./Assignments/reducer";
 
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams<{ cid: string }>(); // Make sure cid is of type string
@@ -21,8 +22,32 @@ export default function Courses({ courses }: { courses: any[] }) {
   const [assignments, setAssignments] = useState(db.assiginments);
 
   // Function to save a new assignment
-  const saveAssignment = (newAssignment: any) => {
-    setAssignments((prevAssignments) => [...prevAssignments, newAssignment]);
+
+ 
+
+   // Function to delete an assignment
+   const deleteAssignment = (assignmentId: string) => {
+    setAssignments((prevAssignments) =>
+      prevAssignments.filter((assignment) => assignment._id !== assignmentId)
+    );
+  };
+
+  // Function to save a new assignment or update an existing one
+  const saveAssignment = (updatedAssignment: any) => {
+    setAssignments((prevAssignments) => {
+      const existingAssignmentIndex = prevAssignments.findIndex(
+        (assignment) => assignment._id === updatedAssignment._id
+      );
+
+      // If editing an existing assignment
+      if (existingAssignmentIndex !== -1) {
+        return prevAssignments.map((assignment, index) =>
+          index === existingAssignmentIndex ? updatedAssignment : assignment
+        );
+      }
+      // If adding a new assignment
+      return [...prevAssignments, updatedAssignment];
+    });
   };
 
   if (!cid || !course) {
@@ -49,11 +74,20 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Modules" element={<Modules />} />
             <Route path="People" element={<PeopleTable />} />
             {/* Pass the assignments state to Assignments */}
-            <Route path="Assignments" element={<Assignments assignments={assignments} />} />
+            <Route
+              path="Assignments"
+              element={<Assignments assignments={assignments} deleteAssignment={deleteAssignment} />}
+            />
             {/* Pass the saveAssignment function to AssignmentEditor for creating a new assignment */}
-            <Route path="Assignments/New" element={<AssignmentEditor saveAssignment={saveAssignment} />} />
+            <Route
+                path="Assignments/New"
+                element={<AssignmentEditor saveAssignment={saveAssignment} assignments={assignments} />}  />
+
             {/* Editor route for editing existing assignments */}
-            <Route path="Assignments/:aid" element={<AssignmentEditor assignments={assignments} />} />
+            <Route
+              path="Assignments/:aid"
+              element={<AssignmentEditor saveAssignment={saveAssignment} assignments={assignments} />}/>
+
             <Route path="Quizzes" element={<Quizes />} />
           </Routes>
         </div>
