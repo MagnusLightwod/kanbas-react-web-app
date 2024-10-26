@@ -34,6 +34,14 @@ import Highlight from "./Highlight";
 import AddPathParameters from "./AddPathParameters";
 import PathParameters from "./PathParameters";
 import { useSelector } from "react-redux";
+
+import PathMath from "./def";
+// import Rew from "./abc";
+import Jkl from "./def";
+import Mnb from "./def";
+import Abc from "./def";
+import Dsa from "./abc";
+import Rew from "./abc";
 export default function Lab3() {
   const { todos } = useSelector((state: any) => state.todosReducer);
   console.log('Hello World!');
@@ -90,8 +98,14 @@ export default function Lab3() {
 
 
 
-    <PathParameters />
+    {/* <PathParameters />
 
+       <Rew />
+        <PathMath /> */}
+        {/* <Jkl />
+        <Mnb /> */}
+        <Abc />
+        <Rew />
     </div>
   );
 }

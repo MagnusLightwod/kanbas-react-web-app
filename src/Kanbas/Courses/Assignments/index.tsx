@@ -1,17 +1,14 @@
-import { useNavigate, useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
 import ModuleControlButtons from "../Modules/ModuleControlbuttons";
 import { BsGripVertical } from "react-icons/bs";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { TfiWrite } from "react-icons/tfi";
-import * as db from "../../Database";
 
-export default function Assignments() {
+export default function Assignments({ assignments }: { assignments: any[] }) {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   const navigate = useNavigate(); // Initialize navigate function
-
-  const assignments = db.assiginments; // Fetch assignments from the Database
 
   // Filter assignments for the specific course based on cid
   const filteredAssignments = assignments.filter(
@@ -19,9 +16,9 @@ export default function Assignments() {
   );
 
   const handleAddAssignment = () => {
-    navigate(`New`); // Use relative path within the course context
+    navigate(`/Kanbas/Courses/${cid}/Assignments/New`); 
   };
-
+  
   return (
     <div id="wd-modules-controls" className="text-nowrap wd-margin-right-left">
       <ul id="wd-modules" className="list-group rounded-0 wd-margin-right-left">
@@ -47,7 +44,7 @@ export default function Assignments() {
             <button
               id="wd-add-module-btn"
               className="btn btn-lg btn-danger me-1"
-              onClick={ handleAddAssignment} // Set the click handler
+              onClick={handleAddAssignment}
             >
               <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
               Assignments
@@ -115,5 +112,3 @@ export default function Assignments() {
     </div>
   );
 }
- // checked for if we are editing, and we make it so New works, before it would break since it is not a proper uid
- 

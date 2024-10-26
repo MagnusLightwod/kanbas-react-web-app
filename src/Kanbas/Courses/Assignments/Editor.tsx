@@ -1,13 +1,12 @@
 
-import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import * as db from "../../Database"; // Assuming assignments data is in Database
+import { useState, } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import * as db from "../../Database"; 
 
-// map it so 
-export default function AssignmentEditor() {
+export default function AssignmentEditor(props: any) {
   const { cid, aid } = useParams(); // Get course ID and assignment ID from the URL
   const assignments = db.assiginments;
-  
+  const navigate = useNavigate();
   // Find the selected assignment based on the ID from the URL
   const assignment = assignments.find((assignment: any) => assignment._id === aid);
 
@@ -30,9 +29,28 @@ export default function AssignmentEditor() {
     const [studentAnnotation, setStudentAnnotation] = useState(false);
     const [fileUploads, setFileUploads] = useState(false);
   // Now handle conditionals AFTER hooks are called
-    // Fallback if the assignment is not found
+  
+  // hanlde saving the new assignment
  
+  const handleSave = () => {
+    
+    const newAssignment = {
+      _id: new Date().getTime().toString(),
+      course: cid,
+      title,
+      description,
+      points,
+      dueDate,
+      availableDate, 
+      untilDate,
+    };
 
+    if (props.saveAssignment) {
+      props.saveAssignment(newAssignment);
+      
+    }
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
+  }
 
     return (
       
@@ -213,10 +231,12 @@ export default function AssignmentEditor() {
            <tr>
            
             <td align="right" valign="middle">
-            <Link to={` /Kanbas/Courses/${cid}/Assignments`} id="wd-cancel-button"  className="btn btn-secondary"> cancel </Link>
+
+            <Link to={`/Kanbas/Courses/${cid}/Assignments`} id="wd-cancel-button"  className="btn btn-secondary"> cancel </Link>
             </td>
             <td align="right" valign="middle">
-            <Link to={` /Kanbas/Courses/${cid}/Assignments`} id="wd-cancel-button"  className="btn btn-secondary"> save </Link>
+            <button onClick={handleSave} className="btn btn-primary"> Save</button>
+            
             </td>
            
            

@@ -5,6 +5,7 @@ export default function Destructing() {
     // const age = person.age
     const numbers = ["one", "two", "three"];
     const [ first, second, third ] = numbers;
+    const [u, x, w] = ["p", "v", "j"];
     return (
       <div id="wd-destructing">
         <h2>Destructing</h2>
@@ -18,6 +19,12 @@ export default function Destructing() {
         first = {first}<br />
         second = {second}<br />
         third = {third}<hr />
+
+        <div>
+      u = {u}<br />
+      w = {x} <br />
+      j = {w}
+    </div>
       </div>
     );
    }
