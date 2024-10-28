@@ -9,7 +9,12 @@ const accountSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    signoOut: (state, action) => {
+      state.currentUser = null;
+    }
   },
 });
-export const { setCurrentUser } = accountSlice.actions;
+export const { setCurrentUser, signoOut } = accountSlice.actions;
 export default accountSlice.reducer;
+
+// when you sign out and it makes it so user type is null again. 
