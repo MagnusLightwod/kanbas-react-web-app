@@ -44,7 +44,7 @@ export default function Dashboard({
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
       <hr />
-      {currentUser.role === "Faculty" ? (
+      {currentUser.role === "FACULTY" ? (
         <>
           <h5>New Course
             <button className="btn btn-primary float-end"
@@ -68,7 +68,7 @@ export default function Dashboard({
           {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
         </button>
       )}
-
+      
       <h2 id="wd-dashboard-published">
         {showAllCourses ? "All Courses" : "Published Courses"} ({courses.length})
       </h2>
@@ -77,7 +77,7 @@ export default function Dashboard({
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {courses
             .filter((course) => {
-              if (currentUser.role === "Faculty") {
+              if (currentUser.role === "FACULTY") {
                 return true;
               } else if (showAllCourses) {
                 return true;
@@ -105,7 +105,7 @@ export default function Dashboard({
                       </p>
                       <button className="btn btn-primary">Go</button>
 
-                      {currentUser.role === "Faculty" ? (
+                      {currentUser.role === "FACULTY" ? (
                         <>
                           <button
                             onClick={(event) => {
