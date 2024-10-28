@@ -42,6 +42,8 @@ import Mnb from "./def";
 import Abc from "./def";
 import Dsa from "./abc";
 import Rew from "./abc";
+import Acme from "./Acme";
+import Yfunc from "./Acme";
 export default function Lab3() {
   const { todos } = useSelector((state: any) => state.todosReducer);
   console.log('Hello World!');
@@ -106,6 +108,8 @@ export default function Lab3() {
         <Mnb /> */}
         <Abc />
         <Rew />
+
+       <Yfunc />
     </div>
   );
 }

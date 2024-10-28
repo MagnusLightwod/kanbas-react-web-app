@@ -1,4 +1,6 @@
+// enrollmentSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import * as db from "../Database";
 
 interface EnrollmentState {
   enrollments: {
@@ -8,7 +10,10 @@ interface EnrollmentState {
 }
 
 const initialState: EnrollmentState = {
-  enrollments: [],
+  enrollments: db.enrollments.map((enrollment) => ({
+    userId: enrollment.user,
+    courseId: enrollment.course,
+  })),
 };
 
 const enrollmentSlice = createSlice({
@@ -42,3 +47,15 @@ const enrollmentSlice = createSlice({
 
 export const { setCourseEnrollment } = enrollmentSlice.actions;
 export default enrollmentSlice.reducer;
+
+// Selector to get enrollments for a specific user
+export const selectUserEnrollments = (state: any, userId: string) => {
+  return state.enrollmentReducer.enrollments.filter(
+    (enrollment: any) => enrollment.userId === userId
+  );
+};
+
+// Selector to get all course IDs for a user
+export const selectUserCourses = (state: any, userId: string) => {
+  return selectUserEnrollments(state, userId).map((enrollment : any) => enrollment.courseId);
+};
