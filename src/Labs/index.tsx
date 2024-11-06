@@ -9,6 +9,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Kanbas from "../Kanbas"
 import Lab4 from "./Lab4";
 import store from "./store";
+import Lab5 from "./Lab5"
 import { Provider } from "react-redux";
 // Importing Lab1 from lab1 file, defaults to index.tsx
   export default function Labs() {
@@ -27,6 +28,7 @@ import { Provider } from "react-redux";
         <Route path="Lab2" element={<Lab2 />} />
         <Route path="Lab3/*" element={<Lab3 />} />
         <Route path="Lab4" element={<Lab4/>} />
+        <Route path="Lab5" element={<Lab5/>} />
         <Route path="Kanbas" element ={<Kanbas />} />
       </Routes>
       </div>
