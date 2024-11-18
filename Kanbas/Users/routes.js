@@ -50,8 +50,12 @@ const signout = (req, res) => {
 };
 
   const profile = (req, res) => { 
+    console.log("User routes, getting current user profile");
+    console.log("Session data:", req.session); // Log session data
     const currentUser = req.session["currentUser"];
+   
     if (!currentUser) {
+      console.log("No user profile found");
       res.sendStatus(401);
       return;
     }
@@ -61,15 +65,19 @@ const signout = (req, res) => {
 
   // find enrolled courses for the current user. 
   const findCoursesForEnrolledUser = (req, res) => {
+    console.log("Users Route enters to find courses for enrolled user")
     let { userId } = req.params;
     if (userId === "current") {
+      console.log("current");
       const currentUser = req.session["currentUser"];
       if (!currentUser) {
+        console.log("Not current user, return status 401");
         res.sendStatus(401);
         return;
       }
       userId = currentUser._id;
     }
+    console.log( "return status");
     const courses = courseDao.findCoursesForEnrolledUser(userId);
     res.json(courses);
   };

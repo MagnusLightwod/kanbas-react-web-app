@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import Courses from "./Courses";
 import KanbasNavigation from "./Navigation";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { useState, useEffect } from "react";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import "./styles.css";
@@ -11,22 +12,26 @@ import AssignmentEditor from "./Courses/Assignments/Editor";
 import CourseHome from "./Courses/Home"
 import Session from "./Account/Session";
 import * as userClient from "./Account/client";
-import { useSelector } from "react-redux";
+import { Provider, useSelector } from "react-redux";
+
+
 export default function Kanbas() {
-// fetch courses from the server on component load and updat ethe courses state vairable that populates the dashboard. currentuser in account reducer  
+
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const fetchCourses = async () => {
     try {
+      console.log("kanbas index fecth courses");
       const courses = await userClient.findMyCourses();
       setCourses(courses);
     } catch (error) {
       console.error(error);
     }
   };
-
   useEffect(() => {
-    fetchCourses();
+    if (currentUser) {
+      fetchCourses();
+    }
   }, [currentUser]);
 
   const [course, setCourse] = useState<any>({
@@ -55,7 +60,7 @@ export default function Kanbas() {
     return (
      
      // <Provider store={ store }>
-      <Session> {/* put session inside provider */}
+      <Session> 
       <div className="container-fluid">
       <div className="row">
         {/* Sidebar */}
@@ -94,7 +99,7 @@ export default function Kanbas() {
       </div>
     </div>
     </Session>
-  //  </Provider>
+  // </Provider>
     
   );}
   

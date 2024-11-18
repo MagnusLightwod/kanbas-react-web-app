@@ -1,4 +1,5 @@
 import Database from "../Databases/index.js"
+
 export function findAllCourses() {
   return Database.courses;
 }
