@@ -1,4 +1,6 @@
 import * as dao from "./dao.js";
+import * as courseDao from "../Courses/dao.js";
+import * as enrollmentsDao from "../Enrollments/dao.js";
 
 function UserRoutes(app) {
   const createUser = (req, res) => { };
@@ -55,6 +57,33 @@ const signout = (req, res) => {
     }
    res.json(currentUser);
   };
+
+
+  // find enrolled courses for the current user. 
+  const findCoursesForEnrolledUser = (req, res) => {
+    let { userId } = req.params;
+    if (userId === "current") {
+      const currentUser = req.session["currentUser"];
+      if (!currentUser) {
+        res.sendStatus(401);
+        return;
+      }
+      userId = currentUser._id;
+    }
+    const courses = courseDao.findCoursesForEnrolledUser(userId);
+    res.json(courses);
+  };
+  app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);
+
+  // create a course in the server for the current user. 
+  const createCourse = (req, res) => {
+    const currentUser = req.session["currentUser"];
+    const newCourse = courseDao.createCourse(req.body);
+    enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
+    res.json(newCourse);
+  };
+  app.post("/api/users/current/courses", createCourse);
+
 
   app.post("/api/users", createUser);
   app.get("/api/users", findAllUsers);

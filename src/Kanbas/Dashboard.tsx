@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer"; // Import the selector
 
+// may have an issue with 4.4.1 remove dashboard stuff check later 
 export default function Dashboard({
   courses, 
   course, 
@@ -129,6 +130,7 @@ export default function Dashboard({
                       </>
                     ) : (
                       <>
+
                         {enrollments.some(
                           (enrollment: any) => enrollment.courseId === course._id
                         ) ? (

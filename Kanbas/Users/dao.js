@@ -18,5 +18,10 @@ export const updateUser = (userId, user) => (users = users.map((u) => (u._id ===
 
 export const deleteUser = (userId) => (users = users.filter((u) => u._id !== userId));
 
+export function createCourse(course) {
+  const newCourse = { ...course, _id: Date.now().toString() };
+  Database.courses = [...Database.courses, newCourse];
+  return newCourse;
+}
 
 

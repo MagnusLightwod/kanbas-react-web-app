@@ -4,19 +4,31 @@ import Dashboard from "./Dashboard";
 import Courses from "./Courses";
 import KanbasNavigation from "./Navigation";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import * as db from "./Database";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import "./styles.css";
 import AssignmentEditor from "./Courses/Assignments/Editor";
 import CourseHome from "./Courses/Home"
 import Session from "./Account/Session";
-
-// import store from "./store";
-// import { Provider } from "react-redux";
+import * as userClient from "./Account/client";
+import { useSelector } from "react-redux";
 export default function Kanbas() {
+// fetch courses from the server on component load and updat ethe courses state vairable that populates the dashboard. currentuser in account reducer  
+  const [courses, setCourses] = useState<any[]>([]);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const fetchCourses = async () => {
+    try {
+      const courses = await userClient.findMyCourses();
+      setCourses(courses);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const [courses, setCourses] = useState<any[]>(db.courses);
+  useEffect(() => {
+    fetchCourses();
+  }, [currentUser]);
+
   const [course, setCourse] = useState<any>({
     _id: "1234", name: "New Course", number: "New Number",
     startDate: "2023-09-10", endDate: "2023-12-15", description: "New Description",

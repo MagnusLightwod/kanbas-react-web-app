@@ -5,6 +5,7 @@ import cors from "cors";
 import UserRoutes from "../Kanbas/Users/routes.js";
 import session from "express-session";
 import "dotenv/config";
+import CourseRoutes from "../Kanbas/Courses/routes.js";
 // import CourseRoutes from "../Kanbas/Courses/routes.js";
 // import ModuleRoutes from '../Kanbas/Modules/routes.js';
 const app = express();
@@ -37,7 +38,7 @@ app.use(express.json()); // allows for json and http request bodys to send data 
 UserRoutes(app);
 // ModuleRoutes(app);
 
-// CourseRoutes(app); // course available only using our api. 
+CourseRoutes(app); // course available only using our api. 
 Lab5(app);
 Hello(app)
 
