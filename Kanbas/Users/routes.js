@@ -10,7 +10,8 @@ function UserRoutes(app) {
     const userId = req.params.userId;
     const userUpdates = req.body;
     dao.updateUser(userId, userUpdates);
-    currentUser = dao.findUserById(userId);
+    const currentUser = dao.findUserById(userId);
+    req.session["currentUser"] = currentUser;
     res.json(currentUser);
  };
 
@@ -41,13 +42,20 @@ function UserRoutes(app) {
 
 const signout = (req, res) => {
   console.log("signout endpoint hit")
-  currentUser = null;
+  req.session.destroy();
+  // currentUser = null;
   res.sendStatus(200);
 };
 
-
-  const profile = (req, res) => {  res.json(currentUser);
+  const profile = (req, res) => { 
+    const currentUser = req.session["currentUser"];
+    if (!currentUser) {
+      res.sendStatus(401);
+      return;
+    }
+   res.json(currentUser);
   };
+
   app.post("/api/users", createUser);
   app.get("/api/users", findAllUsers);
   app.get("/api/users/:userId", findUserById);
