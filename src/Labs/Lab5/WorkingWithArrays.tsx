@@ -1,98 +1,111 @@
-import React, { useState } from "react";
-const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
-
-export default function WorkingWithArrays() {
-  const API = `${REMOTE_SERVER}/lab5/todos`;
-  //const [todo, setTodo] = useState({id: "1"});
-
-  const [todo, setTodo] = useState({
-    id: "1",
-    title: "NodeJS Assignment",
-    description: "Create a NodeJS server with ExpressJS",
-    due: "2021-09-09",
-    completed: false,
-  });
-
-  
-
-  return (
-    <div id="wd-working-with-arrays">
-      <h3>Working with Arrays</h3>
-      <h4>Retrieving Arrays</h4>
-      <a id="wd-retrieve-todos" className="btn btn-primary" href={API}>
-        Get Todos </a><hr/>
-
-        <h4>Retrieving an Item from an Array by ID</h4>
-      <a id="wd-retrieve-todo-by-id" className="btn btn-primary float-end" href={`${API}/${todo.id}`}>
-        Get Todo by ID
-      </a>
-      <input id="wd-todo-id" value={todo.id} className="form-control w-50"
-        onChange={(e) => setTodo({ ...todo, id: e.target.value })} />
-      <hr />
-
-      <h3>Filtering Array Items</h3>
-  <a id="wd-retrieve-completed-todos" className="btn btn-primary"
-     href={`${API}?completed=true`}>
-    Get Completed Todos
-  </a><hr/>
-
-  <h3>Creating new Items in an Array</h3>
-  <a id="wd-retrieve-completed-todos" className="btn btn-primary"
-     href={`${API}/create`}>
-    Create Todo
-  </a><hr/>
-
-  <h3>Deleting from an Array</h3>
-<a id="wd-retrieve-completed-todos" className="btn btn-primary float-end" href={`${API}/${todo.id}/delete`}>
-   Delete Todo with ID = {todo.id} </a>
-<input value={todo.id} className="form-control w-50" onChange={(e) => setTodo({ ...todo, id: e.target.value })}/><hr/>
-
-<h3>Updating an Item in an Array</h3>
-      <a href={`${API}/${todo.id}/title/${todo.title}`} className="btn btn-primary float-end">
-        Update Todo</a>
-      <input value={todo.id} className="form-control w-25 float-start me-2"
-        onChange={(e) => setTodo({ ...todo, id: e.target.value })}/>
-      <input value={todo.title} className="form-control w-50 float-start"
-             onChange={(e) => setTodo({ ...todo, title: e.target.value }) }/>
-      <br /><br /><hr />
-
-      <a href={`${API}/${todo.id}/description/${todo.description}`} className="btn btn-primary float-end">
-        Update Description</a>
-      <input value={todo.id} className="form-control w-25 float-start me-2"
-        onChange={(e) => setTodo({ ...todo, id: e.target.value })}/>
-      <input value={todo.description} className="form-control w-50 float-start"
-             onChange={(e) => setTodo({ ...todo, description: e.target.value }) }/>
-      <br /><br /><hr />
-
-       {/* Updated Completed Section */}
-       <a
-        href={`${API}/${todo.id}/completed/${todo.completed}`}
-        className="btn btn-primary float-end"
-      >
-        
-        Update Completed
-      </a>
-      <input
-        value={todo.id}
-        className="form-control w-25 float-start me-2"
-        onChange={(e) => setTodo({ ...todo, id: e.target.value })}
-      />
-      
-      <div className="form-check form-check-inline float-start">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="wd-todo-completed"
-          checked={todo.completed}
-          onChange={(e) => setTodo({ ...todo, completed: e.target.checked })}
-        />
-        <label className="form-check-label" htmlFor="wd-todo-completed">
-          Completed
-        </label> 
-        
-      </div>
-      
+import React, { useState, useEffect } from "react";
+import * as client from "./client";
+import { FaTrash } from "react-icons/fa";
+import { FaPlusCircle } from "react-icons/fa";
+import { TiDelete } from "react-icons/ti";
+import { FaPencil } from "react-icons/fa6";
 
 
-    </div>
-);}
+export default function WorkingWithArraysAsynchronously(): JSX.Element {
+    const [todos, setTodos] = useState<any[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const fetchTodos = async () => {
+        const todos = await client.fetchTodos();
+        setTodos(todos);
+    };
+
+    useEffect(() => {
+        fetchTodos();
+    }, []);
+
+    const removeTodo = async (todo: any) => {
+        const updatedTodos = await client.removeTodo(todo);
+        setTodos(updatedTodos);
+    };
+
+    const createTodo = async () => {
+        const todos = await client.createTodo();
+        setTodos(todos);
+    };
+
+    const postTodo = async () => {
+        const newTodo = await client.postTodo({ title: "New Posted Todo", completed: false });
+        setTodos([...todos, newTodo]);
+    };
+
+    const updateTodo = async (todo: any) => {
+        try {
+            await client.updateTodo(todo);
+            setTodos(todos.map((t) => (t.id === todo.id ? todo : t)));
+        } catch (error: any) {
+            setErrorMessage(error.response?.data?.message || "Error updating todo");
+        }
+    };
+
+    const deleteTodo = async (todo: any) => {
+        try {
+            await client.deleteTodo(todo);
+            const newTodos = todos.filter((t) => t.id !== todo.id);
+            setTodos(newTodos);
+        } catch (error: any) {
+            setErrorMessage(error.response?.data?.message || "Error deleting todo");
+        }
+    };
+
+    const editTodo = (todo: any) => {
+        const updatedTodos = todos.map((t) => t.id === todo.id ? { ...todo, editing: true } : t);
+        setTodos(updatedTodos);
+    };
+
+    return (
+        <div id="wd-asynchronous-arrays">
+            <h3>Working with Arrays Asynchronously</h3>
+            {errorMessage && (
+                <div id="wd-todo-error-message" className="alert alert-danger mb-2 mt-2">
+                    {errorMessage}
+                </div>
+            )}
+
+            <h4>Todos 
+                <FaPlusCircle onClick={createTodo} className="text-success float-end fs-3" id="wd-create-todo" />
+                <FaPlusCircle onClick={postTodo} className="text-primary float-end fs-3 me-3" id="wd-post-todo" />
+            </h4>
+
+            <ul className="list-group">
+                {todos.map((todo) => (
+                    <li key={todo.id} className="list-group-item">
+                        <FaPencil onClick={() => editTodo(todo)} className="text-primary float-end me-2 mt-1 " />
+                        <input
+                            type="checkbox"
+                            defaultChecked={todo.completed}
+                            className="form-check-input me-2 float-start"
+                            onChange={(e) => updateTodo({ ...todo, completed: e.target.checked })}
+                        />
+
+                        {!todo.editing ? (
+                            <span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+                                {todo.title}
+                            </span>
+                        ) : (
+                            <input
+                                className="form-control w-50 float-start"
+                                defaultValue={todo.title}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        updateTodo({ ...todo, editing: false });
+                                    }
+                                }}
+                                onChange={(e) => updateTodo({ ...todo, title: e.target.value })}
+                            />
+                        )}
+
+                        <FaTrash onClick={() => removeTodo(todo)} className="text-danger float-end mt-1" id="wd-remove-todo" />
+                        <TiDelete onClick={() => deleteTodo(todo)} className="text-danger float-end me-2 fs-3" id="wd-delete-todo" />
+                    </li>
+                ))}
+            </ul>
+            <hr />
+        </div>
+    );
+}
