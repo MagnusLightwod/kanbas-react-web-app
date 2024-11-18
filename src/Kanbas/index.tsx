@@ -12,8 +12,10 @@ import store from "./store";
 import { Provider } from "react-redux";
 import AssignmentEditor from "./Courses/Assignments/Editor";
 import CourseHome from "./Courses/Home"
+import Session from "./Account/Session";
 
 export default function Kanbas() {
+
   const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
     _id: "1234", name: "New Course", number: "New Number",
@@ -37,8 +39,11 @@ export default function Kanbas() {
     );
   };
 
+  
     return (
+     
       <Provider store={ store }>
+      <Session> {/* put session inside provider */}
       <div className="container-fluid">
       <div className="row">
         {/* Sidebar */}
@@ -49,9 +54,10 @@ export default function Kanbas() {
         {/* Main Content */}
         <div className="col-md-10 col-lg-10 col-xl-11 pt-3">
           <Routes>
-            <Route path="/" element={<Navigate to="Dashboard" />} />
+            { /* dont put a forward / here*/}
+           <Route path="/" element={<Navigate to="Dashboard" />} /> 
             <Route path="/Account/*" element={<Account />} />
-            <Route path="Dashboard" element={
+            <Route path="/Dashboard" element={
             <ProtectedRoute><Dashboard
               courses={courses}
               course={CourseHome}
@@ -75,6 +81,8 @@ export default function Kanbas() {
         </div>
       </div>
     </div>
+    </Session>
     </Provider>
+    
   );}
   
