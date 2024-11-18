@@ -8,12 +8,12 @@ import * as db from "./Database";
 import { useState } from "react";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import "./styles.css";
-import store from "./store";
-import { Provider } from "react-redux";
 import AssignmentEditor from "./Courses/Assignments/Editor";
 import CourseHome from "./Courses/Home"
 import Session from "./Account/Session";
 
+// import store from "./store";
+// import { Provider } from "react-redux";
 export default function Kanbas() {
 
   const [courses, setCourses] = useState<any[]>(db.courses);
@@ -42,7 +42,7 @@ export default function Kanbas() {
   
     return (
      
-      <Provider store={ store }>
+     // <Provider store={ store }>
       <Session> {/* put session inside provider */}
       <div className="container-fluid">
       <div className="row">
@@ -82,7 +82,7 @@ export default function Kanbas() {
       </div>
     </div>
     </Session>
-    </Provider>
+  //  </Provider>
     
   );}
   

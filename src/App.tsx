@@ -3,10 +3,13 @@ import Labs from "./Labs";
 import Kanbas from "./Kanbas";
 import AssignmentEditor from "./Kanbas/Courses/Assignments/Editor";
 import { HashRouter, Link, Route, Routes, Navigate } from "react-router-dom";
+import store from "./Kanbas/store";
+import { Provider } from "react-redux";
 export default function App() {
   return (
     
     <HashRouter>
+      <Provider store={store}>
       <div>
         <Link to="Labs">Labs</Link>| 
         <Link to="Kanbas">Kanbas</Link>
@@ -20,6 +23,7 @@ export default function App() {
         </Routes>
 
       </div>
+      </Provider>
     </HashRouter>
   );
 }
