@@ -1,22 +1,22 @@
 import Database from "../Databases/index.js";
 
-// export function enrollUserInCourse(userId, courseId) {
-//   const { enrollments } = Database;
-//   // Create a new enrollment record
-//   const newEnrollment = {
-//     _id: Date.now(), // Unique identifier
-//     user: userId,
-//     course: courseId,
-//   };
-//   // Add the new enrollment to the database
-//   enrollments.push(newEnrollment);
-//   return newEnrollment;
-// }
-
 export function enrollUserInCourse(userId, courseId) {
-    const { enrollments } = Database;
-    enrollments.push({ _id: Date.now(), user: userId, course: courseId });
-  }
+  const { enrollments } = Database;
+  // Create a new enrollment record
+  const newEnrollment = {
+    _id: Date.now(), // Unique identifier
+    user: userId,
+    course: courseId,
+  };
+  // Add the new enrollment to the database
+  enrollments.push(newEnrollment);
+  return newEnrollment;
+}
+
+// export function enrollUserInCourse(userId, courseId) {
+//     const { enrollments } = Database;
+//     enrollments.push({ _id: Date.now(), user: userId, course: courseId });
+//   }
   
 
 export function findEnrollmentsByUser(userId) {

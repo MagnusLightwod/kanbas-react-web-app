@@ -59,24 +59,13 @@ export default function CourseRoutes(app) {
         }
     });
 
-    // Route to delete a specific course by ID
     app.delete("/api/courses/:courseId", (req, res) => {
-        try {
-            const { courseId } = req.params;
-            const currentUser = req.session["currentUser"];
-            if (!currentUser || currentUser.role !== "FACULTY") {
-                res.status(403).send("Unauthorized: Only faculty can delete courses");
-                return;
-            }
+        const { courseId } = req.params;
+        const status = dao.deleteCourse(courseId);
+        res.send(status);
+      });
 
-            dao.deleteCourse(courseId);
-            res.sendStatus(204);  // Successful deletion returns a 204 status
-        } catch (error) {
-            console.error("Error deleting course: ", error);
-            res.status(500).send("Error deleting course");
-        }
-    });
-
+      
     app.put("/api/courses/:courseId", (req, res) => {
         const { courseId } = req.params;
         const courseUpdates = req.body;
@@ -86,7 +75,7 @@ export default function CourseRoutes(app) {
     
       app.get("/api/courses/:courseId/modules", (req, res) => {
         const { courseId } = req.params;
-        console.log("Received courseId:", courseId);
+        //console.log("Received courseId:", courseId);
         const modules = modulesDao.findModulesForCourse(courseId);
         res.json(modules);
       });

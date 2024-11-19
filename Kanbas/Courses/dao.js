@@ -24,17 +24,14 @@ export function findCoursesForEnrolledUser(userId) {
   return enrolledCourses;
 }
 
-// Function to delete a course given a course ID
 export function deleteCourse(courseId) {
-  const { courses, enrollments } = Database;
-
-  // Remove the course from the courses list
-  Database.courses = courses.filter((course) => course._id !== courseId);
-
-  // Remove all enrollments associated with the deleted course
-  Database.enrollments = enrollments.filter((enrollment) => enrollment.course !== courseId);
-}
-
+    const { courses, enrollments } = Database;
+    Database.courses = courses.filter((course) => course._id !== courseId);
+    Database.enrollments = enrollments.filter(
+      (enrollment) => enrollment.course !== courseId
+  );}
+  
+  
 export function updateCourse(courseId, courseUpdates) {
     const { courses } = Database;
     const course = courses.find((course) => course._id === courseId);

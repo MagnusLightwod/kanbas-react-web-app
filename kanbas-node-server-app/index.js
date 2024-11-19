@@ -6,8 +6,6 @@ import UserRoutes from "../Kanbas/Users/routes.js";
 import CourseRoutes from "../Kanbas/Courses/routes.js";
 import session from "express-session";
 import "dotenv/config";
-// import CourseRoutes from "../Kanbas/Courses/routes.js";
-// import ModuleRoutes from '../Kanbas/Modules/routes.js';
 const app = express();
 
 app.use(cors({
@@ -28,12 +26,12 @@ app.use(cors({
     }
   }
 
-  if (process.env.NODE_ENV !== "development") {
-    sessionOptions.proxy = true;
-    sessionOptions.cookie.sameSite = 'none';
-    sessionOptions.cookie.secure = true;
-    sessionOptions.cookie.domain = process.env.NODE_SERVER_DOMAIN;
-}
+//   if (process.env.NODE_ENV !== "development") {
+//     sessionOptions.proxy = true;
+//     sessionOptions.cookie.sameSite = 'none';
+//     sessionOptions.cookie.secure = true;
+//     sessionOptions.cookie.domain = process.env.NODE_SERVER_DOMAIN;
+// }
 app.use(session(sessionOptions));
   
 

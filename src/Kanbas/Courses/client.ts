@@ -13,13 +13,8 @@ export const fetchAllCourses = async () => {
 };
 
 export const deleteCourse = async (id: string) => {
-  try {
-    const response = await axios.delete(`${COURSES_API}/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error deleting course:", error);
-    throw error;
-  }
+  const { data } = await axios.delete(`${COURSES_API}/${id}`);
+  return data;
 };
 
 export const updateCourse = async (course: any) => {

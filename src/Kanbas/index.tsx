@@ -61,26 +61,23 @@ export default function Kanbas() {
   };
 
   const deleteCourse = async (courseId: string) => {
-    try {
-      const status = await courseClient.deleteCourse(courseId);
-      setCourses(courses.filter((course) => course._id !== courseId));
-    } catch (error) {
-      console.error("Error deleting course:", error);
-    }
+    const status = await courseClient.deleteCourse(courseId);
+    setCourses(courses.filter((course) => course._id !== courseId));
+
   };
 
   const updateCourse = async () => {
-    await courseClient.updateCourse(course);
-    setCourses(
-      courses.map((c) => {
-        if (c._id === course._id) {
-          return course;
-        } else {
-          return c;
-        }
-      })
-    );
+    try {
+      console.log(`Attempting to update course with ID: ${course._id}`);
+      const updatedCourse = await courseClient.updateCourse(course);
+      setCourses(
+        courses.map((c) => (c._id === updatedCourse._id ? updatedCourse : c))
+      );
+    } catch (error) {
+      console.error("Error updating course:", error);
+    }
   };
+  
 
   return (
     <Session>
