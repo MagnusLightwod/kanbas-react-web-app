@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer"; 
-import * as userClient from "./Courses/client";
+import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer";
+import * as client from "./Account/client";
 
 export default function Dashboard({
-  courses, 
-  course, 
-  setCourse, 
+  courses,
+  course,
+  setCourse,
   addNewCourse,
-  deleteCourse, 
+  deleteCourse,
   updateCourse,
-  setCourses
+  setCourses,
 }: {
   courses: any[];
   course: any;
@@ -33,21 +33,40 @@ export default function Dashboard({
   // Handle toggle of "Show All Courses" button
   const toggleShowCourses = () => {
     setShowAllCourses(!showAllCourses);
+    if (!showAllCourses) {
+      // When toggling to show all, fetch all courses
+      client
+        .findMyCourses()
+        .then((allCourses) => setCourses(allCourses))
+        .catch((err) => console.error("Error fetching all courses:", err));
+    }
   };
 
   // Handle enrollment
   const enroll = (course: any) => {
-    dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: course._id, enroll: true }));
+    dispatch(
+      setCourseEnrollment({
+        userId: currentUser._id,
+        courseId: course._id,
+        enroll: true,
+      })
+    );
   };
 
   // Handle unenrollment
   const unenroll = (courseId: string) => {
-    dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: courseId, enroll: false }));
+    dispatch(
+      setCourseEnrollment({
+        userId: currentUser._id,
+        courseId: courseId,
+        enroll: false,
+      })
+    );
   };
 
   // Filter courses based on user's role or selection
   const filteredCourses = courses.filter((course) => {
-    if (currentUser.role === 'FACULTY') {
+    if (currentUser.role === "FACULTY") {
       return true;
     } else if (showAllCourses) {
       return true;
@@ -58,47 +77,42 @@ export default function Dashboard({
     }
   });
 
-  // Fetch courses on component load and based on user role or toggle status
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        if (currentUser.role === "FACULTY") {
-          // Faculty should see all courses by default
-          const allCourses = await userClient.fetchAllCourses();
-          setCourses(allCourses); // Use setCourses to update the state
-        } else if (showAllCourses) {
-          // Fetch all courses when "show all" is toggled for students
-          const allCourses = await userClient.fetchAllCourses();
-          setCourses(allCourses);
-        } 
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCourses();
-  }, [currentUser, showAllCourses]);
-  
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
       <hr />
       {currentUser.role === "FACULTY" ? (
         <>
-          <h5>New Course
-            <button className="btn btn-primary float-end"
+          <h5>
+            New Course
+            <button
+              className="btn btn-primary float-end"
               id="wd-add-new-course-click"
-              onClick={addNewCourse} > 
-              Add 
+              onClick={addNewCourse}
+            >
+              Add
             </button>
-            <button className="btn btn-warning float-end me-2"
-              onClick={updateCourse} id="wd-update-course-click">
+            <button
+              className="btn btn-warning float-end me-2"
+              onClick={updateCourse}
+              id="wd-update-course-click"
+            >
               Update
             </button>
-          </h5><br />
-          <input defaultValue={course.name} className="form-control mb-2"
-            onChange={(e) => setCourse({ ...course, name: e.target.value })} />
-          <textarea defaultValue={course.description} className="form-control"
-            onChange={(e) => setCourse({ ...course, description: e.target.value })} />
+          </h5>
+          <br />
+          <input
+            defaultValue={course.name}
+            className="form-control mb-2"
+            onChange={(e) => setCourse({ ...course, name: e.target.value })}
+          />
+          <textarea
+            defaultValue={course.description}
+            className="form-control"
+            onChange={(e) =>
+              setCourse({ ...course, description: e.target.value })
+            }
+          />
           <hr />
         </>
       ) : (
@@ -106,9 +120,10 @@ export default function Dashboard({
           {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
         </button>
       )}
-      
+
       <h2 id="wd-dashboard-published">
-        {showAllCourses ? "All Courses" : "Published Courses"} ({filteredCourses.length})
+        {showAllCourses ? "All Courses" : "Published Courses"} (
+        {filteredCourses.length})
       </h2>
       <hr />
       <div id="wd-dashboard-courses" className="row">
@@ -117,7 +132,7 @@ export default function Dashboard({
             <div
               className="wd-dashboard-course col"
               style={{ width: "300px" }}
-              key={course._id} // Ensure that key is unique and not duplicated
+              key={course._id}
             >
               <div className="card rounded-3 overflow-hidden">
                 <Link
@@ -141,7 +156,7 @@ export default function Dashboard({
                       {course.description}
                     </p>
                     <button className="btn btn-primary">Go</button>
-                    
+
                     {/* Render options for faculty and students */}
                     {currentUser.role === "FACULTY" ? (
                       <>

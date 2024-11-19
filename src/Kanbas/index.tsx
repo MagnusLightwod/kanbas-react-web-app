@@ -11,7 +11,7 @@ import "./styles.css";
 import AssignmentEditor from "./Courses/Assignments/Editor";
 import Session from "./Account/Session";
 import * as userClient from "./Account/client";
-import * as courseClient from "./Courses/client"
+import * as courseClient from "./Courses/client";
 import { useSelector } from "react-redux";
 
 export default function Kanbas() {
@@ -19,12 +19,18 @@ export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
-  // Fetch courses for the logged-in user
+  // Centralized fetch courses logic here
   const fetchCourses = async () => {
     try {
       console.log("Kanbas index fetching courses");
-      const courses = await userClient.findMyCourses();
-      setCourses(courses);
+      if (currentUser.role === "FACULTY") {
+        // Faculty should see all courses by default
+        const allCourses = await courseClient.fetchAllCourses();
+        setCourses(allCourses);
+      } else {
+        const enrolledCourses = await userClient.findMyCourses();
+        setCourses(enrolledCourses);
+      }
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
@@ -62,15 +68,19 @@ export default function Kanbas() {
       console.error("Error deleting course:", error);
     }
   };
-  
+
   const updateCourse = async () => {
     await courseClient.updateCourse(course);
-    setCourses(courses.map((c) => {
-        if (c._id === course._id) { return course; }
-        else { return c; }
-    })
-  );};
-
+    setCourses(
+      courses.map((c) => {
+        if (c._id === course._id) {
+          return course;
+        } else {
+          return c;
+        }
+      })
+    );
+  };
 
   return (
     <Session>

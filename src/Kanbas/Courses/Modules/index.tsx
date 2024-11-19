@@ -26,6 +26,12 @@ export default function Modules() {
 
   const [moduleName, setModuleName] = useState("");  
 
+  const createModuleForCourse = async () => {
+    if (!cid) return;
+    const newModule = { name: moduleName, course: cid };
+    const module = await coursesClient.createModuleForCourse(cid, newModule);
+    dispatch(addModule(module));
+  };
 
   return (
     <div className="wd-modules">
@@ -40,9 +46,7 @@ export default function Modules() {
 
       {/* Modules List */}
       <ul id="wd-modules" className="list-group rounded-0">
-        {modules
-          
-          .map((module: any) => (
+        {modules.map((module: any) => (
             <li key={module._id} className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
               <div className="wd-title p-3 ps-2 bg-secondary">
                 <BsGripVertical className="me-2 fs-3" />

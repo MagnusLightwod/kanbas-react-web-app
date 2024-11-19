@@ -27,6 +27,13 @@ app.use(cors({
       sameSite: 'lax' // Please use your own value based on requirements.
     }
   }
+
+  if (process.env.NODE_ENV !== "development") {
+    sessionOptions.proxy = true;
+    sessionOptions.cookie.sameSite = 'none';
+    sessionOptions.cookie.secure = true;
+    sessionOptions.cookie.domain = process.env.NODE_SERVER_DOMAIN;
+}
 app.use(session(sessionOptions));
   
 

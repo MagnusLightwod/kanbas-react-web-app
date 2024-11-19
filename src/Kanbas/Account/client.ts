@@ -4,7 +4,7 @@ export const USERS_API = `${REMOTE_SERVER}/api/users`;
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
 export const signin = async (credentials: any) => {
-  const response = await axios.post(`${USERS_API}/signin`, credentials);
+  const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
   return response.data;
 };
 

@@ -1,7 +1,7 @@
 import e from "cors";
 import * as dao from "./dao.js";  // Import the data access object for courses
 import express from "express";
-
+import * as modulesDao from "../Modules/dao.js"
 export default function CourseRoutes(app) {
     // Route to find all courses
     app.get("/api/courses", (req, res) => {
@@ -83,5 +83,13 @@ export default function CourseRoutes(app) {
         const status = dao.updateCourse(courseId, courseUpdates);
         res.send(status);
       });
+    
+      app.get("/api/courses/:courseId/modules", (req, res) => {
+        const { courseId } = req.params;
+        console.log("Received courseId:", courseId);
+        const modules = modulesDao.findModulesForCourse(courseId);
+        res.json(modules);
+      });
+    
     
 }
