@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer"; // Import the selector
+import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer"; 
+import * as userClient from "./Courses/client";
 
 export default function Dashboard({
   courses, 
@@ -10,6 +11,7 @@ export default function Dashboard({
   addNewCourse,
   deleteCourse, 
   updateCourse,
+  setCourses
 }: {
   courses: any[];
   course: any;
@@ -17,6 +19,7 @@ export default function Dashboard({
   addNewCourse: () => void;
   deleteCourse: (courseId: string) => void;
   updateCourse: () => void;
+  setCourses: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const enrollments = useSelector((state: any) =>
@@ -41,19 +44,42 @@ export default function Dashboard({
   const unenroll = (courseId: string) => {
     dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: courseId, enroll: false }));
   };
+
   const filteredCourses = courses.filter((course) => {
     if (currentUser.role === 'FACULTY') {
       return true;
     } else if (showAllCourses) {
       return true;
     } else {
-      
       return enrollments.some(
         (enrollment: any) => enrollment.courseId === course._id
       );
     }
   });
-  
+
+  // Fetch courses for the current user
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        if (currentUser.role === "FACULTY") {
+          // Faculty should see all courses by default
+          const allCourses = await userClient.fetchAllCourses();
+          setCourses(allCourses);
+        } else if (showAllCourses) {
+          // Fetch all courses when "show all" is toggled for students
+          const allCourses = await userClient.fetchAllCourses();
+          setCourses(allCourses);
+        } else {
+          // Fetch only the enrolled courses for students
+          const enrolledCourses = await userClient.findMyCourses();
+          setCourses(enrolledCourses);
+        }
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+    fetchCourses();
+  }, [currentUser, showAllCourses]);
 
   return (
     <div id="wd-dashboard">
@@ -83,7 +109,7 @@ export default function Dashboard({
           {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
         </button>
       )}
-      
+
       <h2 id="wd-dashboard-published">
         {showAllCourses ? "All Courses" : "Published Courses"} ({filteredCourses.length})
       </h2>
@@ -105,7 +131,6 @@ export default function Dashboard({
                       {course.description}
                     </p>
                     <button className="btn btn-primary">Go</button>
-
                     {currentUser.role === "FACULTY" ? (
                       <>
                         <button
