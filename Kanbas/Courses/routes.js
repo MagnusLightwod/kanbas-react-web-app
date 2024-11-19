@@ -1,3 +1,4 @@
+import e from "cors";
 import * as dao from "./dao.js";  // Import the data access object for courses
 import express from "express";
 
@@ -75,4 +76,12 @@ export default function CourseRoutes(app) {
             res.status(500).send("Error deleting course");
         }
     });
+
+    app.put("/api/courses/:courseId", (req, res) => {
+        const { courseId } = req.params;
+        const courseUpdates = req.body;
+        const status = dao.updateCourse(courseId, courseUpdates);
+        res.send(status);
+      });
+    
 }

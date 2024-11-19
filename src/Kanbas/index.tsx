@@ -9,9 +9,9 @@ import { useState, useEffect } from "react";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import "./styles.css";
 import AssignmentEditor from "./Courses/Assignments/Editor";
-import CourseHome from "./Courses/Home";
 import Session from "./Account/Session";
 import * as userClient from "./Account/client";
+import * as courseClient from "./Courses/client"
 import { useSelector } from "react-redux";
 
 export default function Kanbas() {
@@ -56,23 +56,21 @@ export default function Kanbas() {
 
   const deleteCourse = async (courseId: string) => {
     try {
-      await userClient.deleteCourse(courseId);
+      const status = await courseClient.deleteCourse(courseId);
       setCourses(courses.filter((course) => course._id !== courseId));
     } catch (error) {
       console.error("Error deleting course:", error);
     }
   };
-
+  
   const updateCourse = async () => {
-    try {
-      const updatedCourse = await userClient.updateCourse(course);
-      setCourses(
-        courses.map((c) => (c._id === updatedCourse._id ? updatedCourse : c))
-      );
-    } catch (error) {
-      console.error("Error updating course:", error);
-    }
-  };
+    await courseClient.updateCourse(course);
+    setCourses(courses.map((c) => {
+        if (c._id === course._id) { return course; }
+        else { return c; }
+    })
+  );};
+
 
   return (
     <Session>

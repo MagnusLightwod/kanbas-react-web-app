@@ -34,3 +34,11 @@ export function deleteCourse(courseId) {
   // Remove all enrollments associated with the deleted course
   Database.enrollments = enrollments.filter((enrollment) => enrollment.course !== courseId);
 }
+
+export function updateCourse(courseId, courseUpdates) {
+    const { courses } = Database;
+    const course = courses.find((course) => course._id === courseId);
+    Object.assign(course, courseUpdates);
+    return course;
+  }
+  

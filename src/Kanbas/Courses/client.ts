@@ -22,15 +22,11 @@ export const deleteCourse = async (id: string) => {
   }
 };
 
-export const updateCourse = async (id: string, updatedCourseData: any) => {
-  try {
-    const response = await axios.put(`${COURSES_API}/${id}`, updatedCourseData);
-    return response.data; // Return the updated course data
-  } catch (error) {
-    console.error("Error updating course:", error);
-    throw error;
-  }
+export const updateCourse = async (course: any) => {
+  const { data } = await axios.put(`${COURSES_API}/${course._id}`, course);
+  return data;
 };
+
 
 export const enrollUserInCourse = async (userId: string, courseId: string) => {
   try {

@@ -45,6 +45,7 @@ export default function Dashboard({
     dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: courseId, enroll: false }));
   };
 
+  // Filter courses based on user's role or selection
   const filteredCourses = courses.filter((course) => {
     if (currentUser.role === 'FACULTY') {
       return true;
@@ -57,30 +58,26 @@ export default function Dashboard({
     }
   });
 
-  // Fetch courses for the current user
+  // Fetch courses on component load and based on user role or toggle status
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         if (currentUser.role === "FACULTY") {
           // Faculty should see all courses by default
           const allCourses = await userClient.fetchAllCourses();
-          setCourses(allCourses);
+          setCourses(allCourses); // Use setCourses to update the state
         } else if (showAllCourses) {
           // Fetch all courses when "show all" is toggled for students
           const allCourses = await userClient.fetchAllCourses();
           setCourses(allCourses);
-        } else {
-          // Fetch only the enrolled courses for students
-          const enrolledCourses = await userClient.findMyCourses();
-          setCourses(enrolledCourses);
-        }
+        } 
       } catch (error) {
-        console.error("Error fetching courses:", error);
+        console.error(error);
       }
     };
     fetchCourses();
   }, [currentUser, showAllCourses]);
-
+  
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
@@ -109,7 +106,7 @@ export default function Dashboard({
           {showAllCourses ? "Show Enrolled Courses" : "Show All Courses"}
         </button>
       )}
-
+      
       <h2 id="wd-dashboard-published">
         {showAllCourses ? "All Courses" : "Published Courses"} ({filteredCourses.length})
       </h2>
@@ -117,20 +114,35 @@ export default function Dashboard({
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {filteredCourses.map((course) => (
-            <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
+            <div
+              className="wd-dashboard-course col"
+              style={{ width: "300px" }}
+              key={course._id} // Ensure that key is unique and not duplicated
+            >
               <div className="card rounded-3 overflow-hidden">
                 <Link
                   to={`/Kanbas/Courses/${course._id}/Home`}
-                  className="wd-dashboard-course-link text-decoration-none text-dark">
-                  <img src={`/images/${course.image}`} width="100%" height={160} alt={course.name} />
+                  className="wd-dashboard-course-link text-decoration-none text-dark"
+                >
+                  <img
+                    src={`/images/${course.image}`}
+                    width="100%"
+                    height={160}
+                    alt={course.name}
+                  />
                   <div className="card-body">
                     <h5 className="wd-dashboard-course-title card-title">
                       {course.name}
                     </h5>
-                    <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ maxHeight: 100 }}>
+                    <p
+                      className="wd-dashboard-course-title card-text overflow-y-hidden"
+                      style={{ maxHeight: 100 }}
+                    >
                       {course.description}
                     </p>
                     <button className="btn btn-primary">Go</button>
+                    
+                    {/* Render options for faculty and students */}
                     {currentUser.role === "FACULTY" ? (
                       <>
                         <button
@@ -139,7 +151,8 @@ export default function Dashboard({
                             deleteCourse(course._id);
                           }}
                           className="btn btn-danger float-end"
-                          id="wd-delete-course-click">
+                          id="wd-delete-course-click"
+                        >
                           Delete
                         </button>
                         <button
@@ -148,7 +161,8 @@ export default function Dashboard({
                             event.preventDefault();
                             setCourse(course);
                           }}
-                          className="btn btn-warning me-2 float-end">
+                          className="btn btn-warning me-2 float-end"
+                        >
                           Edit
                         </button>
                       </>
@@ -159,13 +173,15 @@ export default function Dashboard({
                         ) ? (
                           <button
                             onClick={() => unenroll(course._id)}
-                            className="btn btn-danger float-end">
+                            className="btn btn-danger float-end"
+                          >
                             Unenroll
                           </button>
                         ) : (
                           <button
                             onClick={() => enroll(course)}
-                            className="btn btn-success float-end">
+                            className="btn btn-success float-end"
+                          >
                             Enroll
                           </button>
                         )}
