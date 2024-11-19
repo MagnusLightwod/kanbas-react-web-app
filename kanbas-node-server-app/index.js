@@ -3,6 +3,7 @@ import Hello from "./Hello.js";
 import Lab5 from "./Lab5/index.js";
 import cors from "cors";
 import UserRoutes from "../Kanbas/Users/routes.js";
+import CourseRoutes from "../Kanbas/Courses/routes.js";
 import session from "express-session";
 import "dotenv/config";
 // import CourseRoutes from "../Kanbas/Courses/routes.js";
@@ -26,17 +27,14 @@ app.use(cors({
       sameSite: 'lax' // Please use your own value based on requirements.
     }
   }
-  app.use(session(sessionOptions));
+app.use(session(sessionOptions));
   
-app.use(
-  session(sessionOptions)
-);
 
 app.use(express.json()); // allows for json and http request bodys to send data securely 
 UserRoutes(app);
 // ModuleRoutes(app);
 
-// CourseRoutes(app); // course available only using our api. 
+CourseRoutes(app); // course available only using our api. 
 Lab5(app);
 Hello(app)
 
