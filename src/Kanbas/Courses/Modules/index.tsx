@@ -1,6 +1,7 @@
 import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import * as coursesClient from "../client";
+import * as modulesClient from "./client";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlbuttons";
@@ -23,6 +24,11 @@ export default function Modules() {
     fetchModules();
   }, []);
 
+  const removeModule = async (moduleId: string) => {
+    await modulesClient.deleteModule(moduleId);
+    dispatch(deleteModule(moduleId));
+  };
+
 
   const [moduleName, setModuleName] = useState("");  
 
@@ -33,15 +39,19 @@ export default function Modules() {
     dispatch(addModule(module));
   };
 
+  const saveModule = async (module: any) => {
+    await modulesClient.updateModule(module);
+    dispatch(updateModule(module));
+  };
+  
+  
   return (
     <div className="wd-modules">
       {/* Modules Controls */}
       <ModulesControls
         setModuleName={setModuleName}
         moduleName={moduleName}
-        addModule={() => {
-          dispatch(addModule({ name: moduleName, course: cid, lessons: [] }));
-          setModuleName("");}}
+        addModule={createModuleForCourse}
       />
 
       {/* Modules List */}
@@ -62,18 +72,16 @@ export default function Modules() {
                     }
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        dispatch(updateModule({ ...module, editing: false }));
-
-                      }
+                        saveModule({ ...module, editing: false });
+                   }
+   
                     }}
                     defaultValue={module.name}
                   />
                 )}
                 <ModuleControlButtons
                   moduleId={module._id}
-                  deleteModule={(moduleId) => {
-                    dispatch(deleteModule(moduleId));
-                  }}
+                  deleteModule={(moduleId) => removeModule(moduleId)}
 
                   editModule={(moduleId) => dispatch(editModule(moduleId))} 
                 />

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer";
 import * as client from "./Account/client";
-
+import * as courseClient from "./Courses/client";
 export default function Dashboard({
   courses,
   course,
@@ -30,28 +30,28 @@ export default function Dashboard({
   // Toggle to show all courses
   const [showAllCourses, setShowAllCourses] = useState(false);
 
-  // Handle toggle of "Show All Courses" button
-  const toggleShowCourses = () => {
-    setShowAllCourses(!showAllCourses);
-    if (!showAllCourses) {
-      // When toggling to show all, fetch all courses
-      client
-        .findMyCourses()
-        .then((allCourses) => setCourses(allCourses))
-        .catch((err) => console.error("Error fetching all courses:", err));
-    }
-  };
-
-  // Handle enrollment
-  const enroll = (course: any) => {
-    dispatch(
-      setCourseEnrollment({
-        userId: currentUser._id,
-        courseId: course._id,
-        enroll: true,
+// Toggle to show all courses
+const toggleShowCourses = () => {
+  if (!showAllCourses) {
+    // When toggling to show all courses, fetch all courses
+    courseClient
+      .fetchAllCourses()
+      .then((allCourses) => {
+        setCourses(allCourses);
+        setShowAllCourses(true);
       })
-    );
-  };
+      .catch((err) => console.error("Error fetching all courses:", err));
+  } else {
+    // If toggling back to enrolled courses, just call setCourses again with enrolled courses
+    client
+      .findMyCourses()
+      .then((enrolledCourses) => {
+        setCourses(enrolledCourses);
+        setShowAllCourses(false);
+      })
+      .catch((err) => console.error("Error fetching enrolled courses:", err));
+  }
+};
 
   // Handle unenrollment
   const unenroll = (courseId: string) => {
@@ -63,6 +63,18 @@ export default function Dashboard({
       })
     );
   };
+
+    // Handle enrollment
+    const enroll = (course: any) => {
+      dispatch(
+        setCourseEnrollment({
+          userId: currentUser._id,
+          courseId: course._id,
+          enroll: true,
+        })
+      );
+    };
+  
 
   // Filter courses based on user's role or selection
   const filteredCourses = courses.filter((course) => {
@@ -187,18 +199,24 @@ export default function Dashboard({
                           (enrollment: any) => enrollment.courseId === course._id
                         ) ? (
                           <button
-                            onClick={() => unenroll(course._id)}
+                            onClick={(event) => {
+                              event.preventDefault();
+                               unenroll(course._id);}}
                             className="btn btn-danger float-end"
                           >
                             Unenroll
                           </button>
                         ) : (
+
                           <button
-                            onClick={() => enroll(course)}
-                            className="btn btn-success float-end"
-                          >
-                            Enroll
-                          </button>
+                              onClick={(event) => {
+                                event.preventDefault(); // Prevent card click
+                                enroll(course);
+                              }}
+                              className="btn btn-success float-end"
+                            >
+                              Enroll
+                            </button>
                         )}
                       </>
                     )}
