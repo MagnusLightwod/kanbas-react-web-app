@@ -1,12 +1,12 @@
-import { addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
-
+import * as coursesClient from "../client";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlbuttons";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams } from "react-router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Modules() {
   const { cid } = useParams<{ cid: string }>();
@@ -14,6 +14,15 @@ export default function Modules() {
   
   const modules = useSelector((state: any) => state.modulesReducer.modules);
   const dispatch = useDispatch();
+
+  const fetchModules = async () => {
+    const modules = await coursesClient.findModulesForCourse(cid as string);
+    dispatch(setModules(modules));
+  };
+  useEffect(() => {
+    fetchModules();
+  }, []);
+
 
   const [moduleName, setModuleName] = useState("");  
 
@@ -32,7 +41,7 @@ export default function Modules() {
       {/* Modules List */}
       <ul id="wd-modules" className="list-group rounded-0">
         {modules
-          .filter((module: any) => module.course === cid)
+          
           .map((module: any) => (
             <li key={module._id} className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
               <div className="wd-title p-3 ps-2 bg-secondary">

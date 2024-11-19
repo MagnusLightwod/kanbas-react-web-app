@@ -47,3 +47,10 @@ export const unenrollUserFromCourse = async (userId: string, courseId: string) =
     throw error;
   }
 };
+
+export const findModulesForCourse = async (courseId: string) => {
+  const response = await axios
+    .get(`${COURSES_API}/${courseId}/modules`);
+  return response.data;
+};
+
