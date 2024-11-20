@@ -1,6 +1,7 @@
 import axios from "axios";
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
+const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
 
 export const fetchAllCourses = async () => {
   try {
@@ -36,6 +37,7 @@ export const enrollUserInCourse = async (userId: string, courseId: string) => {
 export const unenrollUserFromCourse = async (userId: string, courseId: string) => {
   try {
     const response = await axios.post(`${COURSES_API}/${courseId}/unenroll`, { userId });
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error unenrolling user from course:", error);
@@ -58,5 +60,6 @@ export const createModuleForCourse = async (courseId: string, module: any) => {
   return response.data;
   
 };
+
 
 

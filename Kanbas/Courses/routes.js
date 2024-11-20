@@ -53,6 +53,8 @@ export default function CourseRoutes(app) {
     }
   });
 
+
+  
   // Route to enroll a student or faculty in an existing course
   app.post("/api/courses/:courseId/enroll", (req, res) => {
     try {

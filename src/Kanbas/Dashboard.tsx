@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer";
 import * as client from "./Account/client";
 import * as courseClient from "./Courses/client";
+import { enrollUserInCourse, unenrollUserFromCourse } from "./Courses/enrollmentclient";
 export default function Dashboard({
   courses,
   course,
@@ -53,27 +54,48 @@ const toggleShowCourses = () => {
   }
 };
 
-  // Handle unenrollment
-  const unenroll = (courseId: string) => {
-    dispatch(
-      setCourseEnrollment({
-        userId: currentUser._id,
-        courseId: courseId,
-        enroll: false,
-      })
-    );
-  };
+  // // Handle unenrollment
+  // const unenroll = (courseId: string) => {
+  //   dispatch(
+  //     setCourseEnrollment({
+  //       userId: currentUser._id,
+  //       courseId: courseId,
+  //       enroll: false,
+  //     })
+  //   );
+  // };
 
-    // Handle enrollment
-    const enroll = (course: any) => {
-      dispatch(
-        setCourseEnrollment({
-          userId: currentUser._id,
-          courseId: course._id,
-          enroll: true,
-        })
-      );
-    };
+  //   // Handle enrollment
+  //   const enroll = (course: any) => {
+  //     dispatch(
+  //       setCourseEnrollment({
+  //         userId: currentUser._id,
+  //         courseId: course._id,
+  //         enroll: true,
+  //       })
+  //     );
+  //   };
+
+  // Enroll function in Dashboard
+const enroll = async (course: any) => {
+  try {
+    await enrollUserInCourse(course._id);
+    dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: course._id, enroll: true }));
+  } catch (error) {
+    console.error('Failed to enroll user in course:', error);
+  }
+};
+
+// Unenroll function in Dashboard
+const unenroll = async (courseId: string) => {
+  try {
+    await unenrollUserFromCourse(courseId);
+    dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: courseId, enroll: false }));
+  } catch (error) {
+    console.error('Failed to unenroll user from course:', error);
+  }
+};
+
   
 
   // Filter courses based on user's role or selection

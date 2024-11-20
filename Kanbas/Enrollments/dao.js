@@ -43,7 +43,7 @@ export function findCoursesForEnrolledUser(userId) {
 }
 
 export function deleteEnrollment(userId, courseId) {
-  let { enrollments } = Database;
+  const { enrollments } = Database;
   // Remove enrollment matching the user and course IDs
   Database.enrollments = enrollments.filter(
     (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
@@ -51,7 +51,7 @@ export function deleteEnrollment(userId, courseId) {
 }
 
 export function deleteEnrollmentsByCourse(courseId) {
-  let { enrollments } = Database;
+  const { enrollments } = Database;
   // Remove all enrollments associated with a specific course
   Database.enrollments = enrollments.filter(
     (enrollment) => enrollment.course !== courseId
@@ -59,7 +59,7 @@ export function deleteEnrollmentsByCourse(courseId) {
 }
 
 export function deleteEnrollmentsByUser(userId) {
-  let { enrollments } = Database;
+  const { enrollments } = Database;
   // Remove all enrollments associated with a specific user
   Database.enrollments = enrollments.filter(
     (enrollment) => enrollment.user !== userId

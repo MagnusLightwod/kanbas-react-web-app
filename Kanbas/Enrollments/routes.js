@@ -1,10 +1,10 @@
 import express from "express";
 import * as enrollmentsDao from "./dao.js";
-import * as courseDao from "../Courses/dao.js";
 
 export default function EnrollmentsRoutes(app) {
+  
   // Route to enroll a user in a course
-  app.post("/api/enrollments/:courseId", (req, res) => {
+  app.post("/api/courses/:courseId/enroll", (req, res) => {
     try {
       const currentUser = req.session["currentUser"];
       const { courseId } = req.params;
@@ -24,7 +24,7 @@ export default function EnrollmentsRoutes(app) {
   });
 
   // Route to unenroll a user from a course
-  app.delete("/api/enrollments/:courseId", (req, res) => {
+  app.delete("/api/courses/:courseId/unenroll", (req, res) => {
     try {
       const currentUser = req.session["currentUser"];
       const { courseId } = req.params;
@@ -46,6 +46,7 @@ export default function EnrollmentsRoutes(app) {
   // Route to find all courses a user is enrolled in
   app.get("/api/enrollments/user/:userId", (req, res) => {
     try {
+        console.log("getting user enrollments");
       let { userId } = req.params;
       if (userId === "current") {
         const currentUser = req.session["currentUser"];
