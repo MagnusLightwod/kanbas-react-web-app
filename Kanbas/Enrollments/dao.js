@@ -14,8 +14,8 @@ const enrollments = [...Database.enrollments];
   if (existingEnrollment) {
     return null; // User is already enrolled
   }
-  console.log("Enrollments before enrolling:", JSON.stringify(enrollments, null, 2));
-  console.log("Enrolling User ID:", userId, "in Course ID:", courseId);
+ // console.log("Enrollments before enrolling:", JSON.stringify(enrollments, null, 2));
+ // console.log("Enrolling User ID:", userId, "in Course ID:", courseId);
   // Create a new enrollment record
   const newEnrollment = {
     _id: Date.now().toString(), // Unique identifier

@@ -23,12 +23,6 @@ export default function Modules() {
     fetchModules();
   }, []);
 
-  // const removeModule = async (moduleId: string) => {
-  //   await modulesClient.deleteModule(moduleId);
-  //   dispatch(deleteModule(moduleId));
-  // };
-
-
   const [moduleName, setModuleName] = useState("");  
 
   const createModuleForCourse = async () => {
@@ -38,11 +32,7 @@ export default function Modules() {
     dispatch(addModule(module));
   };
 
-  // const saveModule = async (module: any) => {
-  //   await modulesClient.updateModule(module);
-  //   dispatch(updateModule(module));
-  // };
-  
+
   
   return (
     <div className="wd-modules">

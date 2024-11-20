@@ -1,80 +1,56 @@
-// enrollmentSlice.ts
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import * as db from "../Database";
-import * as client from "../Courses/client"
-interface EnrollmentState {
-  enrollments: {
-    userId: string;
-    courseId: string;
-  }[];
-}
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: EnrollmentState = {
-  enrollments: db.enrollments.map((enrollment) => ({
-    userId: enrollment.user,
-    courseId: enrollment.course,
-  })),
-  
+// Define the initial state with an empty enrollments array
+const initialState = {
+  enrollments: [],
 };
 
-export const enrollUser = createAsyncThunk(
-  "enrollments/enrollUser",
-  async ({ userId, courseId }: { userId: string; courseId: string }) => {
-    await client.enrollUserInCourse(userId, courseId);
-    return { userId, courseId };
-  }
-);
-
-// Thunk to unenroll user from a course
-export const unenrollUser = createAsyncThunk(
-  "enrollments/unenrollUser",
-  async ({ userId, courseId }: { userId: string; courseId: string }) => {
-    await client.unenrollUserFromCourse(userId, courseId);
-    return { userId, courseId };
-  }
-);
-
-const enrollmentSlice = createSlice({
+// Create the slice for enrollments
+const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
-    setCourseEnrollment: (
-      state,
-      action: PayloadAction<{ userId: string; courseId: string; enroll: boolean }>
-    ) => {
-      const { userId, courseId, enroll } = action.payload;
+    setEnrollments: (state, action) => {
+      // Set the entire enrollments list
+      state.enrollments = action.payload;
+    },
+    addEnrollment: (state, { payload: enrollment }) => {
+      // Add a new enrollment if it doesn't exist
+      const alreadyEnrolled = state.enrollments.some(
+        (e: any) => e.userId === enrollment.userId && e.courseId === enrollment.courseId
+      );
 
-      if (enroll) {
-        // Add enrollment if it does not exist
-        const alreadyEnrolled = state.enrollments.some(
-          (enrollment) => enrollment.userId === userId && enrollment.courseId === courseId
-        );
-
-        if (!alreadyEnrolled) {
-          state.enrollments.push({ userId, courseId });
-        }
-      } else {
-        // Remove enrollment
-        state.enrollments = state.enrollments.filter(
-          (enrollment) => !(enrollment.userId === userId && enrollment.courseId === courseId)
-        );
+      if (!alreadyEnrolled) {
+        const newEnrollment = {
+          _id: new Date().getTime().toString(),
+          userId: enrollment.userId,
+          courseId: enrollment.courseId,
+        };
+        state.enrollments = [...state.enrollments, newEnrollment] as any;
       }
+    },
+    deleteEnrollment: (state, { payload: { userId, courseId } }) => {
+      // Remove an enrollment matching userId and courseId
+      state.enrollments = state.enrollments.filter(
+        (e: any) => !(e.userId === userId && e.courseId === courseId)
+      );
     },
   },
 });
 
+// Export actions and reducer
+export const { setEnrollments, addEnrollment, deleteEnrollment } = enrollmentsSlice.actions;
+export default enrollmentsSlice.reducer;
 
 // Selector to get enrollments for a specific user
 export const selectUserEnrollments = (state: any, userId: string) => {
-  return state.enrollmentReducer.enrollments.filter(
+  return state.enrollments.enrollments.filter(
     (enrollment: any) => enrollment.userId === userId
   );
 };
 
-// Selector to get all course IDs for a user
-export const selectUserCourses = (state: any, userId: string) => {
-  return selectUserEnrollments(state, userId).map((enrollment : any) => enrollment.courseId);
-};
 
-export const { setCourseEnrollment } = enrollmentSlice.actions;
-export default enrollmentSlice.reducer;
+// Selector to get all enrollments
+export const selectAllEnrollments = (state: any) => {
+  return state.enrollments.enrollments;
+};

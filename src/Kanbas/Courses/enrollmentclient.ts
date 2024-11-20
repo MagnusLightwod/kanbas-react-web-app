@@ -23,3 +23,15 @@ export const unenrollUserFromCourse = async (courseId: string) => {
     throw error;
   }
 };
+
+export const fetchEnrollmentsForCurrentUser = async () => {
+  try {
+    const response = await axios.get(`${REMOTE_SERVER}/api/enrollments/current`, { withCredentials: true });
+    console.log("Fetched enrollments:", response.data); // Log the response for debugging
+    return response.data; // Expecting an array of enrollment objects
+  } catch (error) {
+    console.error('Error fetching enrollments:', error);
+    throw error;
+  }
+};
+
