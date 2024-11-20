@@ -1,7 +1,7 @@
 // enrollmentSlice.ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import * as db from "../Database";
-
+import * as client from "../Courses/client"
 interface EnrollmentState {
   enrollments: {
     userId: string;
@@ -14,7 +14,25 @@ const initialState: EnrollmentState = {
     userId: enrollment.user,
     courseId: enrollment.course,
   })),
+  
 };
+
+export const enrollUser = createAsyncThunk(
+  "enrollments/enrollUser",
+  async ({ userId, courseId }: { userId: string; courseId: string }) => {
+    await client.enrollUserInCourse(userId, courseId);
+    return { userId, courseId };
+  }
+);
+
+// Thunk to unenroll user from a course
+export const unenrollUser = createAsyncThunk(
+  "enrollments/unenrollUser",
+  async ({ userId, courseId }: { userId: string; courseId: string }) => {
+    await client.unenrollUserFromCourse(userId, courseId);
+    return { userId, courseId };
+  }
+);
 
 const enrollmentSlice = createSlice({
   name: "enrollments",
@@ -45,8 +63,6 @@ const enrollmentSlice = createSlice({
   },
 });
 
-export const { setCourseEnrollment } = enrollmentSlice.actions;
-export default enrollmentSlice.reducer;
 
 // Selector to get enrollments for a specific user
 export const selectUserEnrollments = (state: any, userId: string) => {
@@ -59,3 +75,6 @@ export const selectUserEnrollments = (state: any, userId: string) => {
 export const selectUserCourses = (state: any, userId: string) => {
   return selectUserEnrollments(state, userId).map((enrollment : any) => enrollment.courseId);
 };
+
+export const { setCourseEnrollment } = enrollmentSlice.actions;
+export default enrollmentSlice.reducer;

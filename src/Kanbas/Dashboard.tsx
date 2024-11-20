@@ -54,27 +54,6 @@ const toggleShowCourses = () => {
   }
 };
 
-  // // Handle unenrollment
-  // const unenroll = (courseId: string) => {
-  //   dispatch(
-  //     setCourseEnrollment({
-  //       userId: currentUser._id,
-  //       courseId: courseId,
-  //       enroll: false,
-  //     })
-  //   );
-  // };
-
-  //   // Handle enrollment
-  //   const enroll = (course: any) => {
-  //     dispatch(
-  //       setCourseEnrollment({
-  //         userId: currentUser._id,
-  //         courseId: course._id,
-  //         enroll: true,
-  //       })
-  //     );
-  //   };
 
   // Enroll function in Dashboard
 const enroll = async (course: any) => {
