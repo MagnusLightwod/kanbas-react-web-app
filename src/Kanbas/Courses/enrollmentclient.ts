@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
-
+const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
 // Enroll a user in a course
 export const enrollUserInCourse = async (courseId: string) => {
   try {
@@ -20,6 +20,19 @@ export const unenrollUserFromCourse = async (courseId: string) => {
     await axios.delete(`${COURSES_API}/${courseId}/unenroll`, { withCredentials: true });
   } catch (error) {
     console.error('Error unenrolling user from course:', error);
+    throw error;
+  }
+};
+
+// Fetch enrollments for a user
+export const fetchEnrollments = async (userId: string) => {
+  try {
+    const response = await axios.get(`${ENROLLMENTS_API}/user/${userId}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching enrollments for user:', error);
     throw error;
   }
 };

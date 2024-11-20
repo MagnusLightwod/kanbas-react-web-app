@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCourseEnrollment, selectUserEnrollments } from "./redux/reducer";
+import { addEnrollment, selectUserEnrollments, deleteEnrollment, setEnrollments } from "./redux/reducer";
 import * as client from "./Account/client";
 import * as courseClient from "./Courses/client";
+import * as enrollmentClient from "./Courses/enrollmentclient";
 import { enrollUserInCourse, unenrollUserFromCourse } from "./Courses/enrollmentclient";
 export default function Dashboard({
   courses,
@@ -28,6 +29,15 @@ export default function Dashboard({
   ); // Use selector to get enrollments for the current user
   const dispatch = useDispatch();
 
+
+  const fetchEnrollments = async() => {
+    const enrollments = await enrollmentClient.fetchEnrollments(currentUser._id);
+    dispatch(setEnrollments(enrollments));
+  };
+  useEffect(() => {
+    fetchEnrollments();
+  }, [])
+  
   // Toggle to show all courses
   const [showAllCourses, setShowAllCourses] = useState(false);
 
@@ -59,7 +69,7 @@ const toggleShowCourses = () => {
 const enroll = async (course: any) => {
   try {
     await enrollUserInCourse(course._id);
-    dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: course._id, enroll: true }));
+    dispatch(addEnrollment({ userId: currentUser._id, courseId: course._id, enroll: true }));
   } catch (error) {
     console.error('Failed to enroll user in course:', error);
   }
@@ -69,13 +79,11 @@ const enroll = async (course: any) => {
 const unenroll = async (courseId: string) => {
   try {
     await unenrollUserFromCourse(courseId);
-    dispatch(setCourseEnrollment({ userId: currentUser._id, courseId: courseId, enroll: false }));
+    dispatch(deleteEnrollment({ userId: currentUser._id, courseId: courseId, enroll: false }));
   } catch (error) {
     console.error('Failed to unenroll user from course:', error);
   }
 };
-
-  
 
   // Filter courses based on user's role or selection
   const filteredCourses = courses.filter((course) => {
