@@ -23,20 +23,37 @@ export default function Dashboard({
   updateCourse: () => void;
   setCourses: React.Dispatch<React.SetStateAction<any[]>>;
 }) {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const enrollments = useSelector((state: any) =>
     selectUserEnrollments(state, currentUser._id)
   ); // Use selector to get enrollments for the current user
-  const dispatch = useDispatch();
+  console.log("Enrollments upon start up", enrollments);
 
-
-  const fetchEnrollments = async() => {
-    const enrollments = await enrollmentClient.fetchEnrollments(currentUser._id);
-    dispatch(setEnrollments(enrollments));
+// fetch enrollments from the server
+  // Fetch enrollments when the component mounts or currentUser changes
+ 
+  const fetchEnrollments = async () => {
+    if (currentUser && currentUser._id) {
+      const enrollments = await enrollmentClient.fetchEnrollments(
+        currentUser._id
+      );
+      console.log("Starting to fetch, ", enrollments);
+      // Map enrollments if necessary
+      const mappedEnrollments = enrollments.map((enrollment: any) => ({
+        ...enrollment,
+        userId: currentUser._id,
+        courseId: enrollment._id ,
+      }));
+      dispatch(setEnrollments(mappedEnrollments));
+    }
   };
   useEffect(() => {
-    fetchEnrollments();
-  }, [])
+    if (currentUser && currentUser._id) {
+      fetchEnrollments();
+    }
+  }, [currentUser]);
+
   
   // Toggle to show all courses
   const [showAllCourses, setShowAllCourses] = useState(false);
@@ -65,28 +82,50 @@ const toggleShowCourses = () => {
 };
 
 
-  // Enroll function in Dashboard
-const enroll = async (course: any) => {
-  try {
-    await enrollUserInCourse(course._id);
-    dispatch(addEnrollment({ userId: currentUser._id, courseId: course._id, enroll: true }));
-  } catch (error) {
-    console.error('Failed to enroll user in course:', error);
-  }
-};
+  // // Enroll function in Dashboard
+  // const enroll = async (course: any) => {
+  //   try {
+  //     await enrollUserInCourse(course._id);
+  //     fetchEnrollments();
+  //   } catch (error) {
+  //     console.error('Failed to enroll user in course:', error);
+  //   }
+  // };
+  
+  // const unenroll = async (courseId: string) => {
+  //   try {
+  //     await unenrollUserFromCourse(courseId);
+  //     fetchEnrollments();
+  //   } catch (error) {
+  //     console.error('Failed to unenroll user from course:', error);
+  //   }
+  // };
+  
 
-// Unenroll function in Dashboard
-const unenroll = async (courseId: string) => {
-  try {
-    await unenrollUserFromCourse(courseId);
-    dispatch(deleteEnrollment({ userId: currentUser._id, courseId: courseId, enroll: false }));
-  } catch (error) {
-    console.error('Failed to unenroll user from course:', error);
-  }
-};
+  const enroll = async (course:any ) => {
+    try {
+      await enrollUserInCourse(course._id);
+      dispatch(addEnrollment({ userId: currentUser._id, courseId: course._id }));
+    } catch (error) {
+      console.error('Failed to enroll user in course:', error);
+    }
+  };
+
+  const unenroll = async (courseId: any) => {
+    try {
+      await unenrollUserFromCourse(courseId);
+      dispatch(deleteEnrollment({ userId: currentUser._id, courseId }));
+    } catch (error) {
+      console.error('Failed to unenroll user from course:', error);
+    }
+  };
+
+  
+  
 
   // Filter courses based on user's role or selection
   const filteredCourses = courses.filter((course) => {
+    //console.log('Enrollments before filtering courses:', enrollments);
     if (currentUser.role === "FACULTY") {
       return true;
     } else if (showAllCourses) {
@@ -204,9 +243,12 @@ const unenroll = async (courseId: string) => {
                       </>
                     ) : (
                       <>
+                      
                         {enrollments.some(
-                          (enrollment: any) => enrollment.courseId === course._id
+                          
+                          (enrollment: any) => enrollment._id === course._id
                         ) ? (
+                          
                           <button
                             onClick={(event) => {
                               event.preventDefault();

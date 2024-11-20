@@ -9,7 +9,7 @@ const store = configureStore({
     modulesReducer,
     accountReducer,
     assignmentReducer,
-    enrollmentReducer,
+    enrollments: enrollmentReducer,
   },
 });
 
