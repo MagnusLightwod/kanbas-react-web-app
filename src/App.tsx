@@ -14,7 +14,7 @@ export default function App() {
         <Link to="Labs">Labs</Link>| 
         <Link to="Kanbas">Kanbas</Link>
         <Routes>
-          <Route path="/" element={<Navigate to="/Labs" />} />
+          <Route path="/" element={<Navigate to="Labs" />} />
           {/* route to power 3000 and 3000/#/Labs */}
           <Route path="/Labs/*" element={<Labs />} />
           <Route path="/Kanbas/*" element={<Kanbas />} />
