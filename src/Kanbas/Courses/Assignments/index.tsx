@@ -1,16 +1,25 @@
-import { useParams, useNavigate } from "react-router";
+
 import { FaPlus } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
-import ModuleControlButtons from "../Modules/ModuleControlbuttons";
 import { BsGripVertical } from "react-icons/bs";
+import ModuleControlButtons from "../Modules/ModuleControlbuttons";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { TfiWrite } from "react-icons/tfi";
 import { FaRegTrashAlt } from "react-icons/fa";
 
+import * as assignmentClient from "./client";
+import { useParams, useNavigate } from "react-router";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setAssignments,
+  deleteAssignmentAction,
+} from "./reducer";
+
 export default function Assignments({ assignments, deleteAssignment }: { assignments: any[], deleteAssignment: (assignmentId: string) => void }) {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   const navigate = useNavigate(); // Initialize navigate function
-
+  const dispatch = useDispatch();
   // Filter assignments for the specific course based on cid
   const filteredAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid
@@ -21,10 +30,14 @@ export default function Assignments({ assignments, deleteAssignment }: { assignm
   };
 
    // Function to confirm deletion
-   const handleConfirm = (assignmentId: string) => {
+ 
+  // Function to confirm deletion
+  const handleConfirm = (assignmentId: string) => {
     const answer = window.confirm("Delete assignment? Are you sure?");
     if (answer) {
-      deleteAssignment(assignmentId);
+      assignmentClient.deleteAssignment(assignmentId).then(() => {
+        dispatch(deleteAssignmentAction(assignmentId));
+      });
     }
   };
   
@@ -77,6 +90,7 @@ export default function Assignments({ assignments, deleteAssignment }: { assignm
             editModule={() => {}}
           />
         </div>
+
 
         <ul className="wd-lessons list-group rounded-0">
           {filteredAssignments.length === 0 ? (
