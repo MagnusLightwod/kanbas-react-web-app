@@ -14,8 +14,7 @@ const enrollments = [...Database.enrollments];
   if (existingEnrollment) {
     return null; // User is already enrolled
   }
-  console.log("Enrollments before enrolling:", JSON.stringify(enrollments, null, 2));
-  console.log("Enrolling User ID:", userId, "in Course ID:", courseId);
+  
   // Create a new enrollment record
   const newEnrollment = {
     _id: Date.now().toString(), // Unique identifier
@@ -25,13 +24,13 @@ const enrollments = [...Database.enrollments];
 
   // Update the shared enrollments array
   Database.enrollments.push(newEnrollment);
-  console.log("Enrollments after enrolling:", JSON.stringify(Database.enrollments, null, 2));
+  // console.log("Enrollments after enrolling:", JSON.stringify(Database.enrollments, null, 2));
   return newEnrollment;
 }
 
 export function deleteEnrollment(userId, courseId) {
   const { enrollments } = Database;
-  console.log("11111111111111111111111111");
+  
   // Remove enrollment matching the user and course IDs
   Database.enrollments = enrollments.filter(
     (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
@@ -39,7 +38,7 @@ export function deleteEnrollment(userId, courseId) {
 }
 
 export function deleteEnrollmentsByCourse(courseId) {
-  console.log("333333333333333333");
+ 
   const { enrollments } = Database;
   // Remove all enrollments associated with a specific course
   Database.enrollments = enrollments.filter(
@@ -73,7 +72,7 @@ export function findCoursesForEnrolledUser(userId) {
 
 
 export function deleteEnrollmentsByUser(userId) {
-  console.log("2222222222222222222");
+ 
   const { enrollments } = Database;
   // Remove all enrollments associated with a specific user
   Database.enrollments = enrollments.filter(

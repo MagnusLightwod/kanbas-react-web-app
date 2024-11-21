@@ -1,40 +1,72 @@
 
-import { useState, } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import * as db from "../../Database"; 
 
-export default function AssignmentEditor(props: any) {
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  addAssignment as addAssignmentAction,
+  updateAssignment as updateAssignmentAction,
+} from "./reducer";
+import * as assignmentClient from "./client";
+
+export default function AssignmentEditor() {
   const { cid, aid } = useParams<{ cid: string; aid?: string }>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Determine if we are editing an existing assignment or creating a new one
   const isEditing = Boolean(aid);
-  const assignment = isEditing ? props.assignments?.find((assignment: any) => assignment._id === aid) : null;
 
   // Use state to manage the input fields
-  const [title, setTitle] = useState(isEditing ? assignment?.title || "" : "");
-  const [description, setDescription] = useState(isEditing ? assignment?.description || "" : "");
-  const [points, setPoints] = useState(isEditing ? assignment?.points?.toString() || "100" : "100");
-  const [assignmentGroup, setAssignmentGroup] = useState(isEditing ? assignment?.assignmentGroup || "ASSIGNMENTS" : "ASSIGNMENTS");
-  const [displayGradeAs, setDisplayGradeAs] = useState(isEditing ? assignment?.displayGradeAs || "PERCENTAGE" : "PERCENTAGE");
-  const [submissionType, setSubmissionType] = useState(isEditing ? assignment?.submissionType || "ONLINE" : "ONLINE");
-  const [dueDate, setDueDate] = useState(isEditing ? assignment?.dueDate || "2024-05-13" : "2024-05-13");
-  const [availableDate, setAvailableDate] = useState(isEditing ? assignment?.availableDate || "2024-05-06" : "2024-05-06");
-  const [untilDate, setUntilDate] = useState(isEditing ? assignment?.untilDate || "2024-05-20" : "2024-05-20");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [points, setPoints] = useState("100");
+  const [assignmentGroup, setAssignmentGroup] = useState("ASSIGNMENTS");
+  const [displayGradeAs, setDisplayGradeAs] = useState("PERCENTAGE");
+  const [submissionType, setSubmissionType] = useState("ONLINE");
+  const [dueDate, setDueDate] = useState("");
+  const [availableDate, setAvailableDate] = useState("");
+  const [untilDate, setUntilDate] = useState("");
 
+  // State for each checkbox
+  const [textEntry, setTextEntry] = useState(false);
+  const [websiteURL, setWebsiteURL] = useState(false);
+  const [mediaRecordings, setMediaRecordings] = useState(false);
+  const [studentAnnotation, setStudentAnnotation] = useState(false);
+  const [fileUploads, setFileUploads] = useState(false);
 
-    // State for each checkbox
-    const [textEntry, setTextEntry] = useState(false);
-    const [websiteURL, setWebsiteURL] = useState(false);
-    const [mediaRecordings, setMediaRecordings] = useState(false);
-    const [studentAnnotation, setStudentAnnotation] = useState(false);
-    const [fileUploads, setFileUploads] = useState(false);
-  // Now handle conditionals AFTER hooks are called
-  
-  // hanlde saving the new assignment
- 
-   // Handle Save Button Click
-   const handleSave = () => {
+  // Fetch assignment data if editing
+  useEffect(() => {
+    if (isEditing && aid) {
+      const fetchAssignment = async () => {
+        try {
+          const assignmentData = await assignmentClient.findAssignment(cid!, aid);
+          // Set state with fetched data
+          setTitle(assignmentData.title || "");
+          setDescription(assignmentData.description || "");
+          setPoints(assignmentData.points?.toString() || "100");
+          setAssignmentGroup(assignmentData.assignmentGroup || "ASSIGNMENTS");
+          setDisplayGradeAs(assignmentData.displayGradeAs || "PERCENTAGE");
+          setSubmissionType(assignmentData.submissionType || "ONLINE");
+          setDueDate(assignmentData.dueDate || "");
+          setAvailableDate(assignmentData.availableDate || "");
+          setUntilDate(assignmentData.untilDate || "");
+          setTextEntry(assignmentData.textEntry || false);
+          setWebsiteURL(assignmentData.websiteURL || false);
+          setMediaRecordings(assignmentData.mediaRecordings || false);
+          setStudentAnnotation(assignmentData.studentAnnotation || false);
+          setFileUploads(assignmentData.fileUploads || false);
+          // ... set other fields if any
+        } catch (error) {
+          console.error("Error fetching assignment:", error);
+        }
+      };
+      fetchAssignment();
+    }
+  }, [isEditing, aid, cid]);
+
+  // Handle Save Button Click
+  const handleSave = async () => {
     const updatedAssignment = {
       _id: isEditing ? aid! : new Date().getTime().toString(),
       course: cid,
@@ -47,12 +79,25 @@ export default function AssignmentEditor(props: any) {
       dueDate,
       availableDate,
       untilDate,
+      textEntry,
+      websiteURL,
+      mediaRecordings,
+      studentAnnotation,
+      fileUploads,
     };
 
-    props.saveAssignment(updatedAssignment);
+    if (isEditing) {
+      await assignmentClient.updateAssignment(aid!, updatedAssignment);
+      dispatch(updateAssignmentAction(updatedAssignment));
+    } else {
+      const newAssignment = await assignmentClient.createAssignment(cid!, updatedAssignment);
+      dispatch(addAssignmentAction(newAssignment));
+    }
+
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
 
+  
     return (
       
       

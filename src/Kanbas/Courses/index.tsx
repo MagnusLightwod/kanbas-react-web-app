@@ -53,7 +53,6 @@ export default function Courses({ courses }: { courses: any[] }) {
   if (!cid || !course) {
     return <div>Course not found</div>; // Handle missing or invalid course ID
   }
-
   return (
     <div id="wd-courses">
       <h2 className="text-danger">
@@ -73,21 +72,9 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Home" element={<Home />} />
             <Route path="Modules" element={<Modules />} />
             <Route path="People" element={<PeopleTable />} />
-            {/* Pass the assignments state to Assignments */}
-            <Route
-              path="Assignments"
-              element={<Assignments assignments={assignments} deleteAssignment={deleteAssignment} />}
-            />
-            {/* Pass the saveAssignment function to AssignmentEditor for creating a new assignment */}
-            <Route
-                path="Assignments/New"
-                element={<AssignmentEditor saveAssignment={saveAssignment} assignments={assignments} />}  />
-
-            {/* Editor route for editing existing assignments */}
-            <Route
-              path="Assignments/:aid"
-              element={<AssignmentEditor saveAssignment={saveAssignment} assignments={assignments} />}/>
-
+            <Route path="Assignments" element={<Assignments />} />
+            <Route path="Assignments/New" element={<AssignmentEditor />} />
+            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
             <Route path="Quizzes" element={<Quizes />} />
           </Routes>
         </div>

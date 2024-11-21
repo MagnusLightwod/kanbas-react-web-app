@@ -28,7 +28,7 @@ export default function Dashboard({
   const enrollments = useSelector((state: any) =>
     selectUserEnrollments(state, currentUser._id)
   ); // Use selector to get enrollments for the current user
-  console.log("Enrollments upon start up", enrollments);
+  //console.log("Enrollments upon start up", enrollments);
 
 // fetch enrollments from the server
   // Fetch enrollments when the component mounts or currentUser changes
@@ -38,7 +38,7 @@ export default function Dashboard({
       const enrollments = await enrollmentClient.fetchEnrollments(
         currentUser._id
       );
-      console.log("Starting to fetch, ", enrollments);
+      //console.log("Starting to fetch, ", enrollments);
       // Map enrollments if necessary
       const mappedEnrollments = enrollments.map((enrollment: any) => ({
         ...enrollment,

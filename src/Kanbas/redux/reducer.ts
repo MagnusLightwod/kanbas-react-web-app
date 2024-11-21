@@ -43,7 +43,7 @@ export default enrollmentsSlice.reducer;
 
 //// ISSUE HERE
 export const selectUserEnrollments = (state: any, userId: string) => {
-  console.log('Enrollments in state:', state.enrollments);
+ //console.log('Enrollments in state:', state.enrollments);
   return state.enrollments;
  
   

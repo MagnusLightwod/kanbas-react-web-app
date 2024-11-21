@@ -16,14 +16,15 @@ import {
   deleteAssignmentAction,
 } from "./reducer";
 
-export default function Assignments({ assignments, deleteAssignment }: { assignments: any[], deleteAssignment: (assignmentId: string) => void }) {
+export default function Assignments() {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   const navigate = useNavigate(); // Initialize navigate function
   const dispatch = useDispatch();
-  // Filter assignments for the specific course based on cid
-  const filteredAssignments = assignments.filter(
-    (assignment: any) => assignment.course === cid
-  );
+  const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);
+  // // Filter assignments for the specific course based on cid
+  // const filteredAssignments = assignments.filter(
+  //   (assignment: any) => assignment.course === cid
+  // );
 
   const handleAddAssignment = () => {
     navigate(`/Kanbas/Courses/${cid}/Assignments/New`); 
@@ -93,10 +94,10 @@ export default function Assignments({ assignments, deleteAssignment }: { assignm
 
 
         <ul className="wd-lessons list-group rounded-0">
-          {filteredAssignments.length === 0 ? (
+          {assignments.length === 0 ? (
             <li>No assignments available for this course.</li>
           ) : (
-            filteredAssignments.map((assignment: any) => (
+            assignments.map((assignment: any) => (
               <li
                 key={assignment._id}
                 className="wd-lesson list-group-item d-flex align-items-start justify-content-between p-3 ps-1"

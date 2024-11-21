@@ -16,7 +16,8 @@ export default function EnrollmentsRoutes(app) {
         // Enroll the user in the course
         const newEnrollment = enrollmentsDao.enrollUserInCourse(currentUser._id, courseId);
         if (newEnrollment) {
-            console.log("USER ENROLLED.....");
+           
+           // console.log("USER ENROLLED.....");
           res.status(201).json(newEnrollment);
         } else {
           res.status(409).send("User is already enrolled in this course");

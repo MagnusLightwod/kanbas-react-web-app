@@ -34,5 +34,19 @@ export default function AssignmentRoutes(app) {
         const updateAssignment = assignmentsDao.updateAssignment(assignmentId, assignmentUpdates);
         res.json(updateAssignment);
     })
+
+   
+
+// Get a single assignment by courseId and assignmentId
+app.get("/api/courses/:courseId/assignments/:assignmentId", (req, res) => {
+    const { courseId, assignmentId } = req.params;
+    const assignment = assignmentsDao.findAssignment(courseId, assignmentId);
+    if (assignment) {
+      res.json(assignment);
+    } else {
+      res.status(404).send("Assignment not found");
+    }
+  });
+  
     
 }

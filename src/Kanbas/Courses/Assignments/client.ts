@@ -6,21 +6,31 @@ const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignments`;
 
 export const findAssignmentsInCourse = async (courseId: string) => {
+    console.log("gettingassignments................");
     const response = await axios.get(`${COURSES_API}/${courseId}/assignments`);
     return response.data;
 }
 
 export const createAssignment = async (courseId: string, assignment:any ) => {
+    console.log("creating................");
     const response = await axios.post(`${COURSES_API}/${courseId}/assignments`, assignment);
     return response.data;
 }
 
 export const deleteAssignment = async (assignmentId: any) => {
+    console.log("deleting................");
     const response = await axios.delete(`${ASSIGNMENTS_API}/${assignmentId}`);
     return response.data;
 }
 
 export const updateAssignment = async (assignmentId: any, assignment: any) => {
+    console.log("updating................");
     const response = await axios.put(`${ASSIGNMENTS_API}/${assignmentId}`, assignment);
     return response.data;
 }
+
+export const findAssignment = async (courseId: string, assignmentId: string) => {
+    console.log("getting single assignment to edit................");
+    const response = await axios.get(`${COURSES_API}/${courseId}/assignments/${assignmentId}`);
+    return response.data;
+  };
