@@ -82,24 +82,6 @@ const toggleShowCourses = () => {
 };
 
 
-  // // Enroll function in Dashboard
-  // const enroll = async (course: any) => {
-  //   try {
-  //     await enrollUserInCourse(course._id);
-  //     fetchEnrollments();
-  //   } catch (error) {
-  //     console.error('Failed to enroll user in course:', error);
-  //   }
-  // };
-  
-  // const unenroll = async (courseId: string) => {
-  //   try {
-  //     await unenrollUserFromCourse(courseId);
-  //     fetchEnrollments();
-  //   } catch (error) {
-  //     console.error('Failed to unenroll user from course:', error);
-  //   }
-  // };
   
 
   const enroll = async (course:any ) => {
@@ -246,7 +228,7 @@ const toggleShowCourses = () => {
                       
                         {enrollments.some(
                           
-                          (enrollment: any) => enrollment._id === course._id
+                          (enrollment: any) => enrollment.courseId === course._id
                         ) ? (
                           
                           <button

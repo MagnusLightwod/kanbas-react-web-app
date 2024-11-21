@@ -43,21 +43,11 @@ export default enrollmentsSlice.reducer;
 
 //// ISSUE HERE
 export const selectUserEnrollments = (state: any, userId: string) => {
-  // console.log("Attempting to get enrollments")
-  // console.log('State in selector:', state);
-  // console.log('User ID:', userId);
   console.log('Enrollments in state:', state.enrollments);
-  // console.log("this is the user ID", userId);
-  // if (state.enrollments.length > 0) {
-  //   console.log("Enrollment 1 user id:", state.enrollments[1].userId);
-  // } else {
-  //   console.log("No enrollments found in state.");
-  // }
   return state.enrollments;
  
   
 };
-
 
 // Selector to get all enrollments
 export const selectAllEnrollments = (state: any) => {
