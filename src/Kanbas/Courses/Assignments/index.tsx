@@ -20,11 +20,30 @@ export default function Assignments() {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   const navigate = useNavigate(); // Initialize navigate function
   const dispatch = useDispatch();
-  const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);
-  // // Filter assignments for the specific course based on cid
-  // const filteredAssignments = assignments.filter(
-  //   (assignment: any) => assignment.course === cid
-  // );
+  console.log("reducer 1");
+  //
+  const assignments = useSelector((state: any) => state.assignmentReducer.assignments);
+
+  const filteredAssignments = assignments.filter(
+    (assignment: any) => assignment.course === cid
+  );
+
+  // fetch existing assignments
+  useEffect(() => {
+    const fetchAssignments = async () => {
+      try {
+        const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid!);
+        dispatch(setAssignments(assignmentsData));
+      } catch (error) {
+        console.error("Error fetching assignments:", error);
+      }
+    };
+    fetchAssignments();
+  }, [cid, dispatch]);
+
+  console.log("reducer 2");
+  // Filter assignments for the specific course based on cid
+ 
 
   const handleAddAssignment = () => {
     navigate(`/Kanbas/Courses/${cid}/Assignments/New`); 
@@ -97,7 +116,7 @@ export default function Assignments() {
           {assignments.length === 0 ? (
             <li>No assignments available for this course.</li>
           ) : (
-            assignments.map((assignment: any) => (
+            filteredAssignments.map((assignment: any) => (
               <li
                 key={assignment._id}
                 className="wd-lesson list-group-item d-flex align-items-start justify-content-between p-3 ps-1"
