@@ -30,21 +30,18 @@ export default function Assignments() {
   const filteredAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid
   );
+
+  // fetch existing assignments
   useEffect(() => {
     let isMounted = true;
   
     const fetchAssignments = async () => {
       try {
-        const storedAssignments = localStorage.getItem("assignments");
-        if (storedAssignments) {
-          const parsedAssignments = JSON.parse(storedAssignments);
-          dispatch(setAssignments(parsedAssignments));
-        } else {
-          const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid!);
-          if (isMounted) {
-            console.log("setting assignments");
-            dispatch(setAssignments(assignmentsData));
-          }
+        const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid!);
+        if (isMounted) {
+          console.log("setting assignments");
+          // Update the assignments state to include any new assignments
+          dispatch(setAssignments(assignmentsData));
         }
       } catch (error) {
         console.error("Error fetching assignments:", error);
@@ -59,13 +56,6 @@ export default function Assignments() {
       isMounted = false; // cleanup function to prevent state updates if unmounted
     };
   }, [cid, dispatch]);
-  
-  // Save to local storage when assignments change
-  useEffect(() => {
-    if (assignments.length > 0) {
-      localStorage.setItem("assignments", JSON.stringify(assignments));
-    }
-  }, [assignments]);
   
   
   
