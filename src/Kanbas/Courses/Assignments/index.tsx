@@ -136,7 +136,7 @@ export default function Assignments() {
           {assignments.length === 0 ? (
             <li>No assignments available for this course.</li>
           ) : (
-            assignments.map((assignment: any) => (
+            filteredAssignments.map((assignment: any) => (
               <li
                 key={assignment._id}
                 className="wd-lesson list-group-item d-flex align-items-start justify-content-between p-3 ps-1"
