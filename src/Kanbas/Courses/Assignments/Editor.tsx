@@ -11,6 +11,7 @@ import * as assignmentClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams<{ cid: string; aid?: string }>();
+  console.log(cid);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -69,8 +70,8 @@ export default function AssignmentEditor() {
   const handleSave = async () => {
     const updatedAssignment = {
       _id: isEditing ? aid! : new Date().getTime().toString(),
-      course: cid,
       title,
+      course: cid,
       description,
       points: parseInt(points),
       assignmentGroup,
