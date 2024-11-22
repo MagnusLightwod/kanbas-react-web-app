@@ -86,11 +86,16 @@ export default function Assignments() {
       try {
         await assignmentClient.deleteAssignment(assignmentId);
         dispatch(deleteAssignmentAction(assignmentId));
+  
+        // Update localStorage to reflect the deleted state
+        const updatedAssignments = assignments.filter((a: any) => a._id !== assignmentId);
+        localStorage.setItem("assignments", JSON.stringify(updatedAssignments));
       } catch (error) {
         console.error("Error deleting assignment:", error);
       }
     }
   };
+  
   
   return (
     <div id="wd-modules-controls" className="text-nowrap wd-margin-right-left">
