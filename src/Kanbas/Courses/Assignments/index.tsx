@@ -37,26 +37,24 @@ export default function Assignments() {
   
     const fetchAssignments = async () => {
       try {
-        const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid!);
-        if (isMounted) {
-          console.log("setting assignments");
-          // Update the assignments state to include any new assignments
-          dispatch(setAssignments(assignmentsData));
+        if (cid) {
+          const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid);
+          if (isMounted) {
+            console.log("Setting assignments");
+            dispatch(setAssignments(assignmentsData));
+          }
         }
       } catch (error) {
         console.error("Error fetching assignments:", error);
       }
     };
   
-    if (cid) {
-      fetchAssignments();
-    }
+    fetchAssignments();
   
     return () => {
-      isMounted = false; // cleanup function to prevent state updates if unmounted
+      isMounted = false; // Cleanup function to avoid updating state if unmounted
     };
   }, [cid, dispatch]);
-  
   
   
   // Filter assignments for the specific course based on cid
@@ -75,7 +73,8 @@ export default function Assignments() {
       try {
         await assignmentClient.deleteAssignment(assignmentId);
         dispatch(deleteAssignmentAction(assignmentId));
-        setAssignments(assignments.filter((a: any) => a._id !== assignmentId));
+       
+        //setAssignments(assignments.filter((a: any) => a._id !== assignmentId));
       } catch (error) {
         console.error("Error deleting assignment:", error);
       }
