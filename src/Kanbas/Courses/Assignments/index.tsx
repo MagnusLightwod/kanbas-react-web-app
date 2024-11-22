@@ -22,7 +22,8 @@ export default function Assignments() {
   const dispatch = useDispatch();
   console.log("reducer 1");
   //
-  const assignments = useSelector((state: any) => state.assignmentReducer.assignments);
+  const assignments = useSelector((state: any) => state.assignmentReducer?.assignments || []);
+
 
   const filteredAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid
@@ -30,16 +31,28 @@ export default function Assignments() {
 
   // fetch existing assignments
   useEffect(() => {
+    let isMounted = true;
+  
     const fetchAssignments = async () => {
       try {
         const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid!);
-        dispatch(setAssignments(assignmentsData));
+        if (isMounted) {
+          dispatch(setAssignments(assignmentsData));
+        }
       } catch (error) {
         console.error("Error fetching assignments:", error);
       }
     };
-    fetchAssignments();
+  
+    if (cid) {
+      fetchAssignments();
+    }
+  
+    return () => {
+      isMounted = false; // cleanup function to prevent state updates if unmounted
+    };
   }, [cid, dispatch]);
+  
 
   console.log("reducer 2");
   // Filter assignments for the specific course based on cid
