@@ -42,16 +42,15 @@ export default function Assignments() {
           console.log("setting assignments");
           // Update the assignments state to include any new assignments
           dispatch(setAssignments(assignmentsData));
-          setAssignments(assignmentsData);
         }
       } catch (error) {
         console.error("Error fetching assignments:", error);
       }
     };
   
-    if (cid) {
+    useEffect(() => {
       fetchAssignments();
-    }
+    }, []);
   
     return () => {
       isMounted = false; // cleanup function to prevent state updates if unmounted
