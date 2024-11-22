@@ -69,12 +69,15 @@ export default function Assignments() {
    // Function to confirm deletion
  
   // Function to confirm deletion
+  const [refreshKey, setRefreshKey] = React.useState(0);
+
   const handleConfirm = async (assignmentId: string) => {
     const answer = window.confirm("Delete assignment? Are you sure?");
     if (answer) {
       try {
         await assignmentClient.deleteAssignment(assignmentId);
         dispatch(deleteAssignmentAction(assignmentId));
+        setRefreshKey((prevKey) => prevKey + 1); // Force a re-render by updating the refreshKey
       } catch (error) {
         console.error("Error deleting assignment:", error);
       }
@@ -82,8 +85,11 @@ export default function Assignments() {
   };
   
   useEffect(() => {
-    console.log("Assignments state changed: ", assignments);
-  }, [assignments]);
+    // Fetch assignments when refreshKey changes
+  }, [cid, refreshKey]);
+  
+
+
   return (
     <div id="wd-modules-controls" className="text-nowrap wd-margin-right-left">
       <ul id="wd-modules" className="list-group rounded-0 wd-margin-right-left">
