@@ -15,6 +15,8 @@ const assignmentsSlice = createSlice({
     },
     addAssignment: (state, { payload: assignment }) => {
       console.log("addAssignment called with:", assignment);
+      assignment.course = String(assignment.course);
+      console.log("add assignment course", assignment.course);
       state.assignments = [...state.assignments, assignment] as any;
     },
     updateAssignment: (state, { payload: assignment }) => {
