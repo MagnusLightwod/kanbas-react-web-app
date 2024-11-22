@@ -70,7 +70,7 @@ export default function AssignmentEditor() {
   const handleSave = async () => {
     const updatedAssignment = {
       _id: isEditing ? aid! : new Date().getTime().toString(),
-      course: cid,
+      course: cid!,
       title,
       description,
       points: parseInt(points),
