@@ -13,7 +13,7 @@ export const findAssignmentsInCourse = async (courseId: string) => {
 
 export const createAssignment = async (courseId: string, assignment: any) => {
     console.log("creating................");
-    const response = await axios.post(`${COURSES_API}/${courseId}/assignments`, assignment);
+    const response = await axios.post(`${ASSIGNMENTS_API}/${courseId}/assignments`, assignment);
     return response.data;
 };
 
