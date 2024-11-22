@@ -55,8 +55,9 @@ export default function TOC() {
 
       <li>
         <a id="wd-github" href="https://github.com/MagnusLightwod/-kanbas-node-server-app" className="nav-link"> 
-        </a>
-      Assignment 5 Server Github Repo</li>
+       
+      Assignment 5 Server Github Repo
+      </a></li>
     </ul>
 
     );
