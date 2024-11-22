@@ -8,12 +8,16 @@ const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignments`;
 export const findAssignmentsInCourse = async (courseId: string) => {
     console.log("getting assignments................");
     const response = await axios.get(`${COURSES_API}/${courseId}/assignments`);
+    console.log("getting assignments respoonse", response);
+    console.log("getting assignments respoonse data", response.data);
     return response.data;
 }
 
 export const createAssignment = async (courseId: string, assignment: any) => {
     console.log("creating................");
     const response = await axios.post(`${COURSES_API}/${courseId}/assignments`, assignment);
+    console.log("creating assignments respoonse", response);
+    console.log("creating assignments respoonse data", response.data);
     return response.data;
 };
 
