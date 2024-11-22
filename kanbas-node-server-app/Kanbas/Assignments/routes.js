@@ -14,7 +14,7 @@ export default function AssignmentRoutes(app) {
     app.post("/api/courses/:courseid/assignments", (req, res) => {
         const { courseId } = req.params;
         // might edit to be even more similar to the modules route
-        const assignment = {...req.body, course: courseId};
+        const assignment = {...req.body,  _id: Date.now().toString(), course: courseId};
         const newAssignment = assignmentsDao.createAssigment(assignment);
         res.status(201).json(newAssignment);
     })

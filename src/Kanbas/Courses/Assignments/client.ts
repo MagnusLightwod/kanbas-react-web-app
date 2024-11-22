@@ -11,11 +11,11 @@ export const findAssignmentsInCourse = async (courseId: string) => {
     return response.data;
 }
 
-export const createAssignment = async (courseId: string, assignment:any ) => {
+export const createAssignment = async (courseId: string, assignment: any) => {
     console.log("creating................");
     const response = await axios.post(`${COURSES_API}/${courseId}/assignments`, assignment);
     return response.data;
-}
+};
 
 export const deleteAssignment = async (assignmentId: any) => {
     console.log("deleting................");
