@@ -1,6 +1,7 @@
 // Assignments/reducer.ts
 import { createSlice } from "@reduxjs/toolkit";
 
+// bruter force helps add assignments 
 interface Assignment {
   _id: string;
   course: string;
