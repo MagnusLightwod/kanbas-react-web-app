@@ -11,7 +11,7 @@ export default function AssignmentRoutes(app) {
     })
 
     // create a new assignment
-  app.post("/api/courses/:courseId/assignments", (req, res) => {
+  app.post("/api/courses/:courseId/assignments/new", (req, res) => {
     const { courseId } = req.params;
     const assignment = {
         ...req.body,
