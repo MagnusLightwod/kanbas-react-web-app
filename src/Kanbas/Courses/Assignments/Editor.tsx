@@ -68,7 +68,7 @@ export default function AssignmentEditor() {
   // Handle Save Button Click
   const handleSave = async () => {
     const updatedAssignment = {
-      _id: isEditing ? aid! : new Date().getTime().toString(),
+      //_id: isEditing ? aid! : new Date().getTime().toString(),
       course: cid,
       title,
       description,
@@ -91,7 +91,9 @@ export default function AssignmentEditor() {
       dispatch(updateAssignmentAction(updatedAssignment));
     } else {
       const newAssignment = await assignmentClient.createAssignment(cid!, updatedAssignment);
-      dispatch(addAssignmentAction(newAssignment));
+      console.log("Dispatching addAssignmentAction with:", newAssignment);
+dispatch(addAssignmentAction(newAssignment));
+console.log("New state after dispatch:", newAssignment);
     }
 
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
