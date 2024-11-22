@@ -21,7 +21,7 @@ export default function Assignments() {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   const navigate = useNavigate(); // Initialize navigate function
   const dispatch = useDispatch();
-  console.log("reducer 1");
+  
   //
   const assignments = useSelector((state: any) => state.assignmentReducer?.assignments || []);
 
@@ -38,6 +38,7 @@ export default function Assignments() {
       try {
         const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid!);
         if (isMounted) {
+          console.log("setting assignments");
           dispatch(setAssignments(assignmentsData));
         }
       } catch (error) {
@@ -54,8 +55,6 @@ export default function Assignments() {
     };
   }, [cid, dispatch]);
   
-
-  console.log("reducer 2");
   // Filter assignments for the specific course based on cid
  
 
