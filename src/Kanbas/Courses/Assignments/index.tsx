@@ -29,7 +29,7 @@ export default function Assignments() {
 
   const filteredAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid,
-    console.log("assignments in redux state: ", assignments)
+    console.log("assignments in redux state filtered: ", assignments)
   );
 
   // fetch existing assignments
