@@ -81,6 +81,9 @@ export default function Assignments() {
     }
   };
   
+  useEffect(() => {
+    console.log("Assignments state changed: ", assignments);
+  }, [assignments]);
   return (
     <div id="wd-modules-controls" className="text-nowrap wd-margin-right-left">
       <ul id="wd-modules" className="list-group rounded-0 wd-margin-right-left">
