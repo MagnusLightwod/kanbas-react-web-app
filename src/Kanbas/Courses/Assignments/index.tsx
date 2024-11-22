@@ -43,6 +43,7 @@ export default function Assignments() {
             console.log("Setting assignments");
             dispatch(setAssignments(assignmentsData));
           }
+          dispatch(setAssignments(assignmentsData));
         }
       } catch (error) {
         console.error("Error fetching assignments:", error);
