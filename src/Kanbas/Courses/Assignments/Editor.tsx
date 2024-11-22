@@ -92,8 +92,8 @@ export default function AssignmentEditor() {
     } else {
       const newAssignment = await assignmentClient.createAssignment(cid!, updatedAssignment);
       console.log("Dispatching addAssignmentAction with:", newAssignment);
-dispatch(addAssignmentAction(newAssignment));
-console.log("New state after dispatch:", newAssignment);
+    dispatch(addAssignmentAction(newAssignment));
+    console.log("New state after dispatch:", newAssignment);
     }
 
     navigate(`/Kanbas/Courses/${cid}/Assignments`);

@@ -52,11 +52,14 @@ export default function Assignments() {
    // Function to confirm deletion
  
   // Function to confirm deletion
-  const handleConfirm = (assignmentId: string) => {
+  const handleConfirm = async (assignmentId: string) => {
     const answer = window.confirm("Delete assignment? Are you sure?");
     if (answer) {
-      await assignmentClient.deleteAssignment(assignmentId);
-      dispatch(deleteAssignmentAction(assignmentId));
+      try {
+        await assignmentClient.deleteAssignment(assignmentId);
+        dispatch(deleteAssignmentAction(assignmentId));
+      } catch (error) {
+        console.error("Error deleting assignment:", error);
       }
     }
   };
