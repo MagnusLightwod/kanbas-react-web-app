@@ -40,6 +40,7 @@ export default function Assignments() {
         const assignmentsData = await assignmentClient.findAssignmentsInCourse(cid!);
         if (isMounted) {
           console.log("setting assignments");
+          // Update the assignments state to include any new assignments
           dispatch(setAssignments(assignmentsData));
         }
       } catch (error) {
@@ -55,6 +56,7 @@ export default function Assignments() {
       isMounted = false; // cleanup function to prevent state updates if unmounted
     };
   }, [cid, dispatch]);
+  
   
   // Filter assignments for the specific course based on cid
  

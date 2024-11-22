@@ -68,48 +68,37 @@ export default function AssignmentEditor() {
 
   // Handle Save Button Click
   const handleSave = async () => {
-    try {
-      const updatedAssignment = {
-        _id: isEditing ? aid! : new Date().getTime().toString(),
-        course: cid,
-        title,
-        description,
-        points: parseInt(points),
-        assignmentGroup,
-        displayGradeAs,
-        submissionType,
-        dueDate,
-        availableDate,
-        untilDate,
-        textEntry,
-        websiteURL,
-        mediaRecordings,
-        studentAnnotation,
-        fileUploads,
-      };
+    const updatedAssignment = {
+      _id: isEditing ? aid! : new Date().getTime().toString(),
+      course: cid,
+      title,
+      description,
+      points: parseInt(points),
+      assignmentGroup,
+      displayGradeAs,
+      submissionType,
+      dueDate,
+      availableDate,
+      untilDate,
+      textEntry,
+      websiteURL,
+      mediaRecordings,
+      studentAnnotation,
+      fileUploads,
+    };
   
-      if (isEditing) {
-        // Update existing assignment
-        const updated = await assignmentClient.updateAssignment(aid!, updatedAssignment);
-        dispatch(updateAssignmentAction(updated)); // Ensure state is in sync
-      } else {
-        // Create new assignment
-        console.log("adding........");
-        const newAssignment = await assignmentClient.createAssignment(cid!, updatedAssignment);
-        console.log("Dispatching addAssignmentAction with:", newAssignment);
-        
-        // Dispatch addAssignment action directly
-        dispatch(addAssignment(newAssignment));
-        console.log("New state after dispatch:", newAssignment);
-      }
-  
-      // Redirect to assignments list
-      navigate(`/Kanbas/Courses/${cid}/Assignments`);
-  
-    } catch (error) {
-      console.error("Error saving assignment:", error);
-      alert("There was an error saving the assignment. Please try again.");
+    if (isEditing) {
+      await assignmentClient.updateAssignment(aid!, updatedAssignment);
+      dispatch(updateAssignmentAction(updatedAssignment));
+    } else {
+      console.log("adding........");
+      const newAssignment = await assignmentClient.createAssignment(cid!, updatedAssignment);
+      console.log("Dispatching addAssignmentAction with:", newAssignment);
+      dispatch(addAssignment(newAssignment));
+      console.log("New state after dispatch:", newAssignment);
     }
+  
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
   
 
