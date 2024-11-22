@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setAssignments,
   deleteAssignmentAction,
+  addAssignment,
 } from "./reducer";
 
 export default function Assignments() {
