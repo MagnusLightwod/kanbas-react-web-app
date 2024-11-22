@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
+  addAssignment,
   addAssignment as addAssignmentAction,
   updateAssignment as updateAssignmentAction,
 } from "./reducer";
@@ -85,7 +86,7 @@ export default function AssignmentEditor() {
       studentAnnotation,
       fileUploads,
     };
-  
+
     if (isEditing) {
       await assignmentClient.updateAssignment(aid!, updatedAssignment);
       dispatch(updateAssignmentAction(updatedAssignment));
@@ -96,10 +97,9 @@ export default function AssignmentEditor() {
       dispatch(addAssignmentAction(newAssignment));
       console.log("New state after dispatch:", newAssignment);
     }
-  
+
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
-  
 
   
     return (
