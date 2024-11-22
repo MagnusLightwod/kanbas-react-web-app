@@ -38,7 +38,7 @@ export default function Dashboard({
       const enrollments = await enrollmentClient.fetchEnrollments(
         currentUser._id
       );
-      //console.log("Starting to fetch, ", enrollments);
+      
       // Map enrollments if necessary
       const mappedEnrollments = enrollments.map((enrollment: any) => ({
         ...enrollment,
@@ -80,9 +80,6 @@ const toggleShowCourses = () => {
       .catch((err) => console.error("Error fetching enrolled courses:", err));
   }
 };
-
-
-  
 
   const enroll = async (course:any ) => {
     try {

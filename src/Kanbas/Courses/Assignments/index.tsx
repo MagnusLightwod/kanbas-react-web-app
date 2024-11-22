@@ -22,10 +22,10 @@ export default function Assignments() {
   const navigate = useNavigate(); // Initialize navigate function
   const dispatch = useDispatch();
   
-  //
+  // get assignemnts
   const assignments = useSelector((state: any) => state.assignmentReducer?.assignments || []);
 
-
+  // filter them for the course again
   const filteredAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid,
     console.log("assignments in redux state filtered: ", assignments)
@@ -57,16 +57,11 @@ export default function Assignments() {
     };
   }, [cid, dispatch]);
   
-  
-  // Filter assignments for the specific course based on cid
- 
 
   const handleAddAssignment = () => {
     navigate(`/Kanbas/Courses/${cid}/Assignments/New`); 
   };
 
-   // Function to confirm deletion
- 
   // Function to confirm deletion
   const handleConfirm = async (assignmentId: string) => {
     const answer = window.confirm("Delete assignment? Are you sure?");
@@ -81,7 +76,6 @@ export default function Assignments() {
       }
     }
   };
-
 
   return (
     <div id="wd-modules-controls" className="text-nowrap wd-margin-right-left">
