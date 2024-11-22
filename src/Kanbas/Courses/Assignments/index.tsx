@@ -24,7 +24,6 @@ export default function Assignments() {
   
   //
   const assignments = useSelector((state: any) => state.assignmentReducer?.assignments || []);
-  console.log("assignments in redux state: ", assignments)
 
 
   const filteredAssignments = assignments.filter(

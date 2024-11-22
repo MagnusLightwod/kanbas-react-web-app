@@ -11,7 +11,7 @@ import * as assignmentClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams<{ cid: string; aid?: string }>();
-  console.log(cid);
+  console.log("cide ======", cid);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
