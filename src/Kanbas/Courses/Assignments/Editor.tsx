@@ -71,7 +71,7 @@ export default function AssignmentEditor() {
     const updatedAssignment = {
       _id: isEditing ? aid! : new Date().getTime().toString(),
       title,
-      course: cid,
+      course: String(cid),
       description,
       points: parseInt(points),
       assignmentGroup,
