@@ -48,15 +48,15 @@ export default function TOC() {
         </a>
       </li>
       <li className="nav-item">
-        <a id="wd-github" href="https://github.com/MagnusLightwod/kanbas-react-web-app/tree/a4" className="nav-link">
-          My GitHub Main Repo
+        <a id="wd-github" href="https://github.com/MagnusLightwod/kanbas-react-web-app/tree/a5" className="nav-link">
+          My GitHub Assignment 5 Repo
         </a>
       </li>
 
       <li>
         <a id="wd-github" href="https://github.com/MagnusLightwod/-kanbas-node-server-app" className="nav-link"> 
         </a>
-      Server Github Repo</li>
+      Assignment 5 Server Github Repo</li>
     </ul>
 
     );
