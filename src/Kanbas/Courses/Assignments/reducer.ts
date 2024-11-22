@@ -10,10 +10,8 @@ const assignmentsSlice = createSlice({
   initialState,
   reducers: {
     setAssignments: (state, action) => {
-      return {
-        ...state,
-        assignments: action.payload,
-      };
+      console.log("setAssignments called with:", action.payload);
+      state.assignments = action.payload;
     },
     addAssignment: (state, { payload: assignment }) => {
       console.log("addAssignment called with:", assignment);
