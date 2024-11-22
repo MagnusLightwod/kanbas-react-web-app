@@ -48,9 +48,9 @@ export default function Assignments() {
       }
     };
   
-    useEffect(() => {
+    if (cid) {
       fetchAssignments();
-    }, []);
+    }
   
     return () => {
       isMounted = false; // cleanup function to prevent state updates if unmounted
