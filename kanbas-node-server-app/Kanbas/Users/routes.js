@@ -10,10 +10,10 @@ function UserRoutes(app) {
   };
 
   // Route to delete a user by ID
-  const deleteUser = (req, res) => {
-    const { userId } = req.params;
-    dao.deleteUser(userId);
-    res.sendStatus(204);
+  const deleteUser = async (req, res) => {
+    const status = await dao.deleteUser(req.params.userId);
+      res.json(status);
+
   };
 
   // Route to find all users
@@ -37,8 +37,8 @@ function UserRoutes(app) {
 
 
   // Route to find a user by ID
-  const findUserById = (req, res) => {
-    const user = dao.findUserById(req.params.userId);
+  const findUserById = async (req, res) => {
+    const user = await dao.findUserById(req.params.userId);
     if (user) {
       res.json(user);
     } else {
@@ -47,12 +47,15 @@ function UserRoutes(app) {
   };
 
   // Route to update a user by ID
-  const updateUser = (req, res) => {  
+  const updateUser = async (req, res) => {  
     const userId = req.params.userId;
     const userUpdates = req.body;
-    dao.updateUser(userId, userUpdates);
-    const currentUser = dao.findUserById(userId);
-    req.session["currentUser"] = currentUser;
+    await dao.updateUser(userId, userUpdates);
+    const currentUser = req.session["currentUser"];
+    if (currentUser && currentUser._id === userId) {
+      req.session["currentUser"] = { ...currentUser, ...userUpdates };
+    }
+ 
     res.json(currentUser);
   };
 
