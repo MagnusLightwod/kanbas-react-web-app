@@ -18,7 +18,7 @@ export default function Kanbas() {
   console.log("Kanbas component hit");
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-
+  //console.log("Got the current user in index..................", currentUser);
   // Centralized fetch courses logic here
   const fetchCourses = async () => {
     try {

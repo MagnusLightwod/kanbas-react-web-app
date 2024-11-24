@@ -45,3 +45,10 @@ export const createCourse = async (course: any) => {
   return data;
 };
 
+// get array of users in the data property. 
+export const findAllUsers = async () => {
+  const response = await axiosWithCredentials.get(USERS_API);
+  return response.data;
+};
+
+
