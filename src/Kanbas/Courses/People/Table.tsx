@@ -7,6 +7,9 @@ export default function PeopleTable({ users = []}: {users?: any[]}) {
 
   return (
     <div id="wd-people-table">
+      <thead>
+          <tr> <th>Name</th> <th>Login ID</th><th>Section</th><th>Role</th><th>Last Activity</th> <th>Total Activity</th></tr>
+        </thead>
       <tbody>
   {users.map((user: any) => (
       <tr key={user._id}>
