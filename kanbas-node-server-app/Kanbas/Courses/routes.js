@@ -101,7 +101,7 @@ export default function CourseRoutes(app) {
   });
 
   // Route to delete a specific course by ID
-  app.delete("/api/courses/:courseId", (req, res) => {
+  app.delete("/api/courses/:courseId", async (req, res) => {
     try {
       const { courseId } = req.params;
       const currentUser = req.session["currentUser"];
@@ -111,7 +111,7 @@ export default function CourseRoutes(app) {
       }
 
       // Delete the course and any associated enrollments
-      courseDao.deleteCourse(courseId);
+      await courseDao.deleteCourse(courseId);
       enrollmentsDao.deleteEnrollmentsByCourse(courseId);
       res.sendStatus(204);  // Successful deletion returns a 204 status
     } catch (error) {
@@ -136,4 +136,18 @@ export default function CourseRoutes(app) {
     res.send(newModule);
   });
 
+  // create course route
+  app.post("/api/courses", async (req, res) => {
+    const course = await courseDao.createCourse(req.body);
+    res.json(course);
+  });
+
+  app.put("/api/courses/:courseId", async (req, res) => {
+    const { courseId } = req.params;
+    const courseUpdates = req.body;
+    const status = await courseDao.updateCourse(courseId, courseUpdates);
+    res.send(status);
+  });
+ 
+ 
 }

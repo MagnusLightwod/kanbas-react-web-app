@@ -10,7 +10,6 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import "./styles.css";
 import AssignmentEditor from "./Courses/Assignments/Editor";
 import Session from "./Account/Session";
-import * as userClient from "./Account/client";
 import * as courseClient from "./Courses/client";
 import { useSelector } from "react-redux";
 
@@ -18,8 +17,8 @@ export default function Kanbas() {
   console.log("Kanbas component hit");
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  //console.log("Got the current user in index..................", currentUser);
-  // Centralized fetch courses logic here
+
+  // Fetch courses function
   const fetchCourses = async () => {
     try {
       console.log("Kanbas index fetching courses");
@@ -36,22 +35,25 @@ export default function Kanbas() {
     }
   };
 
-  console.log(courses);
-  useEffect(() => {
-    if (currentUser) {
-      fetchCourses();
-    }
-  }, [currentUser]);
+  // Fetch courses when component mounts or currentUser changes
 
+  // Initial course state for creating or updating a course
   const [course, setCourse] = useState<any>({
-    _id: "1234",
-    name: "New Course",
-    number: "New Number",
-    startDate: "2023-09-10",
-    endDate: "2023-12-15",
-    description: "New Description",
+    _id: "",
+    name: "",
+    number: "",
+    startDate: "",
+    endDate: "",
+    description: "",
   });
+  
+  // Function that gets called when clicking the edit button in the Dashboard component
+  const handleEditCourse = (selectedCourse: any) => {
+    setCourse(selectedCourse);
+  };
+  
 
+  // Add new course function
   const addNewCourse = async () => {
     try {
       const newCourse = await courseClient.createCourse(course);
@@ -61,25 +63,36 @@ export default function Kanbas() {
     }
   };
 
+  // Delete course function
   const deleteCourse = async (courseId: string) => {
-    const status = await courseClient.deleteCourse(courseId);
-    setCourses(courses.filter((course) => course._id !== courseId));
-
+    try {
+      await courseClient.deleteCourse(courseId);
+      setCourses((prevCourses) => prevCourses.filter((course) => course._id !== courseId));
+    } catch (error) {
+      console.error("Error deleting course:", error);
+    }
   };
 
+  // Update course function
   const updateCourse = async () => {
     try {
       console.log(`Attempting to update course with ID: ${course._id}`);
       const updatedCourse = await courseClient.updateCourse(course);
-      setCourses(
-        courses.map((c) => (c._id === updatedCourse._id ? updatedCourse : c))
+
+      // Update local state with the updated course
+      setCourses((prevCourses) =>
+        prevCourses.map((c) => (c._id === updatedCourse._id ? updatedCourse : c))
       );
     } catch (error) {
       console.error("Error updating course:", error);
     }
   };
-  
 
+  useEffect(() => {
+    if (currentUser) {
+      fetchCourses();
+    }
+  }, [currentUser]);
   return (
     <Session>
       <div className="container-fluid">
@@ -101,7 +114,7 @@ export default function Kanbas() {
                     <Dashboard
                       courses={courses}
                       course={course}
-                      setCourse={setCourse}
+                      setCourse={handleEditCourse}
                       addNewCourse={addNewCourse}
                       deleteCourse={deleteCourse}
                       updateCourse={updateCourse}
