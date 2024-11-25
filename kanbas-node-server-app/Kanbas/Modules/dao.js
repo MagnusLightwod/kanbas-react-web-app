@@ -1,7 +1,15 @@
 import Database from "../Databases/index.js";
-export function findModulesForCourse(courseId) {
-  const { modules } = Database;
-  return modules.filter((module) => module.course === courseId);
+import model from "./model.js";
+
+export async function findModulesForCourse(courseId) {
+  try {
+    const modules = await model.find({ course: courseId });
+    console.log("Fetched modules from database:", modules);
+    return modules;
+  } catch (error) {
+    console.error("Error fetching modules for course:", error);
+    throw error;
+  }
 }
 
 export function createModule(module) {
@@ -13,8 +21,9 @@ export function createModule(module) {
 }
 
 export function deleteModule(moduleId) {
-  const { modules } = Database;
-  Database.modules = modules.filter((module) => module._id !== moduleId);
+  return model.deleteOne({ _id: moduleId });
+  // const { modules } = Database;
+  // Database.modules = modules.filter((module) => module._id !== moduleId);
  }
 
  

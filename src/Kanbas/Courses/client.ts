@@ -24,7 +24,6 @@ export const updateCourse = async (course: any) => {
   return data;
 };
 
-
 export const enrollUserInCourse = async (userId: string, courseId: string) => {
   try {
     const response = await axios.post(`${COURSES_API}/${courseId}/enroll`, { userId });
@@ -47,14 +46,15 @@ export const unenrollUserFromCourse = async (userId: string, courseId: string) =
 };
 
 export const findModulesForCourse = async (courseId: string) => {
-  const response = await axios
+  const response = await axiosWithCredentials
     .get(`${COURSES_API}/${courseId}/modules`);
+    console.log("retrieved modules for couse: course client", response.data);
   return response.data;
 };
 
 
 export const createModuleForCourse = async (courseId: string, module: any) => {
-  const response = await axios.post(
+  const response = await axiosWithCredentials.post(
     `${COURSES_API}/${courseId}/modules`,
     module
   );
@@ -76,6 +76,16 @@ export const findMyCourses = async () => {
     return response.data;
   } catch (error) {
     console.error('Error finding my courses:', error);
+    throw error;
+  }
+};
+
+export const findCourseById = async (courseId: String) => {
+  try {
+    const { data } = await axios.get(`${COURSES_API}/${courseId}`);
+    return data;
+  } catch (error) {
+    console.error("Error finding course by ID:", error);
     throw error;
   }
 };

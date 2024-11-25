@@ -120,19 +120,23 @@ export default function CourseRoutes(app) {
     }
   });
 
-  app.get("/api/courses/:courseId/modules", (req, res) => {
+  app.get("/api/courses/:courseId/modules", async (req, res) => {
     const { courseId } = req.params;
-    const modules = modulesDao.findModulesForCourse(courseId);
+    console.log("at course getting modules: modules dao");
+
+    const modules = await modulesDao.findModulesForCourse(courseId);
+    console.log("modules loaded :", modules);
     res.json(modules);
   });
+  
 
-  app.post("/api/courses/:courseId/modules", (req, res) => {
+  app.post("/api/courses/:courseId/modules", async (req, res) => {
     const { courseId } = req.params;
     const module = {
       ...req.body,
       course: courseId,
     };
-    const newModule = modulesDao.createModule(module);
+    const newModule = await modulesDao.createModule(module);
     res.send(newModule);
   });
 
@@ -147,6 +151,22 @@ export default function CourseRoutes(app) {
     const courseUpdates = req.body;
     const status = await courseDao.updateCourse(courseId, courseUpdates);
     res.send(status);
+  });
+
+  app.get("/api/courses/:courseId", async (req, res) => {
+    try {
+      const { courseId } = req.params;
+      const course = await courseDao.findCourseById(courseId);
+
+      if (!course) {
+        return res.status(404).send("Course not found");
+      }
+
+      res.status(200).json(course);
+    } catch (error) {
+      console.error("Error fetching course: ", error);
+      res.status(500).send("Error fetching course");
+    }
   });
  
  

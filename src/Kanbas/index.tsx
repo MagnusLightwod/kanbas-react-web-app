@@ -14,14 +14,14 @@ import * as courseClient from "./Courses/client";
 import { useSelector } from "react-redux";
 
 export default function Kanbas() {
-  console.log("Kanbas component hit");
+  //console.log("Kanbas component hit");
   const [courses, setCourses] = useState<any[]>([]);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   // Fetch courses function
   const fetchCourses = async () => {
     try {
-      console.log("Kanbas index fetching courses");
+      //console.log("Kanbas index fetching courses");
       if (currentUser.role === "FACULTY") {
         // Faculty should see all courses by default
         const allCourses = await courseClient.fetchAllCourses();
@@ -93,6 +93,8 @@ export default function Kanbas() {
       fetchCourses();
     }
   }, [currentUser]);
+
+  
   return (
     <Session>
       <div className="container-fluid">

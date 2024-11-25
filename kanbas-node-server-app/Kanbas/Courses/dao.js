@@ -11,7 +11,7 @@ delete course._id;
 
 // Function to find all courses
 export function findAllCourses() {
-  console.log("finding model courses");
+  console.log("finding model courses: courses dao");
  
   return model.find();
 }
@@ -45,3 +45,7 @@ export function updateCourse(courseId, courseUpdates) {
   return model.updateOne({ _id: courseId }, courseUpdates);
   }
   
+
+  export function findCourseById(courseId) {
+    return model.findById(courseId);
+  }
