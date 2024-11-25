@@ -3,9 +3,11 @@ import * as courseDao from "../Courses/dao.js";
 import * as enrollmentsDao from "../Enrollments/dao.js";
 
 function UserRoutes(app) {
+
+
   // Route to create a new user
-  const createUser = (req, res) => { 
-    const user = dao.createUser(req.body);
+  const createUser = async (req, res) => { 
+    const user = await dao.createUser(req.body);
     res.json(user);
   };
 

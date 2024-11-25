@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaUserCircle, FaCircle, FaCheck } from "react-icons/fa";
+import { FaUserCircle, FaCheck, FaPlus } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useParams, useNavigate } from "react-router";
 import { FaPencil } from "react-icons/fa6";
