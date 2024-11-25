@@ -1,6 +1,7 @@
 import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import * as coursesClient from "../client";
+import * as moduleClient from "./client";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlbuttons";
@@ -23,12 +24,25 @@ export default function Modules() {
     fetchModules();
   }, []);
 
-  // const removeModule = async (moduleId: string) => {
-  //   await modulesClient.deleteModule(moduleId);
-  //   dispatch(deleteModule(moduleId));
-  // };
+  const deleteModuleForCourse = async (moduleId: string) => {
+    try {
+      await moduleClient.deleteModule(moduleId);
+      dispatch(deleteModule(moduleId)); // Only update the state if the delete was successful
+    } catch (error) {
+      console.error("Error deleting module:", error);
+    }
+  };
+  
+  const updateModuleForCourse = async (module: any) => {
+    try {
+      await moduleClient.updateModule(module);
+      dispatch(updateModule(module)); // Update Redux state only after successful update in backend
+    } catch (error) {
+      console.error("Error updating module:", error);
+    }
+  };
 
-
+  
   const [moduleName, setModuleName] = useState("");  
 
   const createModuleForCourse = async () => {
@@ -68,7 +82,7 @@ export default function Modules() {
         <input
           className="form-control w-50 d-inline-block"
           value={module.name || ""}
-          onChange={(e) => dispatch(updateModule({ ...module, name: e.target.value }))}
+          onChange={(e) => updateModuleForCourse ({ ...module, name: e.target.value })}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               dispatch(updateModule({ ...module, editing: false }));
@@ -79,7 +93,7 @@ export default function Modules() {
       
       <ModuleControlButtons
         moduleId={module._id}
-        deleteModule={(moduleId) => dispatch(deleteModule(moduleId))}
+        deleteModule={(moduleId) => deleteModuleForCourse(moduleId)}
         editModule={() => dispatch(editModule(module._id))}
       />
     </div>

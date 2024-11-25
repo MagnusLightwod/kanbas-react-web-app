@@ -20,6 +20,7 @@ const modulesSlice = createSlice({
       state.modules = [...state.modules, newModule] as any;
     },
     deleteModule: (state, { payload: moduleId }) => {
+      console.log(" moduleId hit reducer",moduleId )
       state.modules = state.modules.filter(
         (m: any) => m._id !== moduleId);
     },
