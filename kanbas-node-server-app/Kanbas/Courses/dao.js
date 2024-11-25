@@ -1,16 +1,19 @@
-import Database from "../Databases/index.js"
 
+import model from "./model.js";
 // Function to create a new course
 export function createCourse(course) {
-  const newCourse = { ...course, _id: Date.now().toString() }; // Assign a unique ID
-  Database.courses = [...Database.courses, newCourse];
-  return newCourse;
+  delete course._id;
+ return model.create(course);
+  // const newCourse = { ...course, _id: Date.now().toString() }; // Assign a unique ID
+  // Database.courses = [...Database.courses, newCourse];
+  // return newCourse;
 }
 
 // Function to find all courses
 export function findAllCourses() {
-  
-  return Database.courses;
+  console.log("finding model courses");
+ 
+  return model.find();
 }
 
 // Function to find courses for a specific enrolled user

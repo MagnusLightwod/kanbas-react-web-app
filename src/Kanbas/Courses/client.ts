@@ -2,10 +2,11 @@ import axios from "axios";
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
+const axiosWithCredentials = axios.create({ withCredentials: true });
 
 export const fetchAllCourses = async () => {
   try {
-    const { data } = await axios.get(COURSES_API);
+    const { data } = await axiosWithCredentials.get(COURSES_API);
     return data;
   } catch (error) {
     console.error("Error fetching all courses:", error);
@@ -61,5 +62,24 @@ export const createModuleForCourse = async (courseId: string, module: any) => {
   
 };
 
+export const createCourse = async (course: any) => {
+  const { data } = await axiosWithCredentials.post(COURSES_API, course);
+  return data;
+ };
+ 
+// courseClient.js
+
+
+export const findMyCourses = async () => {
+  try {
+    const response = await axios.get(`${REMOTE_SERVER}/api/users/current/courses`, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    console.error('Error finding my courses:', error);
+    throw error;
+  }
+};
+
+// Keep your other functions like fetchAllCourses, createCourse, etc. here as well.
 
 

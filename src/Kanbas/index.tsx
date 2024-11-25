@@ -28,7 +28,7 @@ export default function Kanbas() {
         const allCourses = await courseClient.fetchAllCourses();
         setCourses(allCourses);
       } else {
-        const enrolledCourses = await userClient.findMyCourses();
+        const enrolledCourses = await courseClient.findMyCourses();
         setCourses(enrolledCourses);
       }
     } catch (error) {
@@ -36,6 +36,7 @@ export default function Kanbas() {
     }
   };
 
+  console.log(courses);
   useEffect(() => {
     if (currentUser) {
       fetchCourses();
@@ -53,7 +54,7 @@ export default function Kanbas() {
 
   const addNewCourse = async () => {
     try {
-      const newCourse = await userClient.createCourse(course);
+      const newCourse = await courseClient.createCourse(course);
       setCourses([...courses, newCourse]);
     } catch (error) {
       console.error("Error adding new course:", error);

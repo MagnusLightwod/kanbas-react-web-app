@@ -3,10 +3,11 @@ import * as courseDao from "./dao.js";
 import * as enrollmentsDao from "../Enrollments/dao.js";
 import * as modulesDao from "../Modules/dao.js";
 export default function CourseRoutes(app) {
+
   // Route to find all courses
-  app.get("/api/courses", (req, res) => {
+  app.get("/api/courses", async (req, res) => {
     try {
-      const courses = courseDao.findAllCourses();  // Call DAO to get all courses
+      const courses = await courseDao.findAllCourses();  // Call DAO to get all courses
       res.status(200).json(courses);  // Send back the courses as JSON with 200 status
     } catch (error) {
       console.error("Error fetching courses: ", error);
@@ -34,8 +35,10 @@ export default function CourseRoutes(app) {
     }
   });
 
+
+  ///create courses, edited for async and wait on mongo
   // Route to create a new course (for faculty)
-  app.post("/api/users/current/courses", (req, res) => {
+  app.post("/api/users/current/courses", async (req, res) => {
     try {
       const currentUser = req.session["currentUser"];
       if (!currentUser || currentUser.role !== "FACULTY") {
@@ -44,8 +47,10 @@ export default function CourseRoutes(app) {
       }
 
       // Create the new course and enroll the faculty member in it
-      const newCourse = courseDao.createCourse(req.body);
+      const newCourse = await courseDao.createCourse(req.body);
+      // maybe delete this when we get to enrollments
       enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
+      //
       res.status(201).json(newCourse);
     } catch (error) {
       console.error("Error creating course: ", error);

@@ -5,9 +5,11 @@ export function findModulesForCourse(courseId) {
 }
 
 export function createModule(module) {
-  const newModule = { ...module, _id: Date.now().toString() };
-  Database.modules = [...Database.modules, newModule];
-  return newModule;
+  // const newModule = { ...module, _id: Date.now().toString() };
+  // Database.modules = [...Database.modules, newModule];
+  delete module._id;
+  return model.create(module);
+
 }
 
 export function deleteModule(moduleId) {

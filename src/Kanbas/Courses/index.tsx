@@ -17,38 +17,6 @@ export default function Courses({ courses }: { courses: any[] }) {
   // Check if cid exists and if the course exists in the database
   const course = courses.find((course) => course._id === cid);
 
-  // Manage assignments state at the Courses level
-  // const [assignments, setAssignments] = useState(db.assiginments);
-
-  // // Function to save a new assignment
-
- 
-
-  //  // Function to delete an assignment
-  //  const deleteAssignment = (assignmentId: string) => {
-  //   setAssignments((prevAssignments) =>
-  //     prevAssignments.filter((assignment) => assignment._id !== assignmentId)
-  //   );
-  // };
-
-  // // Function to save a new assignment or update an existing one
-  // const saveAssignment = (updatedAssignment: any) => {
-  //   setAssignments((prevAssignments) => {
-  //     const existingAssignmentIndex = prevAssignments.findIndex(
-  //       (assignment) => assignment._id === updatedAssignment._id
-  //     );
-
-  //     // If editing an existing assignment
-  //     if (existingAssignmentIndex !== -1) {
-  //       return prevAssignments.map((assignment, index) =>
-  //         index === existingAssignmentIndex ? updatedAssignment : assignment
-  //       );
-  //     }
-  //     // If adding a new assignment
-  //     return [...prevAssignments, updatedAssignment];
-  //   });
-  // };
-
   if (!cid || !course) {
     return <div>Course not found</div>; // Handle missing or invalid course ID
   }
