@@ -23,32 +23,32 @@ app.use(cors({
     credentials: true // If you're using cookies or other authentication like sessions
   })); 
 
-//   const sessionOptions = {
-//     secret: process.env.SESSION_SECRET || 'super secret session phrase', // Use a strong secret key
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//         domain: process.env.NODE_SERVER_DOMAIN.replace('https://', ''),
-//         maxAge: 5000 * 60, // 5 minutes
-//         httpOnly: true,
-//         secure: process.env.NODE_ENV !== "development", // Use secure cookie in production (over HTTPS)
-//         sameSite: process.env.NODE_ENV === "development" ? 'lax' : 'none', // Use 'none' in production for cross-site cookies
-//     },
-// };
-
-const sessionOptions = {
-    secret: 'sessionSecret', // Replace with a strong secret key
+  const sessionOptions = {
+    secret: process.env.SESSION_SECRET || 'super secret session phrase', // Use a strong secret key
     resave: false,
-    httpOnly: true,
     saveUninitialized: true,
-
     cookie: {
-      domain: 'localhost',
-      path: '/',
-      maxAge: 5000 * 60, //5 mnt
-      sameSite: 'lax' // Please use your own value based on requirements.
-    }
-  }
+        domain: process.env.NODE_SERVER_DOMAIN.replace('https://', ''),
+        maxAge: 5000 * 60, // 5 minutes
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development", // Use secure cookie in production (over HTTPS)
+        sameSite: process.env.NODE_ENV === "development" ? 'lax' : 'none', // Use 'none' in production for cross-site cookies
+    },
+};
+
+// const sessionOptions = {
+//     secret: 'sessionSecret', // Replace with a strong secret key
+//     resave: false,
+//     httpOnly: true,
+//     saveUninitialized: true,
+
+//     cookie: {
+//       domain: 'localhost',
+//       path: '/',
+//       maxAge: 5000 * 60, //5 mnt
+//       sameSite: 'lax' // Please use your own value based on requirements.
+//     }
+//   }
 
 // Set proxy trust if in production, necessary when behind a reverse proxy like Render or Heroku
 if (process.env.NODE_ENV !== "development") {
