@@ -168,6 +168,13 @@ export default function CourseRoutes(app) {
       res.status(500).send("Error fetching course");
     }
   });
+
+  const findUsersForCourse = async (req, res) => {
+    const { cid } = req.params;
+    const users = await enrollmentsDao.findUsersForCourse(cid);
+    res.json(users);
+  };
+  app.get("/api/courses/:cid/users", findUsersForCourse);
  
  
 }

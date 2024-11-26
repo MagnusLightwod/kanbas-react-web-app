@@ -87,6 +87,7 @@ export default function Dashboard({
     if (currentUser) {
       fetchCourses();
       fetchEnrollments();
+      
     }
   }, [currentUser, enrolling]);
 

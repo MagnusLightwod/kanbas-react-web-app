@@ -90,6 +90,13 @@ export const findCourseById = async (courseId: String) => {
   }
 };
 
+// find suers for course in the people table
+
+export const findUsersForCourse = async (courseId: string) => {
+  const response = await axios.get(`${COURSES_API}/${courseId}/users`);
+  return response.data;
+ };
+ 
 // Keep your other functions like fetchAllCourses, createCourse, etc. here as well.
 
 
