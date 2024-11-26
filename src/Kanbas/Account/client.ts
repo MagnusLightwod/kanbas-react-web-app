@@ -34,11 +34,12 @@ export const signout = async () => {
   return response.data;
 };
 
-// Fetch courses for the current user
-export const findMyCourses = async () => {
-  const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
-  return data;
-};
+// // Fetch courses for the current user
+// export const findMyCourses = async () => {
+//   const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
+//   return data;
+// };
+
 
 // Create a new course for the current user (assumed to be faculty)
 export const createCourse = async (course: any) => {
@@ -78,6 +79,23 @@ export const createUser = async (user: any) => {
   const response = await axios.post(`${USERS_API}`, user);
   return response.data;
 };
+
+export const enrollIntoCourse = async (userId: string, courseId: string) => {
+  const response = await axiosWithCredentials.post(`${USERS_API}/${userId}/courses/${courseId}`);
+  return response.data;
+ };
+ export const unenrollFromCourse = async (userId: string, courseId: string) => {
+  const response = await axiosWithCredentials.delete(`${USERS_API}/${userId}/courses/${courseId}`);
+  return response.data;
+ };
+
+ export const findCoursesForUser = async (userId: string) => {
+  console.log("fetched user courses userId", userId);
+  const response = await axiosWithCredentials.get(`${USERS_API}/${userId}/courses`);
+  console.log("FindCOurseSForUser account client:", response.data);
+  return response.data;
+};
+ 
 
 
 

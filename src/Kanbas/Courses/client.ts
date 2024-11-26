@@ -26,7 +26,7 @@ export const updateCourse = async (course: any) => {
 
 export const enrollUserInCourse = async (userId: string, courseId: string) => {
   try {
-    const response = await axios.post(`${COURSES_API}/${courseId}/enroll`, { userId });
+    const response = await axiosWithCredentials.post(`${COURSES_API}/${courseId}/enroll`, { userId });
     return response.data;
   } catch (error) {
     console.error("Error enrolling user in course:", error);
@@ -36,7 +36,7 @@ export const enrollUserInCourse = async (userId: string, courseId: string) => {
 
 export const unenrollUserFromCourse = async (userId: string, courseId: string) => {
   try {
-    const response = await axios.post(`${COURSES_API}/${courseId}/unenroll`, { userId });
+    const response = await axiosWithCredentials.post(`${COURSES_API}/${courseId}/unenroll`, { userId });
     console.log(response);
     return response.data;
   } catch (error) {
