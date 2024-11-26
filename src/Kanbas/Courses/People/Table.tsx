@@ -4,7 +4,7 @@ import * as db from "../../Database";
 import { FaUserCircle } from "react-icons/fa";
 import PeopleDetails from "./Details";
 import { Link } from "react-router-dom";
-
+import * as client from "../";
 export default function PeopleTable({ users = []}: {users?: any[]}) {
 
   return (

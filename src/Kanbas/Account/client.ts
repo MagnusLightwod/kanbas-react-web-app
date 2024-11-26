@@ -34,12 +34,6 @@ export const signout = async () => {
   return response.data;
 };
 
-// // Fetch courses for the current user
-// export const findMyCourses = async () => {
-//   const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
-//   return data;
-// };
-
 
 // Create a new course for the current user (assumed to be faculty)
 export const createCourse = async (course: any) => {
