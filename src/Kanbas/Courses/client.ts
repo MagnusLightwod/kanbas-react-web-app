@@ -1,7 +1,6 @@
 import axios from "axios";
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
-const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
 export const fetchAllCourses = async () => {
@@ -90,13 +89,12 @@ export const findCourseById = async (courseId: String) => {
   }
 };
 
-// find suers for course in the people table
-
 export const findUsersForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/users`);
   return response.data;
  };
  
+
 // Keep your other functions like fetchAllCourses, createCourse, etc. here as well.
 
 

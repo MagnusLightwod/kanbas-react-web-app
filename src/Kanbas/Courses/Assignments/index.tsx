@@ -1,4 +1,3 @@
-
 import { FaPlus } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
 import { BsGripVertical } from "react-icons/bs";
@@ -9,32 +8,29 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 import * as assignmentClient from "./client";
 import { useParams, useNavigate } from "react-router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setAssignments,
   deleteAssignmentAction,
-  addAssignment,
 } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams<{ cid: string }>(); // Get course ID from URL
   const navigate = useNavigate(); // Initialize navigate function
   const dispatch = useDispatch();
-  
-  // get assignemnts
+  const [searchTerm, setSearchTerm] = useState(""); // Search term for assignments
+
+  // Get assignments from redux state
   const assignments = useSelector((state: any) => state.assignmentReducer?.assignments || []);
 
-  // filter them for the course again
-  const filteredAssignments = assignments.filter(
-    (assignment: any) => assignment.course === cid,
-    console.log("assignments in redux state filtered: ", assignments)
-  );
+  // Filter assignments to only include those relevant to the current course
+  const filteredAssignments = assignments.filter((assignment: any) => assignment.course === cid);
 
-  // fetch existing assignments
+  // Fetch existing assignments for the course
   useEffect(() => {
     let isMounted = true;
-  
+
     const fetchAssignments = async () => {
       try {
         if (cid) {
@@ -43,23 +39,21 @@ export default function Assignments() {
             console.log("Setting assignments");
             dispatch(setAssignments(assignmentsData));
           }
-          dispatch(setAssignments(assignmentsData));
         }
       } catch (error) {
         console.error("Error fetching assignments:", error);
       }
     };
-  
+
     fetchAssignments();
-  
+
     return () => {
       isMounted = false; // Cleanup function to avoid updating state if unmounted
     };
   }, [cid, dispatch]);
-  
 
   const handleAddAssignment = () => {
-    navigate(`/Kanbas/Courses/${cid}/Assignments/New`); 
+    navigate(`/Kanbas/Courses/${cid}/Assignments/New`);
   };
 
   // Function to confirm deletion
@@ -69,13 +63,21 @@ export default function Assignments() {
       try {
         await assignmentClient.deleteAssignment(assignmentId);
         dispatch(deleteAssignmentAction(assignmentId));
-       
-        //setAssignments(assignments.filter((a: any) => a._id !== assignmentId));
       } catch (error) {
         console.error("Error deleting assignment:", error);
       }
     }
   };
+
+  // Function to handle search input
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  // Filter assignments based on search term
+  const visibleAssignments = filteredAssignments.filter((assignment: any) =>
+    assignment.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div id="wd-modules-controls" className="text-nowrap wd-margin-right-left">
@@ -89,6 +91,8 @@ export default function Assignments() {
             id="wd-search-assignment"
             placeholder="Search..."
             className="form-control border-start-0"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
           <div>
             <button
@@ -127,12 +131,11 @@ export default function Assignments() {
           />
         </div>
 
-
         <ul className="wd-lessons list-group rounded-0">
-          {assignments.length === 0 ? (
-            <li>No assignments available for this course.</li>
+          {visibleAssignments.length === 0 ? (
+            <li className="list-group-item">No assignments available for this course.</li>
           ) : (
-            filteredAssignments.map((assignment: any) => (
+            visibleAssignments.map((assignment: any) => (
               <li
                 key={assignment._id}
                 className="wd-lesson list-group-item d-flex align-items-start justify-content-between p-3 ps-1"
@@ -142,13 +145,15 @@ export default function Assignments() {
                     <BsGripVertical className="me-2 fs-3" />
                     <TfiWrite className="me-2 fs-3" />
                     <a
-                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`} 
+                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
                       className="h5 text-dark mb-0"
-                      
                     >
                       {assignment.title}
-                    </a><FaRegTrashAlt onClick={() => handleConfirm(assignment._id)}
-                      />
+                    </a>
+                    <FaRegTrashAlt
+                      className="ms-3 text-danger cursor-pointer"
+                      onClick={() => handleConfirm(assignment._id)}
+                    />
                   </span>
 
                   <div>
