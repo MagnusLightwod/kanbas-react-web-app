@@ -13,7 +13,7 @@ import mongoose from "mongoose";
 import "dotenv/config";
 
 // Mongoose connection
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas" || "mongodb+srv://Maggy:secretpassword@kanbas.5bl6y.mongodb.net/?retryWrites=true&w=majority&appName=Kanbas"
 mongoose.connect(CONNECTION_STRING);
 
 
@@ -29,15 +29,13 @@ app.use(cors({
     
     secret: process.env.SESSION_SECRET || 'super secret session phrase', // Use a strong secret key 
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         domain: process.env.NODE_SERVER_DOMAIN,
-        maxAge: 5000 * 60, // 5 minutes
-        httpOnly: true,
         secure: true, // Use secure cookie in production (over HTTPS)
         sameSite: "none", // Use 'none' in production for cross-site cookies
     },
-};
+}; 
 
   // these options are for local deploy
 // const sessionOptions = {
